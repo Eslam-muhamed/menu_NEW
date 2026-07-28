@@ -5,7 +5,7 @@ export const hotItems: MenuItem[] = [
   // ── المشروبات الساخنة ──────────────────────────────────────────────────────
   { id: 'hd-1',  name: 'شاي',                    description: 'شاي أحمر فاخر ساخن',                         price: 15,  currency: 'ج.م', category: 'hot-drinks', image: '/images/WhatsApp Image 2026-07-28 at 19.50.11 (2).jpeg' },
   { id: 'hd-2',  name: 'شاي باكيت',              description: 'أكياس شاي عالمية مختارة',                   price: 20,  currency: 'ج.م', category: 'hot-drinks', image: '/images/WhatsApp Image 2026-07-28 at 20.12.21.jpeg' },
-  { id: 'hd-3',  name: 'شاي كرك',                description: 'شاي هندي بالبهارات العطرية',               price: 25,  currency: 'ج.م', category: 'hot-drinks', image: '/images/WhatsApp Image 2026-07-28 at 20.12.22]', badge: 'Popular' },
+  { id: 'hd-3',  name: 'شاي كرك',                description: 'شاي هندي بالبهارات العطرية',               price: 25,  currency: 'ج.م', category: 'hot-drinks', image: '/images/WhatsApp Image 2026-07-28 at 20.12.22.jpeg]', badge: 'Popular' },
   { id: 'hd-4',  name: 'شاي كرك حليب',           description: 'شاي كرك كريمي مع حليب طازج',               price: 45,  currency: 'ج.م', category: 'hot-drinks', image: '/images/]', badge: 'Popular' },
   { id: 'hd-5',  name: 'شاي حليب',               description: 'شاي أحمر مع حليب دافئ كريمي',             price: 40,  currency: 'ج.م', category: 'hot-drinks', image: '/images/]' },
   { id: 'hd-6',  name: 'ينسون',                  description: 'منقوع الينسون المُهدئ الطبيعي',            price: 20,  currency: 'ج.م', category: 'hot-drinks', image: '/images/]' },
