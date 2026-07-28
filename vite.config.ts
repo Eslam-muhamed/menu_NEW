@@ -3,7 +3,7 @@ import react from "@vitejs/plugin-react-swc";
 import path from "path";
 
 export default defineConfig({
-  base: "/menu_NEW/", // 👈 أضف السطر ده
+  base: "/", // 👈 أضف السطر ده
 
   server: {
     host: "::",
