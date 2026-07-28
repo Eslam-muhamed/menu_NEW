@@ -40,7 +40,7 @@ export const hotItems: MenuItem[] = [
   { id: 'cf-12', name: 'كابتشينو',               description: 'إسبريسو وحليب مُبخَّر ورغوة — الكلاسيكية', price: 60,  currency: 'ج.م', category: 'coffee', image: COF[3], badge: 'Popular' },
   { id: 'cf-13', name: 'كابتشينو فلافور',        description: 'كابتشينو بنكهة خاصة مميزة',                price: 70,  currency: 'ج.م', category: 'coffee', image: COF[3] },
   { id: 'cf-14', name: 'كورتادو',                description: 'إسبريسو مع حليب بنسبة متساوية',            price: 60,  currency: 'ج.م', category: 'coffee', image: COF[5] },
-  { id: 'cf-15', name: 'لاتيه',                  description: 'إسبريسو مع حليب مُبخَّر وكريمة خفيفة',     price: 60,  currency: 'ج.م', category: 'coffee', image: COF[5] },
+  { id: 'cf-15', name: 'لاتيه',                  description: 'إسبريسو مع حليب مُبخَّر وكريمة خفيفة',     price: 60,  currency: 'ج.م', category: 'coffee', image: '/images/latte.png' },
   { id: 'cf-16', name: 'هوت سبانيش لاتيه',       description: 'لاتيه إسباني مع حليب مكثف وعسل',           price: 70,  currency: 'ج.م', category: 'coffee', image: COF[5], badge: "Chef's Choice" },
   { id: 'cf-17', name: 'فلات وايت',              description: 'إسبريسو مزدوج مع رغوة حليب كالحرير',      price: 60,  currency: 'ج.م', category: 'coffee', image: COF[4] },
   { id: 'cf-18', name: 'الأفوجاتو (Affogato)',   description: 'إسبريسو ساخن فوق آيس كريم فانيليا',       price: 70,  currency: 'ج.م', category: 'coffee', image: COF[2], badge: 'New' },
