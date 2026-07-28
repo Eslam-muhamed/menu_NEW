@@ -52,13 +52,19 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
 
   /* Gold gradient text */
   .gold-text {
-    background: linear-gradient(135deg, #c9993d 0%, #f0c862 50%, #c9993d 100%);
+    background: linear-gradient(
+      135deg,
+      #c9993d 0%,
+      #f0c862 50%,
+      #c9993d 100%
+    );
     background-size: 200% auto;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -66,7 +72,14 @@
   }
 
   .gold-text-shimmer {
-    background: linear-gradient(135deg, #c9993d 0%, #f0c862 30%, #ffe99a 50%, #f0c862 70%, #c9993d 100%);
+    background: linear-gradient(
+      135deg,
+      #c9993d 0%,
+      #f0c862 30%,
+      #ffe99a 50%,
+      #f0c862 70%,
+      #c9993d 100%
+    );
     background-size: 200% auto;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -83,10 +96,16 @@
 
   /* Card glow on hover */
   .card-glow-hover {
-    transition: box-shadow 0.4s ease, transform 0.4s ease, border-color 0.4s ease;
+    transition:
+      box-shadow 0.4s ease,
+      transform 0.4s ease,
+      border-color 0.4s ease;
   }
+
   .card-glow-hover:hover {
-    box-shadow: 0 0 40px rgba(201, 153, 61, 0.08), 0 24px 48px rgba(0, 0, 0, 0.5);
+    box-shadow:
+      0 0 40px rgba(201, 153, 61, 0.08),
+      0 24px 48px rgba(0, 0, 0, 0.5);
     transform: translateY(-3px);
   }
 
@@ -100,44 +119,62 @@
 
   /* Dot pattern background */
   .dot-pattern {
-    background-image: radial-gradient(rgba(201, 153, 61, 0.08) 1px, transparent 1px);
+    background-image: radial-gradient(
+      rgba(201, 153, 61, 0.08) 1px,
+      transparent 1px
+    );
     background-size: 28px 28px;
   }
 
-  /* Hero image ken burns */
-  /* Hero image animation */
-.hero-img {
-  animation: kenBurns 20s ease-in-out infinite alternate;
-  transform-origin: center center;
-  will-change: transform;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-}
+  /* =========================================
+     Premium Hero Image Animation
+     ========================================= */
 
-@keyframes kenBurns {
-  0% {
-    transform: scale(1.05) translate3d(0, 0, 0);
-  }
-
-  100% {
-    transform: scale(1.12) translate3d(-2%, 0, 0);
-  }
-}
-
-/* Keep the animation active on mobile */
-@media (max-width: 768px) {
   .hero-img {
-    animation: kenBurnsMobile 20s ease-in-out infinite alternate;
+    animation: heroCinematic 10s cubic-bezier(0.22, 1, 0.36, 1)
+      infinite alternate;
+    transform-origin: center center;
+    will-change: transform;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
   }
 
-  @keyframes kenBurnsMobile {
+  @keyframes heroCinematic {
     0% {
       transform: scale(1.05) translate3d(0, 0, 0);
     }
 
+    35% {
+      transform: scale(1.08) translate3d(-0.5%, 0, 0);
+    }
+
+    70% {
+      transform: scale(1.11) translate3d(-1.2%, 0, 0);
+    }
+
     100% {
-      transform: scale(1.10) translate3d(-1.5%, 0, 0);
+      transform: scale(1.14) translate3d(-2%, 0, 0);
     }
   }
-}
+
+  /* Mobile animation */
+  @media (max-width: 768px) {
+    .hero-img {
+      animation-duration: 8s;
+    }
+
+    @keyframes heroCinematic {
+      0% {
+        transform: scale(1.04) translate3d(0, 0, 0);
+      }
+
+      50% {
+        transform: scale(1.07) translate3d(-0.7%, 0, 0);
+      }
+
+      100% {
+        transform: scale(1.1) translate3d(-1.5%, 0, 0);
+      }
+    }
+  }
 }
