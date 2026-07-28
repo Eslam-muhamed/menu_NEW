@@ -1,0 +1,116 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 241 43% 4%;
+    --foreground: 38 23% 92%;
+    --card: 241 35% 9%;
+    --card-foreground: 38 23% 92%;
+    --popover: 241 35% 9%;
+    --popover-foreground: 38 23% 92%;
+    --primary: 38 60% 52%;
+    --primary-foreground: 241 43% 4%;
+    --secondary: 241 25% 14%;
+    --secondary-foreground: 38 23% 92%;
+    --muted: 241 25% 14%;
+    --muted-foreground: 30 8% 55%;
+    --accent: 38 60% 52%;
+    --accent-foreground: 241 43% 4%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 38 23% 92%;
+    --border: 241 25% 12%;
+    --input: 241 25% 12%;
+    --ring: 38 60% 52%;
+    --radius: 0.75rem;
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    background-color: #07070f;
+    color: #f0ece4;
+    font-family: 'Cairo', 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+}
+
+@layer utilities {
+  /* Scrollbar hide */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Gold gradient text */
+  .gold-text {
+    background: linear-gradient(135deg, #c9993d 0%, #f0c862 50%, #c9993d 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .gold-text-shimmer {
+    background: linear-gradient(135deg, #c9993d 0%, #f0c862 30%, #ffe99a 50%, #f0c862 70%, #c9993d 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmer 3s linear infinite;
+  }
+
+  /* Glass effect */
+  .glass {
+    background: rgba(13, 13, 28, 0.82);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+
+  /* Card glow on hover */
+  .card-glow-hover {
+    transition: box-shadow 0.4s ease, transform 0.4s ease, border-color 0.4s ease;
+  }
+  .card-glow-hover:hover {
+    box-shadow: 0 0 40px rgba(201, 153, 61, 0.08), 0 24px 48px rgba(0, 0, 0, 0.5);
+    transform: translateY(-3px);
+  }
+
+  /* Line clamp */
+  .line-clamp-2 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+
+  /* Dot pattern background */
+  .dot-pattern {
+    background-image: radial-gradient(rgba(201, 153, 61, 0.08) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+
+  /* Hero image ken burns */
+  .hero-img {
+    animation: kenBurns 20s ease-in-out infinite alternate;
+  }
+
+  @keyframes kenBurns {
+    0% { transform: scale(1.05) translateX(0); }
+    100% { transform: scale(1.12) translateX(-2%); }
+  }
+}
