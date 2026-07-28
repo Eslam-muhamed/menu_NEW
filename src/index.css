@@ -105,12 +105,39 @@
   }
 
   /* Hero image ken burns */
-  .hero-img {
-    animation: kenBurns 20s ease-in-out infinite alternate;
+  /* Hero image animation */
+.hero-img {
+  animation: kenBurns 20s ease-in-out infinite alternate;
+  transform-origin: center center;
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+@keyframes kenBurns {
+  0% {
+    transform: scale(1.05) translate3d(0, 0, 0);
   }
 
-  @keyframes kenBurns {
-    0% { transform: scale(1.05) translateX(0); }
-    100% { transform: scale(1.12) translateX(-2%); }
+  100% {
+    transform: scale(1.12) translate3d(-2%, 0, 0);
   }
+}
+
+/* Keep the animation active on mobile */
+@media (max-width: 768px) {
+  .hero-img {
+    animation: kenBurnsMobile 20s ease-in-out infinite alternate;
+  }
+
+  @keyframes kenBurnsMobile {
+    0% {
+      transform: scale(1.05) translate3d(0, 0, 0);
+    }
+
+    100% {
+      transform: scale(1.10) translate3d(-1.5%, 0, 0);
+    }
+  }
+}س
 }
