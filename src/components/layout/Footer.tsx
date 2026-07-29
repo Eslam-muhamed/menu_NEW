@@ -8,8 +8,8 @@ function WhatsAppIcon() {
   );
 }
 
-const PHONE        = '201128727999'; // ← استبدل بالرقم الحقيقي
-const DISPLAY_PHONE = '201128727999';
+const PHONE        = '01128727999'; // ← استبدل بالرقم الحقيقي
+const DISPLAY_PHONE = '01128727999';
 const MSG          = encodeURIComponent('مرحباً، أريد الطلب من sky 7 ☕');
 const MAPS_URL     = 'https://maps.google.com/?q=sky+7+cafe+egypt'; // ← استبدل بالرابط الحقيقي
 
