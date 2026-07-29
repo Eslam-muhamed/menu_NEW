@@ -113,7 +113,7 @@ export default function Footer() {
             <div className="flex-1 min-w-0">
               <p className="text-[11px] mb-0.5" style={{ color: '#7a7268', fontFamily: "'Cairo',sans-serif" }}>مواعيد العمل</p>
               <p className="text-sm font-semibold" style={{ color: '#f0ece4', fontFamily: "'Cairo',sans-serif" }}>
-                يومياً — 8 ص حتى 2 ص {/* ← استبدل بالمواعيد الحقيقية */}
+               العمل على مدار اليوم 24/7{/* ← استبدل بالمواعيد الحقيقية */}
               </p>
             </div>
           </div>
