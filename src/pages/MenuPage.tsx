@@ -4,6 +4,7 @@ import CategoryNav from '@/components/features/CategoryNav';
 import MenuSection from '@/components/features/MenuSection';
 import SearchBar from '@/components/features/SearchBar';
 import Footer from '@/components/layout/Footer';
+import SurpriseButton from '@/components/features/SurpriseButton';
 import { categories, menuItems } from '@/constants/menuData';
 
 export default function MenuPage() {
@@ -140,6 +141,9 @@ export default function MenuPage() {
           </div>
         </main>
       </div>
+
+      {/* Surprise Me floating button */}
+      <SurpriseButton />
 
       <Footer />
     </div>
