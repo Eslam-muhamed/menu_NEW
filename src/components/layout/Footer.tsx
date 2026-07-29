@@ -74,7 +74,7 @@ export default function Footer() {
             <div className="flex-1 min-w-0">
               <p className="text-[11px] mb-0.5" style={{ color: '#7a7268', fontFamily: "'Cairo',sans-serif" }}>العنوان</p>
               <p className="text-sm font-semibold" style={{ color: '#f0ece4', fontFamily: "'Cairo',sans-serif" }}>
-                  الشرقية،كفرصقر، شارع البحر - بجوار البنك الأهلي تمكين ( لتمويل المشاريع ){/* ← استبدل بالعنوان الحقيقي */}
+                  الشرقية - كفر صقر - شارع البحر - بجوار البنك الأهلي تمكين ( لتمويل المشاريع ){/* ← استبدل بالعنوان الحقيقي */}
               </p>
             </div>
           </div>
