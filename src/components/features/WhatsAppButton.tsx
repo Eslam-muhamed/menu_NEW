@@ -6,7 +6,7 @@ function WhatsAppIcon() {
   );
 }
 
-const PHONE = '201000000000'; // ← استبدل بالرقم الحقيقي
+const PHONE = '201128727999'; // ← استبدل بالرقم الحقيقي
 const MSG   = encodeURIComponent('مرحباً، أريد الطلب من sky 7 ☕');
 
 export default function WhatsAppButton() {

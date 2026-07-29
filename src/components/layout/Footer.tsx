@@ -8,8 +8,8 @@ function WhatsAppIcon() {
   );
 }
 
-const PHONE        = '201000000000'; // ← استبدل بالرقم الحقيقي
-const DISPLAY_PHONE = '01000000000';
+const PHONE        = '201128727999'; // ← استبدل بالرقم الحقيقي
+const DISPLAY_PHONE = '201128727999';
 const MSG          = encodeURIComponent('مرحباً، أريد الطلب من sky 7 ☕');
 const MAPS_URL     = 'https://maps.google.com/?q=sky+7+cafe+egypt'; // ← استبدل بالرابط الحقيقي
 
@@ -74,7 +74,7 @@ export default function Footer() {
             <div className="flex-1 min-w-0">
               <p className="text-[11px] mb-0.5" style={{ color: '#7a7268', fontFamily: "'Cairo',sans-serif" }}>العنوان</p>
               <p className="text-sm font-semibold" style={{ color: '#f0ece4', fontFamily: "'Cairo',sans-serif" }}>
-                القاهرة، مصر {/* ← استبدل بالعنوان الحقيقي */}
+                  الشرقية،كفرصقر، شارع البحر - بجوار البنك الأهلي تمكين ( لتمويل المشاريع ){/* ← استبدل بالعنوان الحقيقي */}
               </p>
             </div>
           </div>
