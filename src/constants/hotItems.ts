@@ -99,11 +99,11 @@ export const hotItems: MenuItem[] = [
   { id: 'fj-17', name: 'أفوكادو عسل ومكسرات',   description: 'أفوكادو مع عسل نحل ومكسرات متنوعة',       price: 130, currency: 'ج.م', category: 'fresh-juice', image:'/images/WhatsApp Image 2026-07-29 at 03.12.22 (1).jpeg', badge: "Chef's Choice" },
 
   // ── ميكس فريش ────────────────────────────────────────────────────────────
-  { id: 'mf-1',  name: 'فلوريدا',                description: 'مزيج فريش استوائي بنكهة شمسية',           price: 70,  currency: 'ج.م', category: 'mix-fresh', image: JCE[0] },
-  { id: 'mf-2',  name: 'مانجو بيتش',             description: 'مانجو مع خوخ طازج في مزيج صيفي',          price: 70,  currency: 'ج.م', category: 'mix-fresh', image: JCE[0] },
-  { id: 'mf-3',  name: 'باشن فروت',              description: 'باشن فروت استوائي فريد المذاق',            price: 70,  currency: 'ج.م', category: 'mix-fresh', image: JCE[3] },
-  { id: 'mf-4',  name: 'مانجو هواي',             description: 'مانجو هاواي استوائي بنكهة الجزر',          price: 70,  currency: 'ج.م', category: 'mix-fresh', image: JCE[0] },
-  { id: 'mf-5',  name: 'جي سي',                  description: 'مانجو+فراوله+كيوي+موز+فانيلا+بلو بيري',  price: 90,  currency: 'ج.م', category: 'mix-fresh', image: JCE[3], badge: "Chef's Choice" },
-  { id: 'mf-6',  name: 'بينا كولادا',            description: 'اناناس+جوز هند+فانيلا — نكهة شاطئية',    price: 85,  currency: 'ج.م', category: 'mix-fresh', image: JCE[0] },
-  { id: 'mf-7',  name: 'سكاي مود',               description: 'مزيج سكاي 7 الخاص — تجربة استثنائية',     price: 100, currency: 'ج.م', category: 'mix-fresh', image: JCE[3], badge: 'New' },
+  { id: 'mf-1',  name: 'فلوريدا',                description: 'مزيج فريش استوائي بنكهة شمسية',           price: 70,  currency: 'ج.م', category: 'mix-fresh', image: '/images/WhatsApp Image 2026-07-29 at 03.22.45.jpeg' },
+  { id: 'mf-2',  name: 'مانجو بيتش',             description: 'مانجو مع خوخ طازج في مزيج صيفي',          price: 70,  currency: 'ج.م', category: 'mix-fresh', image: '/images/WhatsApp Image 2026-07-29 at 03.24.17.jpeg' },
+  { id: 'mf-3',  name: 'باشن فروت',              description: 'باشن فروت استوائي فريد المذاق',            price: 70,  currency: 'ج.م', category: 'mix-fresh', image: '/images/WhatsApp Image 2026-07-29 at 03.24.49.jpeg' },
+  { id: 'mf-4',  name: 'مانجو هواي',             description: 'مانجو هاواي استوائي بنكهة الجزر',          price: 70,  currency: 'ج.م', category: 'mix-fresh', image: '/images/WhatsApp Image 2026-07-29 at 03.27.51.jpeg' },
+  { id: 'mf-5',  name: 'جي سي',                  description: 'مانجو+فراوله+كيوي+موز+فانيلا+بلو بيري',  price: 90,  currency: 'ج.م', category: 'mix-fresh', image: '/images/WhatsApp Image 2026-07-29 at 03.29.14.jpeg', badge: "Chef's Choice" },
+  { id: 'mf-6',  name: 'بينا كولادا',            description: 'اناناس+جوز هند+فانيلا — نكهة شاطئية',    price: 85,  currency: 'ج.م', category: 'mix-fresh', image: '/images/WhatsApp Image 2026-07-29 at 03.30.58.jpeg' },
+  { id: 'mf-7',  name: 'سكاي مود',               description: 'مزيج سكاي 7 الخاص — تجربة استثنائية',     price: 100, currency: 'ج.م', category: 'mix-fresh', image: '/images/WhatsApp Image 2026-07-29 at 03.31.50.jpeg', badge: 'New' },
 ];
