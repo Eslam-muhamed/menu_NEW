@@ -60,7 +60,7 @@ export default function MenuPage() {
     <div className="min-h-screen" style={{ backgroundColor: '#07070f', color: '#f0ece4' }}>
       {/* Hero */}
       <HeroSection />
-
+      
       {/* Menu Content */}
       <div id="menu-content">
         {/* Sticky Category Filter Nav */}
@@ -151,3 +151,4 @@ export default function MenuPage() {
     </div>
   );
 }
+
