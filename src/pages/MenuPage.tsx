@@ -6,6 +6,7 @@ import SearchBar from '@/components/features/SearchBar';
 import Footer from '@/components/layout/Footer';
 import SurpriseButton from '@/components/features/SurpriseButton';
 import WhatsAppButton from '@/components/features/WhatsAppButton';
+import OffersSection from '@/components/features/OffersSection';
 import { categories, menuItems } from '@/constants/menuData';
 
 export default function MenuPage() {
@@ -60,7 +61,10 @@ export default function MenuPage() {
     <div className="min-h-screen" style={{ backgroundColor: '#07070f', color: '#f0ece4' }}>
       {/* Hero */}
       <HeroSection />
-      
+
+      {/* Offers Section */}
+      <OffersSection />
+
       {/* Menu Content */}
       <div id="menu-content">
         {/* Sticky Category Filter Nav */}
@@ -151,4 +155,3 @@ export default function MenuPage() {
     </div>
   );
 }
-
