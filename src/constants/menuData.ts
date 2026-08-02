@@ -16,7 +16,7 @@ export const categories: MenuCategory[] = [
   { id: 'soda-flavors', name: 'صودا ونكهات',        icon: '✨', description: 'صودا بنكهات sky 7 الخاصة' },
   { id: 'desserts',     name: 'الحلويات',           icon: '🍰', description: 'كيك ووافلز وبان كيك وطواجن' },
   { id: 'fruit-salad',  name: 'سلطة الفواكه',       icon: '🍓', description: 'سلطات فواكه طازجة' },
-  { id: 'shisha',       name: 'الشيشة والمعسل',     icon: '💨', description: 'شيشة فاخرة ومعسل مميز' },
+  // { id: 'shisha',       name: 'الشيشة والمعسل',     icon: '💨', description: 'شيشة فاخرة ومعسل مميز' },
 ];
 
 export const menuItems = [...hotItems, ...coldItems];

@@ -82,7 +82,7 @@ export const coldItems: MenuItem[] = [
   { id: 'fs-5',  name: 'طبق فاكهه',              description: 'طبق فاكهة فاخر مُصمَّم بإبداع',            price: 200, currency: 'ج.م', category: 'fruit-salad', image: FRT[0] },
 
   // ── الشيشة والمعسل ────────────────────────────────────────────────────────
-  { id: 'sh-1',  name: 'شيشة سبيشل',             description: 'شيشة فاخرة بمعسل سبيشل أجود الأنواع',     price: 110, currency: 'ج.م', category: 'shisha', image: SSH[0] },
-  { id: 'sh-2',  name: 'شيشة فواكه فاخره',       description: 'شيشة بمعسل فواكه استوائية فاخرة',         price: 85,  currency: 'ج.م', category: 'shisha', image: SSH[0], badge: 'Popular' },
-  { id: 'sh-3',  name: 'شيشة معسل',              description: 'معسل سادة عالي الجودة',                    price: 15,  currency: 'ج.م', category: 'shisha', image: SSH[1] },
+  // { id: 'sh-1',  name: 'شيشة سبيشل',             description: 'شيشة فاخرة بمعسل سبيشل أجود الأنواع',     price: 110, currency: 'ج.م', category: 'shisha', image: SSH[0] },
+  // { id: 'sh-2',  name: 'شيشة فواكه فاخره',       description: 'شيشة بمعسل فواكه استوائية فاخرة',         price: 85,  currency: 'ج.م', category: 'shisha', image: SSH[0], badge: 'Popular' },
+  // { id: 'sh-3',  name: 'شيشة معسل',              description: 'معسل سادة عالي الجودة',                    price: 15,  currency: 'ج.م', category: 'shisha', image: SSH[1] },
 ];
