@@ -47,7 +47,7 @@ export default function ItemCustomizerModal({ item, onClose }: Props) {
 
   /* State */
   const [qty,       setQty]       = useState(1);
-  const [sugar,     setSugar]     = useState(2);
+  const [sugar,     setSugar]     = useState<number | undefined>(undefined);
   const [ice,       setIce]       = useState<IceLevel>('normal');
   const [extraShot, setExtraShot] = useState(false);
   const [cream,     setCream]     = useState(false);
@@ -69,7 +69,7 @@ export default function ItemCustomizerModal({ item, onClose }: Props) {
   const handleAdd = () => {
     const customization: CartCustomization = {
       quantity: qty,
-      ...(opts.sugar     ? { sugar }     : {}),
+      ...(opts.sugar && sugar !== undefined ? { sugar } : {}),
       ...(opts.ice       ? { ice }       : {}),
       ...(opts.extraShot ? { extraShot } : {}),
       ...(opts.cream     ? { cream }     : {}),
@@ -207,9 +207,12 @@ export default function ItemCustomizerModal({ item, onClose }: Props) {
               <div>
                 <SectionTitle>🍬 السكر</SectionTitle>
                 <div className="flex gap-2 flex-wrap">
+                  <button onClick={() => setSugar(undefined)} style={sugar === undefined ? pillActive : pillInactive}>
+                    لا تحدد
+                  </button>
                   {[0, 1, 2, 3, 4].map(n => (
                     <button key={n} onClick={() => setSugar(n)} style={sugar === n ? pillActive : pillInactive}>
-                      {n === 0 ? 'بدون' : `${n} معلقة`}
+                      {n === 0 ? 'بدون سكر' : `${n} معلقة`}
                     </button>
                   ))}
                 </div>
