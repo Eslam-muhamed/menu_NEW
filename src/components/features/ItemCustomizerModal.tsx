@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X as CloseIcon, Minus, Plus, ShoppingBag } from 'lucide-react';
 import { toast } from 'sonner';
@@ -114,7 +115,7 @@ export default function ItemCustomizerModal({ item, onClose }: Props) {
     onClose();
   };
 
-  return (
+  const modalContent = (
     <motion.div
       className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center"
       initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
@@ -355,4 +356,6 @@ export default function ItemCustomizerModal({ item, onClose }: Props) {
       </motion.div>
     </motion.div>
   );
+
+  return createPortal(modalContent, document.body);
 }
