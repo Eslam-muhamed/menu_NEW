@@ -4,6 +4,35 @@ import { X as CloseIcon, Trash2, Minus, Plus, ShoppingBag, Eye } from 'lucide-re
 import { useCart } from '@/stores/cartStore';
 import type { CartItem, IceLevel } from '@/types/cart';
 
+const PHONE = '201000000000'; // ← استبدل بالرقم الحقيقي
+
+function WhatsAppIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91C21.95 9.27 20.92 6.78 19.05 4.91 17.18 3.03 14.69 2 12.04 2zm0 1.67c2.2 0 4.26.86 5.82 2.42 1.55 1.56 2.41 3.63 2.41 5.83 0 4.54-3.7 8.23-8.24 8.23-1.48 0-2.93-.39-4.19-1.13l-.3-.18-3.12.81.83-3.04-.2-.32C4.24 14.98 3.8 13.46 3.8 11.91c.01-4.54 3.7-8.24 8.24-8.24zm-2.51 4.16c-.16 0-.43.06-.66.31-.22.25-.87.86-.87 2.07 0 1.22.89 2.39 1.01 2.56.13.17 1.75 2.67 4.24 3.73.59.27 1.05.42 1.41.53.59.19 1.13.16 1.56.1.48-.07 1.46-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.07-.1-.23-.16-.48-.28-.25-.12-1.47-.72-1.69-.8-.23-.08-.39-.12-.56.13-.17.25-.65.8-.79.96-.14.17-.28.19-.52.07-.25-.13-1.03-.38-1.96-1.21-.72-.65-1.2-1.45-1.34-1.7-.14-.25-.01-.39.12-.52.11-.11.25-.29.38-.43.12-.14.17-.25.24-.41.08-.17.04-.31-.02-.44-.05-.13-.56-1.36-.77-1.84-.21-.47-.42-.41-.58-.42-.15-.01-.32-.04-.53-.04z"/>
+    </svg>
+  );
+}
+
+function buildWhatsAppMessage(items: CartItem[], totalPrice: number): string {
+  const lines: string[] = [];
+  lines.push('☕ *طلبية sky 7 café*');
+  lines.push('');
+
+  items.forEach((item, idx) => {
+    const qty = item.customization.quantity;
+    const lineTotal = item.price * qty;
+    lines.push(`${idx + 1}. *${item.name}* × ${qty} = ${lineTotal} ج.م`);
+    const tags = getCustomizationTags(item);
+    if (tags.length > 0) lines.push(`   ${tags.join(' · ')}`);
+    if (item.customization.notes) lines.push(`   📝 ${item.customization.notes}`);
+  });
+
+  lines.push('');
+  lines.push(`💰 *الإجمالي: ${totalPrice} ج.م*`);
+  return lines.join('\n');
+}
+
 /* ── Theme ───────────────────────────────────────────── */
 const DARK  = '#0c0c1e';
 const GOLD  = '#f0c862';
@@ -118,13 +147,35 @@ function WaiterView({ onClose }: { onClose: () => void }) {
 
           {/* Total */}
           <div style={{ margin: '20px 20px 0', borderTop: '1px dashed rgba(201,153,61,0.35)' }} />
-          <div className="px-5 py-4 flex items-center justify-between" dir="rtl">
+          <div className="px-5 pt-4 pb-2 flex items-center justify-between" dir="rtl">
             <span style={{ color: '#7a7268', fontFamily: "'Cairo', sans-serif", fontSize: '14px' }}>الإجمالي</span>
             <span style={{ color: GOLD, fontFamily: "'Cairo', sans-serif", fontWeight: 800, fontSize: '24px' }}>
               {totalPrice} ج.م
             </span>
           </div>
-          <div style={{ height: '20px' }} />
+
+          {/* WhatsApp send button */}
+          <div className="px-5 pb-6">
+            <motion.button
+              whileTap={{ scale: 0.97 }}
+              onClick={() => {
+                const msg = buildWhatsAppMessage(items, totalPrice);
+                window.open(`https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`, '_blank');
+              }}
+              style={{
+                width: '100%', padding: '15px', borderRadius: '16px', marginTop: '10px',
+                fontWeight: 700, fontSize: '15px', fontFamily: "'Cairo', sans-serif",
+                border: 'none', cursor: 'pointer',
+                background: 'linear-gradient(135deg, #1da851, #25D366)',
+                color: '#fff',
+                boxShadow: '0 6px 24px rgba(37,211,102,0.28)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
+              }}
+            >
+              <WhatsAppIcon />
+              إرسال الطلب عبر واتساب
+            </motion.button>
+          </div>
         </div>
       </motion.div>
     </motion.div>
