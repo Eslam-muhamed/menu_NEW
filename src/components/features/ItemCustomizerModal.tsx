@@ -7,6 +7,7 @@ import type { MenuItem } from '@/types/menu';
 import type { CartCustomization, IceLevel } from '@/types/cart';
 import { CATEGORY_OPTIONS } from '@/constants/itemCustomizations';
 import { useCart } from '@/stores/cartStore';
+import { playCartAdd } from '@/lib/sound';
 
 /* ── Theme ───────────────────────────────────────────── */
 const DARK  = '#0c0c1e';
@@ -89,6 +90,8 @@ export default function ItemCustomizerModal({ item, onClose }: Props) {
       image:      item.image ?? FALLBACK,
       customization,
     });
+
+    playCartAdd();
 
     toast.success('تمت الإضافة للسلة ✅', {
       description: item.name,
