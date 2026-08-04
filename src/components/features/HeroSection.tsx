@@ -245,7 +245,7 @@ export default function HeroSection() {
     <section
       ref={heroRef}
       className="relative flex flex-col items-center justify-center overflow-hidden select-none"
-      style={{ minHeight: '85vh', maxHeight: '100svh' }}
+      style={{ minHeight: '85vh', maxHeight: '100svh', paddingTop: '56px' }}
     >
       {/* Background Image */}
       <img
