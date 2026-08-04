@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X as CloseIcon, Trash2, Minus, Plus, ShoppingBag, Eye } from 'lucide-react';
+import { X as CloseIcon, Trash2, Minus, Plus, ShoppingBag, Eye, Users, ChevronDown } from 'lucide-react';
 import { useCart } from '@/stores/cartStore';
 import type { CartItem, IceLevel } from '@/types/cart';
 
-const PHONE = '201128727999'; // ← استبدل بالرقم الحقيقي
+const PHONE = '201000000000'; // ← استبدل بالرقم الحقيقي
 
 function WhatsAppIcon() {
   return (
@@ -327,6 +327,10 @@ interface Props { onClose: () => void; }
 export default function CartSheet({ onClose }: Props) {
   const { items, clearCart, totalItems, totalPrice } = useCart();
   const [showWaiter, setShowWaiter] = useState(false);
+  const [splitOpen,  setSplitOpen]  = useState(false);
+  const [splitCount, setSplitCount] = useState(2);
+  const perPerson = Math.ceil(totalPrice / splitCount);
+  const isUneven  = totalPrice % splitCount !== 0;
 
   return (
     <>
@@ -423,6 +427,228 @@ export default function CartSheet({ onClose }: Props) {
                     <span style={{ color: GOLD, fontFamily: "'Cairo', sans-serif", fontWeight: 800, fontSize: '24px' }}>
                       {totalPrice} ج.م
                     </span>
+                  </div>
+
+                  {/* ── Bill Splitter ───────────────────────── */}
+                  <div className="mb-3">
+                    <button
+                      onClick={() => setSplitOpen(x => !x)}
+                      style={{
+                        width: '100%', padding: '11px 16px', borderRadius: '14px',
+                        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                        background: splitOpen
+                          ? 'rgba(168,220,232,0.08)'
+                          : 'rgba(255,255,255,0.04)',
+                        border: `1px solid ${splitOpen
+                          ? 'rgba(168,220,232,0.28)'
+                          : 'rgba(255,255,255,0.09)'}`,
+                        cursor: 'pointer', transition: 'all 0.22s',
+                      }}
+                    >
+                      <div className="flex items-center gap-2">
+                        <Users
+                          className="w-4 h-4"
+                          style={{ color: splitOpen ? '#a8dce8' : '#5a5868' }}
+                        />
+                        <span
+                          style={{
+                            color: splitOpen ? '#a8dce8' : '#7a7268',
+                            fontFamily: "'Cairo', sans-serif",
+                            fontWeight: 600, fontSize: '13px',
+                          }}
+                        >
+                          حساب الشلة
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        {splitOpen && (
+                          <span
+                            style={{
+                              fontSize: '11px',
+                              color: '#a8dce8',
+                              fontFamily: "'Cairo', sans-serif",
+                              opacity: 0.75,
+                            }}
+                          >
+                            {splitCount} أفراد
+                          </span>
+                        )}
+                        <ChevronDown
+                          className="w-3.5 h-3.5 transition-transform duration-250"
+                          style={{
+                            color: splitOpen ? '#a8dce8' : '#3a3848',
+                            transform: splitOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+                          }}
+                        />
+                      </div>
+                    </button>
+
+                    <AnimatePresence>
+                      {splitOpen && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: 'auto', opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.26, ease: 'easeOut' }}
+                          style={{ overflow: 'hidden' }}
+                        >
+                          <div style={{ paddingTop: '12px' }}>
+                            {/* People counter */}
+                            <div
+                              className="flex items-center justify-between mb-3"
+                              dir="rtl"
+                              style={{
+                                padding: '10px 14px', borderRadius: '14px',
+                                background: 'rgba(255,255,255,0.03)',
+                                border: '1px solid rgba(255,255,255,0.07)',
+                              }}
+                            >
+                              <span
+                                style={{
+                                  color: '#7a7268',
+                                  fontFamily: "'Cairo', sans-serif",
+                                  fontSize: '13px',
+                                }}
+                              >
+                                عدد الأفراد
+                              </span>
+                              <div className="flex items-center gap-3">
+                                <button
+                                  onClick={() => setSplitCount(n => Math.max(2, n - 1))}
+                                  style={{
+                                    width: '30px', height: '30px', borderRadius: '50%',
+                                    background: splitCount <= 2
+                                      ? 'rgba(255,255,255,0.03)'
+                                      : 'rgba(168,220,232,0.1)',
+                                    border: '1px solid rgba(168,220,232,0.18)',
+                                    color: splitCount <= 2 ? '#3a3848' : '#a8dce8',
+                                    cursor: splitCount <= 2 ? 'not-allowed' : 'pointer',
+                                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                  }}
+                                >
+                                  <Minus className="w-3 h-3" />
+                                </button>
+                                <span
+                                  style={{
+                                    color: '#f0ece4',
+                                    fontFamily: "'Cairo', sans-serif",
+                                    fontWeight: 800, fontSize: '18px',
+                                    minWidth: '28px', textAlign: 'center',
+                                  }}
+                                >
+                                  {splitCount}
+                                </span>
+                                <button
+                                  onClick={() => setSplitCount(n => Math.min(20, n + 1))}
+                                  style={{
+                                    width: '30px', height: '30px', borderRadius: '50%',
+                                    background: 'rgba(168,220,232,0.1)',
+                                    border: '1px solid rgba(168,220,232,0.18)',
+                                    color: '#a8dce8', cursor: 'pointer',
+                                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                  }}
+                                >
+                                  <Plus className="w-3 h-3" />
+                                </button>
+                              </div>
+                            </div>
+
+                            {/* Per-person result */}
+                            <motion.div
+                              key={perPerson}
+                              initial={{ scale: 0.97, opacity: 0.6 }}
+                              animate={{ scale: 1, opacity: 1 }}
+                              transition={{ duration: 0.18 }}
+                              style={{
+                                padding: '16px', borderRadius: '16px',
+                                background: 'linear-gradient(135deg,rgba(168,220,232,0.08),rgba(168,220,232,0.03))',
+                                border: '1px solid rgba(168,220,232,0.2)',
+                                marginBottom: '12px',
+                              }}
+                            >
+                              <div className="flex items-center justify-between" dir="rtl">
+                                <div>
+                                  <p
+                                    style={{
+                                      color: '#7a7268',
+                                      fontFamily: "'Cairo', sans-serif",
+                                      fontSize: '12px', marginBottom: '4px',
+                                    }}
+                                  >
+                                    نصيب كل شخص
+                                  </p>
+                                  {isUneven && (
+                                    <p
+                                      style={{
+                                        color: '#4a5868',
+                                        fontFamily: "'Cairo', sans-serif",
+                                        fontSize: '10px',
+                                      }}
+                                    >
+                                      مقرّب لأعلى
+                                    </p>
+                                  )}
+                                </div>
+                                <div className="text-right">
+                                  <span
+                                    style={{
+                                      color: '#a8dce8',
+                                      fontFamily: "'Cairo', sans-serif",
+                                      fontWeight: 800, fontSize: '26px',
+                                      lineHeight: 1,
+                                    }}
+                                  >
+                                    {perPerson}
+                                  </span>
+                                  <span
+                                    style={{
+                                      color: '#5a8a98',
+                                      fontFamily: "'Cairo', sans-serif",
+                                      fontWeight: 600, fontSize: '13px',
+                                      marginRight: '4px',
+                                    }}
+                                  >
+                                    {' '}ج.م
+                                  </span>
+                                </div>
+                              </div>
+
+                              {/* Breakdown pills */}
+                              <div
+                                style={{
+                                  marginTop: '12px',
+                                  paddingTop: '12px',
+                                  borderTop: '1px solid rgba(168,220,232,0.1)',
+                                  display: 'flex', alignItems: 'center',
+                                  justifyContent: 'space-between',
+                                }}
+                                dir="rtl"
+                              >
+                                <span
+                                  style={{
+                                    color: '#3a4858',
+                                    fontFamily: "'Cairo', sans-serif",
+                                    fontSize: '11px',
+                                  }}
+                                >
+                                  الإجمالي {totalPrice} ج.م ÷ {splitCount}
+                                </span>
+                                <span
+                                  style={{
+                                    padding: '3px 10px', borderRadius: '20px', fontSize: '10px',
+                                    background: 'rgba(168,220,232,0.1)',
+                                    color: '#7abccf',
+                                    fontFamily: "'Cairo', sans-serif", fontWeight: 600,
+                                  }}
+                                >
+                                  ✦ حساب الشلة
+                                </span>
+                              </div>
+                            </motion.div>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
 
                   {/* Waiter view CTA */}
