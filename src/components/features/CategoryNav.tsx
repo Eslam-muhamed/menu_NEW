@@ -35,8 +35,8 @@ export default function CategoryNav({ categories, activeCategory, onCategoryChan
     <div
       ref={navRef}
       id="category-nav"
-      className="sticky top-0 z-50 glass"
-      style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.06)' }}
+      className="sticky z-40 glass"
+      style={{ top: '56px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}
     >
       <div
         ref={scrollContainerRef}
