@@ -4,7 +4,7 @@ import { X as CloseIcon, Trash2, Minus, Plus, ShoppingBag, Eye } from 'lucide-re
 import { useCart } from '@/stores/cartStore';
 import type { CartItem, IceLevel } from '@/types/cart';
 
-const PHONE = '201128727999'; // ← استبدل بالرقم الحقيقي
+const PHONE = '201000000000'; // ← استبدل بالرقم الحقيقي
 
 function WhatsAppIcon() {
   return (
@@ -14,9 +14,10 @@ function WhatsAppIcon() {
   );
 }
 
-function buildWhatsAppMessage(items: CartItem[], totalPrice: number): string {
+function buildWhatsAppMessage(items: CartItem[], totalPrice: number, tableNumber: string): string {
   const lines: string[] = [];
   lines.push('☕ *طلبية sky 7 café*');
+  if (tableNumber.trim()) lines.push(`🪑 *رقم الطاولة: ${tableNumber.trim()}*`);
   lines.push('');
 
   items.forEach((item, idx) => {
@@ -60,6 +61,7 @@ function getCustomizationTags(item: CartItem): string[] {
 ══════════════════════════════════════════════════════ */
 function WaiterView({ onClose }: { onClose: () => void }) {
   const { items, totalPrice } = useCart();
+  const [tableNumber, setTableNumber] = useState('');
 
   return (
     <motion.div
@@ -102,6 +104,31 @@ function WaiterView({ onClose }: { onClose: () => void }) {
             <p style={{ color: '#3a3848', fontFamily: "'Cairo', sans-serif", fontSize: '11px', marginTop: '2px' }}>
               sky 7 café &amp; lounge
             </p>
+          </div>
+
+          {/* Table number input */}
+          <div className="px-5 pb-2" dir="rtl">
+            <div style={{
+              display: 'flex', alignItems: 'center', gap: '10px',
+              background: 'rgba(201,153,61,0.07)',
+              border: '1px solid rgba(201,153,61,0.22)',
+              borderRadius: '14px', padding: '10px 14px',
+            }}>
+              <span style={{ fontSize: '18px', flexShrink: 0 }}>🪑</span>
+              <input
+                type="text"
+                inputMode="numeric"
+                placeholder="رقم الطاولة (اختياري)"
+                value={tableNumber}
+                onChange={e => setTableNumber(e.target.value)}
+                maxLength={6}
+                style={{
+                  flex: 1, background: 'transparent', border: 'none', outline: 'none',
+                  color: '#f0ece4', fontFamily: "'Cairo', sans-serif",
+                  fontSize: '14px', fontWeight: 600,
+                }}
+              />
+            </div>
           </div>
 
           <div style={{ margin: '12px 20px', borderTop: '1px dashed rgba(201,153,61,0.3)' }} />
@@ -159,7 +186,7 @@ function WaiterView({ onClose }: { onClose: () => void }) {
             <motion.button
               whileTap={{ scale: 0.97 }}
               onClick={() => {
-                const msg = buildWhatsAppMessage(items, totalPrice);
+                const msg = buildWhatsAppMessage(items, totalPrice, tableNumber);
                 window.open(`https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`, '_blank');
               }}
               style={{
