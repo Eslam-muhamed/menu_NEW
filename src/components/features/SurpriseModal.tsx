@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Sparkles, ChevronRight } from 'lucide-react';
+import { X, Sparkles, ChevronRight, ShoppingBag } from 'lucide-react';
 import { categories } from '@/constants/menuData';
 import { getRecommendation, RecommendationResult } from '@/lib/recommender';
 import { UserAnswers } from '@/types/recommendation';
+import ItemCustomizerModal from '@/components/features/ItemCustomizerModal';
 
 /* ── Constants ────────────────────────────────────────────────────────── */
-const WA_NUMBER = '201234567890'; // TODO: replace with real sky 7 number
+const WA_NUMBER = '201128727999'; // TODO: replace with real sky 7 number
 const FALLBACK  = 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=480&h=360&fit=crop&auto=format&q=85';
 
 type Phase    = 'questions' | 'loading' | 'result';
@@ -254,6 +255,7 @@ function ResultPhase({ result, onAnother }: {
   result:    RecommendationResult;
   onAnother: () => void;
 }) {
+  const [showCustomizer, setShowCustomizer] = useState(false);
   const catName = categories.find(c => c.id === result.item.category)?.name ?? '';
   const catIcon = categories.find(c => c.id === result.item.category)?.icon ?? '✨';
   const waMsg   = encodeURIComponent(`مرحباً،\nعايز أطلب من sky 7:\n${result.item.name} - ${result.item.price} ${result.item.currency}`);
@@ -350,17 +352,36 @@ function ResultPhase({ result, onAnother }: {
         </div>
 
         {/* CTA buttons */}
+        {/* Add to cart */}
+        <motion.button
+          whileTap={{ scale: 0.97 }}
+          onClick={() => setShowCustomizer(true)}
+          className="w-full py-4 rounded-2xl font-bold text-sm mb-2.5 flex items-center justify-center gap-2 transition-opacity hover:opacity-90"
+          style={{
+            background: 'linear-gradient(135deg,#c9993d,#f0c862)',
+            color: '#07070f',
+            fontFamily: "'Cairo',sans-serif",
+            boxShadow: '0 6px 24px rgba(201,153,61,0.32)',
+            border: 'none',
+            cursor: 'pointer',
+          }}
+        >
+          <ShoppingBag className="w-4 h-4" />
+          أضف للسلة
+        </motion.button>
+
         <a
           href={waUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="block w-full py-4 rounded-2xl text-center font-bold text-sm mb-2.5 transition-opacity hover:opacity-90"
+          className="block w-full py-3.5 rounded-2xl text-center font-semibold text-sm mb-2.5 transition-opacity hover:opacity-90"
           style={{
-            background: 'linear-gradient(135deg,#25D366,#128C7E)',
-            color: '#fff',
+            background: 'rgba(37,211,102,0.08)',
+            border: '1px solid rgba(37,211,102,0.22)',
+            color: '#25D366',
             fontFamily: "'Cairo',sans-serif",
-            boxShadow: '0 6px 24px rgba(37,211,102,0.28)',
             textDecoration: 'none',
+            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px',
           }}
         >
           📱 اطلب الآن عبر واتساب
@@ -381,6 +402,17 @@ function ResultPhase({ result, onAnother }: {
           رشحلي مشروب تاني
         </motion.button>
       </div>
+
+      {/* Item customizer portal */}
+      <AnimatePresence>
+        {showCustomizer && (
+          <ItemCustomizerModal
+            key={`surprise-customizer-${result.item.id}`}
+            item={result.item}
+            onClose={() => setShowCustomizer(false)}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 }
