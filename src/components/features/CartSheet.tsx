@@ -4,7 +4,10 @@ import { X as CloseIcon, Trash2, Minus, Plus, ShoppingBag, Eye, Users, ChevronDo
 import { useCart } from '@/stores/cartStore';
 import type { CartItem, IceLevel } from '@/types/cart';
 
-const PHONE = '201128727999'; // ← استبدل بالرقم الحقيقي
+const PHONE   = '201128727999';
+const GOLD    = '#f0c862';
+const GOLD2   = '#c9993d';
+const FALLBACK = 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=480&h=360&fit=crop&auto=format&q=85';
 
 function WhatsAppIcon() {
   return (
@@ -19,34 +22,26 @@ function buildWhatsAppMessage(items: CartItem[], totalPrice: number, tableNumber
   lines.push('☕ *طلبية sky 7 café*');
   if (tableNumber.trim()) lines.push(`🪑 *رقم الطاولة: ${tableNumber.trim()}*`);
   lines.push('');
-
   items.forEach((item, idx) => {
-    const qty = item.customization.quantity;
+    const qty       = item.customization.quantity;
     const lineTotal = item.price * qty;
     lines.push(`${idx + 1}. *${item.name}* × ${qty} = ${lineTotal} ج.م`);
     const tags = getCustomizationTags(item);
     if (tags.length > 0) lines.push(`   ${tags.join(' · ')}`);
     if (item.customization.notes) lines.push(`   📝 ${item.customization.notes}`);
   });
-
   lines.push('');
   lines.push(`💰 *الإجمالي: ${totalPrice} ج.م*`);
   return lines.join('\n');
 }
 
-/* ── Theme ───────────────────────────────────────────── */
-const DARK  = '#0c0c1e';
-const GOLD  = '#f0c862';
-const GOLD2 = '#c9993d';
-const FALLBACK = 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=480&h=360&fit=crop&auto=format&q=85';
-
-/* ── Label maps ──────────────────────────────────────── */
+/* ── ICE map ──────────────────────────────────────── */
 const ICE_MAP: Record<IceLevel, string> = {
   none: 'بدون ثلج', little: 'ثلج قليل', normal: 'ثلج عادي', extra: 'ثلج كتير',
 };
 
 function getCustomizationTags(item: CartItem): string[] {
-  const c = item.customization;
+  const c    = item.customization;
   const tags: string[] = [];
   if (c.sugar !== undefined) tags.push(c.sugar === 0 ? 'بدون سكر' : `${c.sugar} معلقة سكر`);
   if (c.ice)                 tags.push(ICE_MAP[c.ice]);
@@ -68,7 +63,7 @@ function WaiterView({ onClose }: { onClose: () => void }) {
       className="fixed inset-0 z-[70] flex items-end sm:items-center justify-center"
       initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
       transition={{ duration: 0.2 }}
-      style={{ background: 'rgba(7,7,15,0.95)', backdropFilter: 'blur(22px)' }}
+      style={{ background: 'rgba(var(--bg-main-rgb),0.95)', backdropFilter: 'blur(22px)' }}
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
       <motion.div
@@ -76,21 +71,22 @@ function WaiterView({ onClose }: { onClose: () => void }) {
         initial={{ y: 60, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: 60, opacity: 0 }}
         transition={{ type: 'spring', stiffness: 280, damping: 30 }}
         style={{
-          background: '#090919', maxHeight: '90svh',
-          border: '1px solid rgba(201,153,61,0.28)',
-          boxShadow: '0 0 80px rgba(201,153,61,0.18)',
+          background:  'var(--bg-card)',
+          maxHeight:   '90svh',
+          border:      '1px solid rgba(201,153,61,0.28)',
+          boxShadow:   'var(--modal-shadow)',
         }}
       >
         <div style={{ height: '3px', background: `linear-gradient(90deg,transparent,${GOLD2} 28%,${GOLD} 50%,${GOLD2} 72%,transparent)` }} />
         <div className="flex justify-center pt-3 sm:hidden">
-          <div style={{ width: '40px', height: '4px', borderRadius: '2px', background: 'rgba(255,255,255,0.12)' }} />
+          <div style={{ width: '40px', height: '4px', borderRadius: '2px', background: 'var(--border-3)' }} />
         </div>
 
         {/* Close */}
         <button
           onClick={onClose}
-          className="absolute top-5 left-4 z-30 flex items-center justify-center rounded-full hover:bg-white/10"
-          style={{ width: '32px', height: '32px', background: 'rgba(255,255,255,0.07)', color: '#7a7268', border: 'none', cursor: 'pointer' }}
+          className="absolute top-5 left-4 z-30 flex items-center justify-center rounded-full hover:opacity-80"
+          style={{ width: '32px', height: '32px', background: 'var(--surface-3)', color: 'var(--text-2)', border: 'none', cursor: 'pointer' }}
         >
           <CloseIcon className="w-4 h-4" />
         </button>
@@ -101,12 +97,12 @@ function WaiterView({ onClose }: { onClose: () => void }) {
             <h2 style={{ color: GOLD, fontFamily: "'Cairo', sans-serif", fontWeight: 800, fontSize: '17px', letterSpacing: '2px' }}>
               ✦ كشف الطلبات ✦
             </h2>
-            <p style={{ color: '#3a3848', fontFamily: "'Cairo', sans-serif", fontSize: '11px', marginTop: '2px' }}>
+            <p style={{ color: 'var(--text-4)', fontFamily: "'Cairo', sans-serif", fontSize: '11px', marginTop: '2px' }}>
               sky 7 café &amp; lounge
             </p>
           </div>
 
-          {/* Table number input */}
+          {/* Table number */}
           <div className="px-5 pb-2" dir="rtl">
             <div style={{
               display: 'flex', alignItems: 'center', gap: '10px',
@@ -116,15 +112,14 @@ function WaiterView({ onClose }: { onClose: () => void }) {
             }}>
               <span style={{ fontSize: '18px', flexShrink: 0 }}>🪑</span>
               <input
-                type="text"
-                inputMode="numeric"
+                type="text" inputMode="numeric"
                 placeholder="رقم الطاولة (اختياري)"
                 value={tableNumber}
                 onChange={e => setTableNumber(e.target.value)}
                 maxLength={6}
                 style={{
                   flex: 1, background: 'transparent', border: 'none', outline: 'none',
-                  color: '#f0ece4', fontFamily: "'Cairo', sans-serif",
+                  color: 'var(--text-1)', fontFamily: "'Cairo', sans-serif",
                   fontSize: '14px', fontWeight: 600,
                 }}
               />
@@ -142,15 +137,15 @@ function WaiterView({ onClose }: { onClose: () => void }) {
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex-1 min-w-0">
                       <div className="flex items-baseline gap-2 flex-wrap">
-                        <span style={{ color: '#f0ece4', fontFamily: "'Cairo', sans-serif", fontWeight: 700, fontSize: '15px' }}>
+                        <span style={{ color: 'var(--text-1)', fontFamily: "'Cairo', sans-serif", fontWeight: 700, fontSize: '15px' }}>
                           {item.name}
                         </span>
-                        <span style={{ color: '#5a5868', fontFamily: "'Cairo', sans-serif", fontSize: '13px' }}>
+                        <span style={{ color: 'var(--text-3)', fontFamily: "'Cairo', sans-serif", fontSize: '13px' }}>
                           × {item.customization.quantity}
                         </span>
                       </div>
                       {tags.length > 0 && (
-                        <p style={{ color: '#5a5868', fontFamily: "'Cairo', sans-serif", fontSize: '12px', marginTop: '3px' }}>
+                        <p style={{ color: 'var(--text-3)', fontFamily: "'Cairo', sans-serif", fontSize: '12px', marginTop: '3px' }}>
                           {tags.join(' · ')}
                         </p>
                       )}
@@ -165,7 +160,7 @@ function WaiterView({ onClose }: { onClose: () => void }) {
                     </span>
                   </div>
                   {idx < items.length - 1 && (
-                    <div style={{ marginTop: '14px', borderTop: '1px dashed rgba(255,255,255,0.06)' }} />
+                    <div style={{ marginTop: '14px', borderTop: '1px dashed var(--border-1)' }} />
                   )}
                 </div>
               );
@@ -175,13 +170,13 @@ function WaiterView({ onClose }: { onClose: () => void }) {
           {/* Total */}
           <div style={{ margin: '20px 20px 0', borderTop: '1px dashed rgba(201,153,61,0.35)' }} />
           <div className="px-5 pt-4 pb-2 flex items-center justify-between" dir="rtl">
-            <span style={{ color: '#7a7268', fontFamily: "'Cairo', sans-serif", fontSize: '14px' }}>الإجمالي</span>
+            <span style={{ color: 'var(--text-2)', fontFamily: "'Cairo', sans-serif", fontSize: '14px' }}>الإجمالي</span>
             <span style={{ color: GOLD, fontFamily: "'Cairo', sans-serif", fontWeight: 800, fontSize: '24px' }}>
               {totalPrice} ج.م
             </span>
           </div>
 
-          {/* WhatsApp send button */}
+          {/* WhatsApp */}
           <div className="px-5 pb-6">
             <motion.button
               whileTap={{ scale: 0.97 }}
@@ -193,7 +188,7 @@ function WaiterView({ onClose }: { onClose: () => void }) {
                 width: '100%', padding: '15px', borderRadius: '16px', marginTop: '10px',
                 fontWeight: 700, fontSize: '15px', fontFamily: "'Cairo', sans-serif",
                 border: 'none', cursor: 'pointer',
-                background: 'linear-gradient(135deg, #1da851, #25D366)',
+                background: 'linear-gradient(135deg,#1da851,#25D366)',
                 color: '#fff',
                 boxShadow: '0 6px 24px rgba(37,211,102,0.28)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
@@ -226,33 +221,26 @@ function CartItemRow({ item }: { item: CartItem }) {
       className="flex items-start gap-3 py-3"
       dir="rtl"
     >
-      {/* Image */}
       <img
-        src={item.image}
-        alt={item.name}
+        src={item.image} alt={item.name}
         className="w-14 h-14 rounded-xl object-cover flex-shrink-0"
         onError={(e) => { (e.target as HTMLImageElement).src = FALLBACK; }}
       />
 
-      {/* Info */}
       <div className="flex-1 min-w-0">
-        <p style={{ color: '#f0ece4', fontFamily: "'Cairo', sans-serif", fontWeight: 600, fontSize: '14px', marginBottom: '4px' }}>
+        <p style={{ color: 'var(--text-1)', fontFamily: "'Cairo', sans-serif", fontWeight: 600, fontSize: '14px', marginBottom: '4px' }}>
           {item.name}
         </p>
 
-        {/* Customization tags */}
         {tags.length > 0 && (
           <div className="flex flex-wrap gap-1 mb-2">
             {tags.map((tag, i) => (
-              <span
-                key={i}
-                style={{
-                  padding: '2px 8px', borderRadius: '10px', fontSize: '10px',
-                  fontFamily: "'Cairo', sans-serif",
-                  background: 'rgba(201,153,61,0.1)', color: GOLD2,
-                  border: '1px solid rgba(201,153,61,0.2)',
-                }}
-              >
+              <span key={i} style={{
+                padding: '2px 8px', borderRadius: '10px', fontSize: '10px',
+                fontFamily: "'Cairo', sans-serif",
+                background: 'rgba(201,153,61,0.1)', color: GOLD2,
+                border: '1px solid rgba(201,153,61,0.2)',
+              }}>
                 {tag}
               </span>
             ))}
@@ -260,12 +248,11 @@ function CartItemRow({ item }: { item: CartItem }) {
         )}
 
         {item.customization.notes && (
-          <p style={{ color: '#5a5868', fontFamily: "'Cairo', sans-serif", fontSize: '11px', marginBottom: '6px', fontStyle: 'italic' }}>
+          <p style={{ color: 'var(--text-3)', fontFamily: "'Cairo', sans-serif", fontSize: '11px', marginBottom: '6px', fontStyle: 'italic' }}>
             {item.customization.notes}
           </p>
         )}
 
-        {/* Qty controls + price + remove */}
         <div className="flex items-center justify-between">
           {/* Qty */}
           <div className="flex items-center gap-2">
@@ -273,14 +260,15 @@ function CartItemRow({ item }: { item: CartItem }) {
               onClick={() => updateQty(item.cartId, item.customization.quantity - 1)}
               style={{
                 width: '28px', height: '28px', borderRadius: '50%',
-                background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)',
-                color: '#7a7268', cursor: 'pointer',
+                background: 'var(--surface-2)',
+                border: '1px solid var(--border-2)',
+                color: 'var(--text-2)', cursor: 'pointer',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
               }}
             >
               <Minus className="w-3 h-3" />
             </button>
-            <span style={{ color: '#f0ece4', fontFamily: "'Cairo', sans-serif", fontWeight: 700, fontSize: '15px', minWidth: '20px', textAlign: 'center' }}>
+            <span style={{ color: 'var(--text-1)', fontFamily: "'Cairo', sans-serif", fontWeight: 700, fontSize: '15px', minWidth: '20px', textAlign: 'center' }}>
               {item.customization.quantity}
             </span>
             <button
@@ -305,8 +293,8 @@ function CartItemRow({ item }: { item: CartItem }) {
               onClick={() => removeItem(item.cartId)}
               style={{
                 width: '28px', height: '28px', borderRadius: '50%',
-                background: 'rgba(248,113,113,0.08)', border: '1px solid rgba(248,113,113,0.18)',
-                color: '#f87171', cursor: 'pointer',
+                background: 'var(--delete-bg)', border: '1px solid var(--delete-border)',
+                color: 'var(--delete-text)', cursor: 'pointer',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
               }}
             >
@@ -326,14 +314,13 @@ interface Props { onClose: () => void; }
 
 export default function CartSheet({ onClose }: Props) {
   const { items, clearCart, totalItems, totalPrice } = useCart();
-  const [showWaiter,   setShowWaiter]   = useState(false);
-  const [splitOpen,    setSplitOpen]    = useState(false);
-  const [splitCount,   setSplitCount]   = useState(2);
-  const [assignments,  setAssignments]  = useState<Record<string, number | null>>({});
+  const [showWaiter,  setShowWaiter]  = useState(false);
+  const [splitOpen,   setSplitOpen]   = useState(false);
+  const [splitCount,  setSplitCount]  = useState(2);
+  const [assignments, setAssignments] = useState<Record<string, number | null>>({});
 
   const handleSplitCountChange = (next: number) => {
     setSplitCount(next);
-    // clear assignments for persons that no longer exist
     setAssignments(prev => {
       const cleaned: Record<string, number | null> = {};
       Object.entries(prev).forEach(([id, idx]) => {
@@ -365,7 +352,7 @@ export default function CartSheet({ onClose }: Props) {
         className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center"
         initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
         transition={{ duration: 0.2 }}
-        style={{ background: 'rgba(7,7,15,0.88)', backdropFilter: 'blur(16px)' }}
+        style={{ background: 'rgba(var(--bg-main-rgb),0.88)', backdropFilter: 'blur(16px)' }}
         onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
       >
         <motion.div
@@ -373,21 +360,22 @@ export default function CartSheet({ onClose }: Props) {
           initial={{ y: 80, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: 80, opacity: 0 }}
           transition={{ type: 'spring', stiffness: 260, damping: 28 }}
           style={{
-            background: DARK, maxHeight: '92svh',
-            border: '1px solid rgba(201,153,61,0.18)',
-            boxShadow: '0 0 80px rgba(201,153,61,0.1), 0 -20px 60px rgba(0,0,0,0.8)',
+            background:  'var(--bg-card)',
+            maxHeight:   '92svh',
+            border:      '1px solid rgba(201,153,61,0.18)',
+            boxShadow:   'var(--modal-shadow)',
           }}
         >
           <div style={{ height: '3px', background: `linear-gradient(90deg,transparent,${GOLD2} 28%,${GOLD} 50%,${GOLD2} 72%,transparent)` }} />
           <div className="flex justify-center pt-3 sm:hidden">
-            <div style={{ width: '40px', height: '4px', borderRadius: '2px', background: 'rgba(255,255,255,0.12)' }} />
+            <div style={{ width: '40px', height: '4px', borderRadius: '2px', background: 'var(--border-3)' }} />
           </div>
 
           {/* Close */}
           <button
             onClick={onClose}
-            className="absolute top-5 left-4 z-30 flex items-center justify-center rounded-full hover:bg-white/10"
-            style={{ width: '32px', height: '32px', background: 'rgba(255,255,255,0.07)', color: '#7a7268', border: 'none', cursor: 'pointer' }}
+            className="absolute top-5 left-4 z-30 flex items-center justify-center rounded-full hover:opacity-80"
+            style={{ width: '32px', height: '32px', background: 'var(--surface-3)', color: 'var(--text-2)', border: 'none', cursor: 'pointer' }}
           >
             <CloseIcon className="w-4 h-4" />
           </button>
@@ -397,17 +385,14 @@ export default function CartSheet({ onClose }: Props) {
             <div className="pt-5 pb-3 px-5 text-center">
               <div
                 className="mx-auto flex items-center justify-center mb-3"
-                style={{
-                  width: '44px', height: '44px', borderRadius: '14px',
-                  background: 'linear-gradient(135deg,rgba(201,153,61,0.22),rgba(240,200,98,0.06))',
-                }}
+                style={{ width: '44px', height: '44px', borderRadius: '14px', background: 'linear-gradient(135deg,rgba(201,153,61,0.22),rgba(240,200,98,0.06))' }}
               >
                 <ShoppingBag className="w-5 h-5" style={{ color: GOLD }} />
               </div>
-              <h2 style={{ color: '#f0ece4', fontFamily: "'Cairo', sans-serif", fontWeight: 700, fontSize: '18px', marginBottom: '3px' }}>
+              <h2 style={{ color: 'var(--text-1)', fontFamily: "'Cairo', sans-serif", fontWeight: 700, fontSize: '18px', marginBottom: '3px' }}>
                 سلة الطلبات
               </h2>
-              <p style={{ color: '#7a7268', fontFamily: "'Cairo', sans-serif", fontSize: '12px' }}>
+              <p style={{ color: 'var(--text-2)', fontFamily: "'Cairo', sans-serif", fontSize: '12px' }}>
                 {totalItems > 0 ? `${totalItems} منتج في سلتك` : 'السلة فاضية'}
               </p>
             </div>
@@ -416,10 +401,10 @@ export default function CartSheet({ onClose }: Props) {
             {items.length === 0 ? (
               <div className="text-center py-14 px-6" dir="rtl">
                 <p style={{ fontSize: '3rem', marginBottom: '12px' }}>🛒</p>
-                <p style={{ color: '#f0ece4', fontFamily: "'Cairo', sans-serif", fontWeight: 600, fontSize: '16px', marginBottom: '8px' }}>
+                <p style={{ color: 'var(--text-1)', fontFamily: "'Cairo', sans-serif", fontWeight: 600, fontSize: '16px', marginBottom: '8px' }}>
                   السلة فاضية دلوقتي!
                 </p>
-                <p style={{ color: '#7a7268', fontFamily: "'Cairo', sans-serif", fontSize: '13px' }}>
+                <p style={{ color: 'var(--text-2)', fontFamily: "'Cairo', sans-serif", fontSize: '13px' }}>
                   اضغط على زرار + جنب أي منتج عشان تضيفه للسلة
                 </p>
               </div>
@@ -431,7 +416,7 @@ export default function CartSheet({ onClose }: Props) {
                     {items.map((item) => (
                       <div key={item.cartId}>
                         <CartItemRow item={item} />
-                        <div style={{ height: '1px', background: 'rgba(255,255,255,0.05)' }} />
+                        <div style={{ height: '1px', background: 'var(--border-1)' }} />
                       </div>
                     ))}
                   </AnimatePresence>
@@ -443,12 +428,9 @@ export default function CartSheet({ onClose }: Props) {
                   <div
                     className="flex items-center justify-between py-4 px-4 rounded-2xl mb-4"
                     dir="rtl"
-                    style={{
-                      background: 'linear-gradient(135deg,rgba(201,153,61,0.1),rgba(240,200,98,0.04))',
-                      border: '1px solid rgba(201,153,61,0.22)',
-                    }}
+                    style={{ background: 'linear-gradient(135deg,rgba(201,153,61,0.1),rgba(240,200,98,0.04))', border: '1px solid rgba(201,153,61,0.22)' }}
                   >
-                    <span style={{ color: '#7a7268', fontFamily: "'Cairo', sans-serif", fontSize: '14px' }}>
+                    <span style={{ color: 'var(--text-2)', fontFamily: "'Cairo', sans-serif", fontSize: '14px' }}>
                       إجمالي الطلب
                     </span>
                     <span style={{ color: GOLD, fontFamily: "'Cairo', sans-serif", fontWeight: 800, fontSize: '24px' }}>
@@ -456,27 +438,27 @@ export default function CartSheet({ onClose }: Props) {
                     </span>
                   </div>
 
-                  {/* ── Bill Splitter ───────────────────────── */}
+                  {/* ── Bill Splitter ─────────────────────────── */}
                   <div className="mb-3">
                     <button
                       onClick={() => setSplitOpen(x => !x)}
                       style={{
                         width: '100%', padding: '11px 16px', borderRadius: '14px',
                         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                        background: splitOpen ? 'rgba(168,220,232,0.08)' : 'rgba(255,255,255,0.04)',
-                        border: `1px solid ${splitOpen ? 'rgba(168,220,232,0.28)' : 'rgba(255,255,255,0.09)'}`,
+                        background: splitOpen ? 'rgba(168,220,232,0.08)' : 'var(--surface-1)',
+                        border: `1px solid ${splitOpen ? 'rgba(168,220,232,0.28)' : 'var(--border-2)'}`,
                         cursor: 'pointer', transition: 'all 0.22s',
                       }}
                     >
                       <div className="flex items-center gap-2">
-                        <Users className="w-4 h-4" style={{ color: splitOpen ? '#a8dce8' : '#5a5868' }} />
-                        <span style={{ color: splitOpen ? '#a8dce8' : '#7a7268', fontFamily: "'Cairo', sans-serif", fontWeight: 600, fontSize: '13px' }}>
+                        <Users className="w-4 h-4" style={{ color: splitOpen ? '#a8dce8' : 'var(--text-3)' }} />
+                        <span style={{ color: splitOpen ? '#a8dce8' : 'var(--text-2)', fontFamily: "'Cairo', sans-serif", fontWeight: 600, fontSize: '13px' }}>
                           حساب الشلة
                         </span>
                       </div>
                       <ChevronDown
                         className="w-3.5 h-3.5"
-                        style={{ color: splitOpen ? '#a8dce8' : '#3a3848', transform: splitOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.22s' }}
+                        style={{ color: splitOpen ? '#a8dce8' : 'var(--text-4)', transform: splitOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.22s' }}
                       />
                     </button>
 
@@ -491,28 +473,28 @@ export default function CartSheet({ onClose }: Props) {
                         >
                           <div style={{ paddingTop: '12px' }}>
 
-                            {/* ─ People counter ─ */}
+                            {/* People counter */}
                             <div
                               className="flex items-center justify-between mb-4"
                               dir="rtl"
-                              style={{ padding: '10px 14px', borderRadius: '14px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)' }}
+                              style={{ padding: '10px 14px', borderRadius: '14px', background: 'var(--surface-1)', border: '1px solid var(--border-1)' }}
                             >
-                              <span style={{ color: '#7a7268', fontFamily: "'Cairo', sans-serif", fontSize: '13px' }}>عدد الأفراد</span>
+                              <span style={{ color: 'var(--text-2)', fontFamily: "'Cairo', sans-serif", fontSize: '13px' }}>عدد الأفراد</span>
                               <div className="flex items-center gap-3">
                                 <button
                                   onClick={() => handleSplitCountChange(Math.max(2, splitCount - 1))}
                                   style={{
                                     width: '30px', height: '30px', borderRadius: '50%',
-                                    background: splitCount <= 2 ? 'rgba(255,255,255,0.03)' : 'rgba(168,220,232,0.1)',
+                                    background: splitCount <= 2 ? 'var(--surface-1)' : 'rgba(168,220,232,0.1)',
                                     border: '1px solid rgba(168,220,232,0.18)',
-                                    color: splitCount <= 2 ? '#3a3848' : '#a8dce8',
+                                    color: splitCount <= 2 ? 'var(--text-4)' : '#a8dce8',
                                     cursor: splitCount <= 2 ? 'not-allowed' : 'pointer',
                                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                                   }}
                                 >
                                   <Minus className="w-3 h-3" />
                                 </button>
-                                <span style={{ color: '#f0ece4', fontFamily: "'Cairo', sans-serif", fontWeight: 800, fontSize: '18px', minWidth: '28px', textAlign: 'center' }}>
+                                <span style={{ color: 'var(--text-1)', fontFamily: "'Cairo', sans-serif", fontWeight: 800, fontSize: '18px', minWidth: '28px', textAlign: 'center' }}>
                                   {splitCount}
                                 </span>
                                 <button
@@ -529,38 +511,38 @@ export default function CartSheet({ onClose }: Props) {
                               </div>
                             </div>
 
-                            {/* ─ Item assignment ─ */}
-                            <p style={{ color: '#4a4858', fontFamily: "'Cairo', sans-serif", fontSize: '11px', textAlign: 'center', marginBottom: '10px', direction: 'rtl' }}>
+                            {/* Hint */}
+                            <p style={{ color: 'var(--text-5)', fontFamily: "'Cairo', sans-serif", fontSize: '11px', textAlign: 'center', marginBottom: '10px', direction: 'rtl' }}>
                               اضغط رقم الشخص جنب كل منتج
                             </p>
+
+                            {/* Item assignment */}
                             <div className="flex flex-col gap-2 mb-4">
                               {items.map(item => {
-                                const assigned = assignments[item.cartId] ?? null;
+                                const assigned  = assignments[item.cartId] ?? null;
                                 const lineTotal = item.price * item.customization.quantity;
                                 return (
                                   <div
                                     key={item.cartId}
                                     style={{
                                       padding: '10px 12px', borderRadius: '14px',
-                                      background: assigned !== null ? 'rgba(168,220,232,0.05)' : 'rgba(255,255,255,0.025)',
-                                      border: `1px solid ${assigned !== null ? 'rgba(168,220,232,0.15)' : 'rgba(255,255,255,0.06)'}`,
+                                      background: assigned !== null ? 'rgba(168,220,232,0.05)' : 'var(--surface-1)',
+                                      border: `1px solid ${assigned !== null ? 'rgba(168,220,232,0.15)' : 'var(--border-1)'}`,
                                       transition: 'all 0.2s',
                                     }}
                                     dir="rtl"
                                   >
-                                    {/* Item name + price */}
                                     <div className="flex items-center justify-between mb-2">
-                                      <span style={{ color: '#d0ccc6', fontFamily: "'Cairo', sans-serif", fontSize: '13px', fontWeight: 600, flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', paddingLeft: '8px' }}>
+                                      <span style={{ color: 'var(--text-1)', fontFamily: "'Cairo', sans-serif", fontSize: '13px', fontWeight: 600, flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', paddingLeft: '8px' }}>
                                         {item.name}
                                         {item.customization.quantity > 1 && (
-                                          <span style={{ color: '#5a5868', fontSize: '11px', marginRight: '4px' }}>×{item.customization.quantity}</span>
+                                          <span style={{ color: 'var(--text-3)', fontSize: '11px', marginRight: '4px' }}>×{item.customization.quantity}</span>
                                         )}
                                       </span>
                                       <span style={{ color: assigned !== null ? '#a8dce8' : GOLD2, fontFamily: "'Cairo', sans-serif", fontSize: '13px', fontWeight: 700, flexShrink: 0 }}>
                                         {lineTotal} ج.م
                                       </span>
                                     </div>
-                                    {/* Person buttons */}
                                     <div className="flex gap-1.5 flex-wrap">
                                       {Array.from({ length: splitCount }, (_, i) => {
                                         const isMe = assigned === i;
@@ -574,10 +556,8 @@ export default function CartSheet({ onClose }: Props) {
                                               fontFamily: "'Cairo', sans-serif",
                                               border: 'none', cursor: 'pointer',
                                               transition: 'all 0.15s',
-                                              background: isMe
-                                                ? 'linear-gradient(135deg,#a8dce8,#7abccf)'
-                                                : 'rgba(255,255,255,0.07)',
-                                              color: isMe ? '#07070f' : '#5a5868',
+                                              background: isMe ? 'linear-gradient(135deg,#a8dce8,#7abccf)' : 'var(--surface-3)',
+                                              color: isMe ? '#07070f' : 'var(--text-3)',
                                               transform: isMe ? 'scale(1.08)' : 'scale(1)',
                                               boxShadow: isMe ? '0 2px 8px rgba(168,220,232,0.35)' : 'none',
                                             }}
@@ -592,29 +572,23 @@ export default function CartSheet({ onClose }: Props) {
                               })}
                             </div>
 
-                            {/* ─ Per-person totals ─ */}
-                            <div
-                              style={{ padding: '14px', borderRadius: '16px', background: 'linear-gradient(135deg,rgba(168,220,232,0.07),rgba(168,220,232,0.02))', border: '1px solid rgba(168,220,232,0.18)', marginBottom: '12px' }}
-                            >
-                              <p style={{ color: '#7a7268', fontFamily: "'Cairo', sans-serif", fontSize: '11px', textAlign: 'center', marginBottom: '10px', direction: 'rtl' }}>
+                            {/* Per-person totals */}
+                            <div style={{ padding: '14px', borderRadius: '16px', background: 'linear-gradient(135deg,rgba(168,220,232,0.07),rgba(168,220,232,0.02))', border: '1px solid rgba(168,220,232,0.18)', marginBottom: '12px' }}>
+                              <p style={{ color: 'var(--text-2)', fontFamily: "'Cairo', sans-serif", fontSize: '11px', textAlign: 'center', marginBottom: '10px', direction: 'rtl' }}>
                                 ✦ ملخص حساب الشلة
                               </p>
                               <div className="flex flex-col gap-2">
                                 {Array.from({ length: splitCount }, (_, i) => {
                                   const amt = personTotals[i];
                                   return (
-                                    <motion.div
-                                      key={i}
-                                      layout
-                                      className="flex items-center justify-between"
-                                      dir="rtl"
-                                      style={{ padding: '8px 10px', borderRadius: '10px', background: amt > 0 ? 'rgba(168,220,232,0.08)' : 'rgba(255,255,255,0.02)' }}
+                                    <motion.div key={i} layout className="flex items-center justify-between" dir="rtl"
+                                      style={{ padding: '8px 10px', borderRadius: '10px', background: amt > 0 ? 'rgba(168,220,232,0.08)' : 'var(--surface-1)' }}
                                     >
                                       <div className="flex items-center gap-2">
-                                        <span style={{ width: '26px', height: '26px', borderRadius: '8px', background: amt > 0 ? 'linear-gradient(135deg,#a8dce8,#7abccf)' : 'rgba(255,255,255,0.07)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '11px', fontWeight: 800, color: amt > 0 ? '#07070f' : '#3a3848', flexShrink: 0 }}>
+                                        <span style={{ width: '26px', height: '26px', borderRadius: '8px', background: amt > 0 ? 'linear-gradient(135deg,#a8dce8,#7abccf)' : 'var(--surface-3)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '11px', fontWeight: 800, color: amt > 0 ? '#07070f' : 'var(--text-4)', flexShrink: 0 }}>
                                           {i + 1}
                                         </span>
-                                        <span style={{ color: amt > 0 ? '#d0ccc6' : '#3a3848', fontFamily: "'Cairo', sans-serif", fontSize: '12px' }}>
+                                        <span style={{ color: amt > 0 ? 'var(--text-1)' : 'var(--text-4)', fontFamily: "'Cairo', sans-serif", fontSize: '12px' }}>
                                           الشخص {i + 1}
                                         </span>
                                       </div>
@@ -623,7 +597,7 @@ export default function CartSheet({ onClose }: Props) {
                                         initial={{ scale: 0.9, opacity: 0.5 }}
                                         animate={{ scale: 1, opacity: 1 }}
                                         transition={{ duration: 0.15 }}
-                                        style={{ color: amt > 0 ? '#a8dce8' : '#3a3848', fontFamily: "'Cairo', sans-serif", fontWeight: 800, fontSize: amt > 0 ? '16px' : '13px' }}
+                                        style={{ color: amt > 0 ? '#a8dce8' : 'var(--text-4)', fontFamily: "'Cairo', sans-serif", fontWeight: 800, fontSize: amt > 0 ? '16px' : '13px' }}
                                       >
                                         {amt > 0 ? `${amt} ج.م` : '—'}
                                       </motion.span>
@@ -631,11 +605,8 @@ export default function CartSheet({ onClose }: Props) {
                                   );
                                 })}
 
-                                {/* Unassigned remainder */}
                                 {unassignedTotal > 0 && (
-                                  <div
-                                    className="flex items-center justify-between"
-                                    dir="rtl"
+                                  <div className="flex items-center justify-between" dir="rtl"
                                     style={{ padding: '8px 10px', borderRadius: '10px', background: 'rgba(201,153,61,0.07)', border: '1px dashed rgba(201,153,61,0.2)', marginTop: '2px' }}
                                   >
                                     <span style={{ color: '#7a5a2a', fontFamily: "'Cairo', sans-serif", fontSize: '12px' }}>غير منسوب</span>
@@ -651,7 +622,7 @@ export default function CartSheet({ onClose }: Props) {
                     </AnimatePresence>
                   </div>
 
-                  {/* Waiter view CTA */}
+                  {/* Waiter CTA */}
                   <motion.button
                     whileTap={{ scale: 0.97 }}
                     onClick={() => setShowWaiter(true)}
@@ -675,8 +646,8 @@ export default function CartSheet({ onClose }: Props) {
                     style={{
                       width: '100%', padding: '12px', borderRadius: '14px',
                       fontWeight: 600, fontSize: '13px', fontFamily: "'Cairo', sans-serif",
-                      background: 'rgba(248,113,113,0.06)', border: '1px solid rgba(248,113,113,0.15)',
-                      color: '#f87171', cursor: 'pointer',
+                      background: 'var(--delete-bg)', border: '1px solid var(--delete-border)',
+                      color: 'var(--delete-text)', cursor: 'pointer',
                       display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px',
                     }}
                   >

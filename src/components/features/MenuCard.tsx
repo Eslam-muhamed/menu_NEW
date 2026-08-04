@@ -76,8 +76,8 @@ export default function MenuCard({ item, index, baseDelay = 0 }: MenuCardProps) 
         <article
           className="group relative overflow-hidden card-glow-hover"
           style={{
-            backgroundColor: '#131328',
-            border: '1px solid rgba(255, 255, 255, 0.06)',
+            backgroundColor: 'var(--bg-card-alt)',
+            border: '1px solid var(--border-1)',
             borderRadius: '14px',
           }}
         >
@@ -96,13 +96,13 @@ export default function MenuCard({ item, index, baseDelay = 0 }: MenuCardProps) 
                 )}
                 <h3
                   className="font-semibold text-sm leading-tight"
-                  style={{ color: '#f0ece4', fontFamily: "'Cairo', 'Inter', sans-serif" }}
+                  style={{ color: 'var(--text-1)', fontFamily: "'Cairo', 'Inter', sans-serif" }}
                 >
                   {item.name}
                 </h3>
                 <p
                   className="text-xs mt-0.5 line-clamp-2 leading-relaxed"
-                  style={{ color: '#7a7268', fontFamily: "'Cairo', sans-serif" }}
+                  style={{ color: 'var(--text-2)', fontFamily: "'Cairo', sans-serif" }}
                 >
                   {item.description}
                 </p>
@@ -129,7 +129,7 @@ export default function MenuCard({ item, index, baseDelay = 0 }: MenuCardProps) 
               />
               <div
                 className="absolute inset-0"
-                style={{ background: 'linear-gradient(to right, #131328 0%, transparent 40%)' }}
+                style={{ background: 'linear-gradient(to right, var(--bg-card-alt) 0%, transparent 40%)' }}
               />
             </div>
           </div>
@@ -147,7 +147,7 @@ export default function MenuCard({ item, index, baseDelay = 0 }: MenuCardProps) 
               />
               <div
                 className="absolute inset-0"
-                style={{ background: 'linear-gradient(to top, #131328 0%, rgba(19,19,40,0.35) 50%, transparent 100%)' }}
+                style={{ background: 'linear-gradient(to top, var(--bg-card-alt) 0%, rgba(var(--bg-card-alt-rgb),0.35) 50%, transparent 100%)' }}
               />
               {item.badge && (
                 <div className="absolute top-2 left-2">
@@ -172,13 +172,13 @@ export default function MenuCard({ item, index, baseDelay = 0 }: MenuCardProps) 
             <div className="p-3 pb-3" dir="rtl">
               <h3
                 className="font-semibold text-sm leading-snug mb-1"
-                style={{ color: '#f0ece4', fontFamily: "'Cairo', 'Inter', sans-serif" }}
+                style={{ color: 'var(--text-1)', fontFamily: "'Cairo', 'Inter', sans-serif" }}
               >
                 {item.name}
               </h3>
               <p
                 className="text-xs leading-relaxed line-clamp-2 mb-3"
-                style={{ color: '#7a7268', fontFamily: "'Cairo', sans-serif" }}
+                style={{ color: 'var(--text-2)', fontFamily: "'Cairo', sans-serif" }}
               >
                 {item.description}
               </p>

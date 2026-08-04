@@ -60,7 +60,7 @@ export default function MenuPage() {
   };
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: '#07070f', color: '#f0ece4' }}>
+    <div className="min-h-screen" style={{ backgroundColor: 'var(--bg-main)', color: 'var(--text-1)' }}>
       {/* Fixed top header with cart */}
       <TopHeader />
       {/* Hero */}

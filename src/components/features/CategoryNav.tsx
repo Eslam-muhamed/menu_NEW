@@ -53,7 +53,7 @@ export default function CategoryNav({ categories, activeCategory, onCategoryChan
               style={
                 isActive
                   ? { backgroundColor: '#c9993d', color: '#07070f', fontWeight: 700 }
-                  : { color: '#7a7268' }
+                  : { color: 'var(--text-2)' }
               }
               aria-current={isActive ? 'true' : undefined}
             >

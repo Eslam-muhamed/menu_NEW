@@ -22,26 +22,26 @@ const offers: Offer[] = [
     gradient: 'linear-gradient(135deg, rgba(201,153,61,0.18) 0%, rgba(240,200,98,0.08) 100%)',
     glowColor: 'rgba(201,153,61,0.25)',
   },
-//   {
-//     id: 'dessert',
-//     emoji: '🍰',
-//     badge: 'عرض الحلويات',
-//     title: 'مشروب مجاني',
-//     desc: 'عند طلب أي حلوى من قائمتنا احصل على مشروب ساخن مجاناً',
-//     highlight: '1 + 1',
-//     gradient: 'linear-gradient(135deg, rgba(94,234,212,0.14) 0%, rgba(94,234,212,0.04) 100%)',
-//     glowColor: 'rgba(94,234,212,0.2)',
-//   },
-//   {
-//     id: 'monday',
-//     emoji: '🥤',
-//     badge: 'عرض الاثنين',
-//     title: 'ميلك شيك مجاني',
-//     desc: 'كل يوم اثنين عند الطلب بأكثر من 100 ج.م تحصل على ميلك شيك مجاناً',
-//     highlight: 'فوق 100 ج.م',
-//     gradient: 'linear-gradient(135deg, rgba(167,139,250,0.14) 0%, rgba(167,139,250,0.04) 100%)',
-//     glowColor: 'rgba(167,139,250,0.2)',
-//   },
+  // {
+  //   id: 'dessert',
+  //   emoji: '🍰',
+  //   badge: 'عرض الحلويات',
+  //   title: 'مشروب مجاني',
+  //   desc: 'عند طلب أي حلوى من قائمتنا احصل على مشروب ساخن مجاناً',
+  //   highlight: '1 + 1',
+  //   gradient: 'linear-gradient(135deg, rgba(94,234,212,0.14) 0%, rgba(94,234,212,0.04) 100%)',
+  //   glowColor: 'rgba(94,234,212,0.2)',
+  // },
+  // {
+  //   id: 'monday',
+  //   emoji: '🥤',
+  //   badge: 'عرض الاثنين',
+  //   title: 'ميلك شيك مجاني',
+  //   desc: 'كل يوم اثنين عند الطلب بأكثر من 100 ج.م تحصل على ميلك شيك مجاناً',
+  //   highlight: 'فوق 100 ج.م',
+  //   gradient: 'linear-gradient(135deg, rgba(167,139,250,0.14) 0%, rgba(167,139,250,0.04) 100%)',
+  //   glowColor: 'rgba(167,139,250,0.2)',
+  // },
   {
     id: 'group',
     emoji: '👥',
@@ -72,7 +72,7 @@ function OfferCard({ offer, index }: { offer: Offer; index: number }) {
         className="group relative h-full overflow-hidden"
         style={{
           background: offer.gradient,
-          border: '1px solid rgba(255,255,255,0.07)',
+          border: '1px solid var(--border-1)',
           borderRadius: '16px',
           backdropFilter: 'blur(12px)',
           cursor: 'default',
@@ -90,9 +90,9 @@ function OfferCard({ offer, index }: { offer: Offer; index: number }) {
             <span
               className="text-[10px] font-semibold px-2.5 py-1 rounded-full"
               style={{
-                background: 'rgba(255,255,255,0.08)',
-                border: '1px solid rgba(255,255,255,0.12)',
-                color: '#f0ece4',
+                background: 'var(--surface-3)',
+                border: '1px solid var(--border-3)',
+                color: 'var(--text-1)',
                 fontFamily: "'Cairo', sans-serif",
               }}
             >
@@ -103,14 +103,14 @@ function OfferCard({ offer, index }: { offer: Offer; index: number }) {
 
           <h3
             className="font-bold text-base leading-snug mb-1.5"
-            style={{ color: '#f0ece4', fontFamily: "'Cairo', sans-serif" }}
+            style={{ color: 'var(--text-1)', fontFamily: "'Cairo', sans-serif" }}
           >
             {offer.title}
           </h3>
 
           <p
             className="text-xs leading-relaxed flex-1"
-            style={{ color: '#7a7268', fontFamily: "'Cairo', sans-serif" }}
+            style={{ color: 'var(--text-2)', fontFamily: "'Cairo', sans-serif" }}
           >
             {offer.desc}
           </p>
@@ -165,7 +165,7 @@ function SectionHeader() {
         </p>
         <h2
           className="font-display text-xl font-bold leading-none"
-          style={{ color: '#f0ece4' }}
+          style={{ color: 'var(--text-1)' }}
         >
           {'العروض الخاصة '}
           <span

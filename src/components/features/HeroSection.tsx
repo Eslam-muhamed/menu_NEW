@@ -256,8 +256,8 @@ export default function HeroSection() {
       />
 
       {/* Dark overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-sky7-bg/65 to-sky7-bg" />
-      <div className="absolute inset-0 bg-sky7-bg/20" />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/25 to-transparent" />
+      <div className="absolute inset-0 bg-black/20" />
 
       {/* Gold glow orb */}
       <div
@@ -344,7 +344,7 @@ export default function HeroSection() {
       </div>
 
       {/* Bottom fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-28 bg-gradient-to-t from-sky7-bg to-transparent pointer-events-none" />
+      <div className="absolute bottom-0 left-0 right-0 h-40 pointer-events-none" style={{ background: 'linear-gradient(to top, var(--bg-main), transparent)' }} />
     </section>
   );
 }

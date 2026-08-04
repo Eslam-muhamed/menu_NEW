@@ -34,14 +34,14 @@ export default function MenuSection({ category, items, sectionIndex = 0 }: MenuS
           <span className="text-xl leading-none" aria-hidden="true">{category.icon}</span>
           <h2
             className="font-bold text-xl md:text-2xl"
-            style={{ color: '#f0ece4', fontFamily: "'Cairo', 'Inter', sans-serif" }}
+            style={{ color: 'var(--text-1)', fontFamily: "'Cairo', 'Inter', sans-serif" }}
           >
             {category.name}
           </h2>
         </div>
         <p
           className="text-xs pr-9"
-          style={{ color: '#7a7268', fontFamily: "'Cairo', sans-serif" }}
+          style={{ color: 'var(--text-2)', fontFamily: "'Cairo', sans-serif" }}
         >
           {category.description}
         </p>

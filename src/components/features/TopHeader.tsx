@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ShoppingBag } from 'lucide-react';
+import { ShoppingBag, Moon, Sun } from 'lucide-react';
 import { useCart } from '@/stores/cartStore';
+import { useTheme } from '@/stores/themeStore';
 import CartSheet from '@/components/features/CartSheet';
 
 const GOLD  = '#f0c862';
@@ -10,9 +11,10 @@ const GOLD2 = '#c9993d';
 export const HEADER_H = 56; // px — exported so HeroSection can offset
 
 export default function TopHeader() {
-  const [open,        setOpen]        = useState(false);
-  const [scrollRatio,  setScrollRatio]  = useState(0);
-  const { totalItems } = useCart();
+  const [open,       setOpen]       = useState(false);
+  const [scrollRatio, setScrollRatio] = useState(0);
+  const { totalItems }              = useCart();
+  const { isDark, toggleTheme }     = useTheme();
 
   useEffect(() => {
     const onScroll = () => {
@@ -24,19 +26,27 @@ export default function TopHeader() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  // Dynamic background colour — adapts to theme
+  const [r, g, b] = isDark ? [7, 7, 15] : [250, 247, 242];
+  const bgAlpha     = (scrollRatio * 0.97).toFixed(3);
+  const borderAlpha = (scrollRatio * 0.22).toFixed(3);
+  const shadowAlpha = scrollRatio > 0.5
+    ? (scrollRatio * (isDark ? 0.45 : 0.10)).toFixed(3)
+    : '0';
+
   return (
     <>
       <header
-        className="fixed top-0 left-0 right-0 z-[60] flex items-center justify-between transition-all duration-300"
+        className="fixed top-0 left-0 right-0 z-[60] flex items-center justify-between"
         style={{
-          height:       `${HEADER_H}px`,
-          padding:      '0 16px',
-          background:   `rgba(7,7,15,${(scrollRatio * 0.97).toFixed(3)})`,
-          backdropFilter: scrollRatio > 0.05 ? 'blur(20px)' : 'none',
+          height:           `${HEADER_H}px`,
+          padding:          '0 16px',
+          background:       `rgba(${r},${g},${b},${bgAlpha})`,
+          backdropFilter:   scrollRatio > 0.05 ? 'blur(20px)' : 'none',
           WebkitBackdropFilter: scrollRatio > 0.05 ? 'blur(20px)' : 'none',
-          borderBottom: `1px solid rgba(201,153,61,${(scrollRatio * 0.22).toFixed(3)})`,
-          boxShadow:    scrollRatio > 0.5 ? `0 4px 32px rgba(0,0,0,${(scrollRatio * 0.45).toFixed(3)})` : 'none',
-          transition:   'box-shadow 0.3s ease',
+          borderBottom:     `1px solid rgba(201,153,61,${borderAlpha})`,
+          boxShadow:        scrollRatio > 0.5 ? `0 4px 32px rgba(0,0,0,${shadowAlpha})` : 'none',
+          transition:       'box-shadow 0.3s ease',
         }}
       >
         {/* ── LEFT: Cart button ───────────────────────────── */}
@@ -44,13 +54,13 @@ export default function TopHeader() {
           onClick={() => setOpen(true)}
           className="relative flex items-center gap-2.5 rounded-xl transition-all duration-200 hover:scale-[1.03] active:scale-95"
           style={{
-            height: '40px',
-            padding: totalItems > 0 ? '0 14px 0 10px' : '0 10px',
+            height:     '40px',
+            padding:    totalItems > 0 ? '0 14px 0 10px' : '0 10px',
             background: totalItems > 0
               ? 'linear-gradient(135deg,rgba(201,153,61,0.16),rgba(240,200,98,0.05))'
-              : 'rgba(255,255,255,0.05)',
-            border: `1.5px solid ${totalItems > 0 ? 'rgba(201,153,61,0.32)' : 'rgba(255,255,255,0.09)'}`,
-            cursor: 'pointer',
+              : 'var(--surface-2)',
+            border:  `1.5px solid ${totalItems > 0 ? 'rgba(201,153,61,0.32)' : 'var(--border-2)'}`,
+            cursor:  'pointer',
           }}
           aria-label="سلة الطلبات"
         >
@@ -58,7 +68,7 @@ export default function TopHeader() {
           <div className="relative flex-shrink-0">
             <ShoppingBag
               className="w-[19px] h-[19px]"
-              style={{ color: totalItems > 0 ? GOLD : '#5a5868' }}
+              style={{ color: totalItems > 0 ? GOLD : 'var(--text-3)' }}
             />
             <AnimatePresence>
               {totalItems > 0 && (
@@ -108,19 +118,13 @@ export default function TopHeader() {
           </AnimatePresence>
         </button>
 
-        {/* ── RIGHT: Brand ────────────────────────────────── */}
-        <div className="flex items-center gap-2.5" dir="rtl">
-          {/* Gold separator */}
-          <div
-            style={{
-              width: '1.5px', height: '22px', borderRadius: '1px',
-              background: 'linear-gradient(180deg,transparent,rgba(201,153,61,0.5),transparent)',
-            }}
-          />
+        {/* ── RIGHT: Theme toggle + Brand ─────────────────── */}
+        <div className="flex items-center gap-2" dir="rtl">
+          {/* Brand */}
           <div>
             <p
               className="font-display leading-none tracking-wider"
-              style={{ fontSize: '17px', color: '#f0ece4', letterSpacing: '0.07em' }}
+              style={{ fontSize: '17px', color: 'var(--text-1)', letterSpacing: '0.07em' }}
             >
               sky{' '}
               <span
@@ -136,7 +140,7 @@ export default function TopHeader() {
             </p>
             <p
               style={{
-                color: '#3a3848',
+                color: 'var(--text-4)',
                 fontSize: '8px',
                 letterSpacing: '0.32em',
                 fontFamily: "'Cairo', sans-serif",
@@ -148,6 +152,61 @@ export default function TopHeader() {
               CAFÉ &amp; LOUNGE
             </p>
           </div>
+
+          {/* Separator */}
+          <div
+            style={{
+              width: '1.5px', height: '22px', borderRadius: '1px',
+              background: 'linear-gradient(180deg,transparent,rgba(201,153,61,0.5),transparent)',
+            }}
+          />
+
+          {/* ── Theme Toggle ──────────────────────────────── */}
+          <motion.button
+            whileTap={{ scale: 0.85, rotate: 20 }}
+            onClick={toggleTheme}
+            className="flex items-center justify-center rounded-full"
+            style={{
+              width:  '36px',
+              height: '36px',
+              flexShrink: 0,
+              background: isDark
+                ? 'rgba(168,220,232,0.08)'
+                : 'rgba(201,153,61,0.10)',
+              border: isDark
+                ? '1px solid rgba(168,220,232,0.22)'
+                : '1px solid rgba(201,153,61,0.30)',
+              cursor: 'pointer',
+              transition: 'background 0.3s ease, border 0.3s ease',
+            }}
+            aria-label={isDark ? 'تفعيل الوضع الفاتح' : 'تفعيل الوضع الداكن'}
+          >
+            <AnimatePresence mode="wait">
+              {isDark ? (
+                <motion.span
+                  key="moon"
+                  initial={{ rotate: -40, opacity: 0, scale: 0.5 }}
+                  animate={{ rotate: 0,   opacity: 1, scale: 1   }}
+                  exit={{   rotate: 40,  opacity: 0, scale: 0.5 }}
+                  transition={{ duration: 0.22 }}
+                  style={{ display: 'flex' }}
+                >
+                  <Moon className="w-[15px] h-[15px]" style={{ color: '#a8dce8' }} />
+                </motion.span>
+              ) : (
+                <motion.span
+                  key="sun"
+                  initial={{ rotate: -40, opacity: 0, scale: 0.5 }}
+                  animate={{ rotate: 0,   opacity: 1, scale: 1   }}
+                  exit={{   rotate: 40,  opacity: 0, scale: 0.5 }}
+                  transition={{ duration: 0.22 }}
+                  style={{ display: 'flex' }}
+                >
+                  <Sun className="w-[15px] h-[15px]" style={{ color: '#c9993d' }} />
+                </motion.span>
+              )}
+            </AnimatePresence>
+          </motion.button>
         </div>
       </header>
 

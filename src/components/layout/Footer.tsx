@@ -14,8 +14,8 @@ const MSG          = encodeURIComponent('مرحباً، أريد الطلب من
 const MAPS_URL     = 'https://maps.google.com/?q=sky+7+cafe+egypt'; // ← استبدل بالرابط الحقيقي
 
 const infoCardStyle: React.CSSProperties = {
-  background: 'rgba(255,255,255,0.03)',
-  border: '1px solid rgba(255,255,255,0.06)',
+  background: 'var(--surface-1)',
+  border: '1px solid var(--border-1)',
   borderRadius: '14px',
 };
 
@@ -23,7 +23,7 @@ export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+    <footer style={{ borderTop: '1px solid var(--border-1)' }}>
 
       {/* ── Brand Section ─────────────────────────────────────── */}
       <div className="pt-12 pb-8 px-6 text-center">
@@ -37,7 +37,7 @@ export default function Footer() {
           className="font-display font-bold mb-4"
           style={{ fontSize: '2.4rem', lineHeight: 1 }}
         >
-          <span style={{ color: '#f0ece4' }}>sky </span>
+          <span style={{ color: 'var(--text-1)' }}>sky </span>
           <span className="gold-text">7</span>
         </h3>
         <div className="flex items-center justify-center gap-3 mb-4" aria-hidden="true">
@@ -45,7 +45,7 @@ export default function Footer() {
           <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: 'rgba(201,153,61,0.5)' }} />
           <div className="h-px w-10 rounded" style={{ background: 'linear-gradient(to left,transparent,rgba(201,153,61,0.4))' }} />
         </div>
-        <p className="text-sm" style={{ color: '#7a7268', fontFamily: "'Cairo','Inter',sans-serif" }}>
+        <p className="text-sm" style={{ color: 'var(--text-2)', fontFamily: "'Cairo','Inter',sans-serif" }}>
           Crafted with passion. Served with elegance.
         </p>
       </div>
@@ -72,9 +72,9 @@ export default function Footer() {
               <MapPin className="w-4 h-4" style={{ color: '#c9993d' }} />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-[11px] mb-0.5" style={{ color: '#7a7268', fontFamily: "'Cairo',sans-serif" }}>العنوان</p>
-              <p className="text-sm font-semibold" style={{ color: '#f0ece4', fontFamily: "'Cairo',sans-serif" }}>
-                  الشرقية - كفر صقر - شارع البحر - بجوار البنك الأهلي تمكين ( لتمويل المشاريع ){/* ← استبدل بالعنوان الحقيقي */}
+              <p className="text-[11px] mb-0.5" style={{ color: 'var(--text-2)', fontFamily: "'Cairo',sans-serif" }}>العنوان</p>
+              <p className="text-sm font-semibold" style={{ color: 'var(--text-1)', fontFamily: "'Cairo',sans-serif" }}>
+                الشرقيه - كفر صقر- بجوار الاهلي تمكين للتمويل {/* ← استبدل بالعنوان الحقيقي */}
               </p>
             </div>
           </div>
@@ -92,7 +92,7 @@ export default function Footer() {
               <Phone className="w-4 h-4" style={{ color: '#c9993d' }} />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-[11px] mb-0.5" style={{ color: '#7a7268', fontFamily: "'Cairo',sans-serif" }}>التليفون</p>
+              <p className="text-[11px] mb-0.5" style={{ color: 'var(--text-2)', fontFamily: "'Cairo',sans-serif" }}>التليفون</p>
               <p
                 className="text-sm font-semibold"
                 style={{ color: '#f0c862', fontFamily: "'Cairo',sans-serif", direction: 'ltr', textAlign: 'right' }}
@@ -111,9 +111,9 @@ export default function Footer() {
               <Clock className="w-4 h-4" style={{ color: '#c9993d' }} />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-[11px] mb-0.5" style={{ color: '#7a7268', fontFamily: "'Cairo',sans-serif" }}>مواعيد العمل</p>
-              <p className="text-sm font-semibold" style={{ color: '#f0ece4', fontFamily: "'Cairo',sans-serif" }}>
-               العمل على مدار اليوم 24/7{/* ← استبدل بالمواعيد الحقيقية */}
+              <p className="text-[11px] mb-0.5" style={{ color: 'var(--text-2)', fontFamily: "'Cairo',sans-serif" }}>مواعيد العمل</p>
+              <p className="text-sm font-semibold" style={{ color: 'var(--text-1)', fontFamily: "'Cairo',sans-serif" }}>
+               24 ساعه {/* ← استبدل بالمواعيد الحقيقية */}
               </p>
             </div>
           </div>
@@ -161,9 +161,9 @@ export default function Footer() {
       {/* ── Copyright ─────────────────────────────────────────── */}
       <div
         className="py-4 px-6 text-center"
-        style={{ borderTop: '1px solid rgba(255,255,255,0.04)' }}
+        style={{ borderTop: '1px solid var(--border-1)' }}
       >
-        <p className="text-xs" style={{ color: '#4a4850', fontFamily: "'Cairo','Inter',sans-serif" }}>
+        <p className="text-xs" style={{ color: 'var(--text-5)', fontFamily: "'Cairo','Inter',sans-serif" }}>
           © {year} sky 7 Café · All rights reserved
         </p>
       </div>

@@ -2,6 +2,94 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ═══════════════════════════════════════════════════════
+   SKY 7 — THEME CSS VARIABLES
+   Dark (default) ↔ Light
+═══════════════════════════════════════════════════════ */
+:root {
+  /* ── Backgrounds ──────────────────────────────── */
+  --bg-main:     #07070f;
+  --bg-card:     #0c0c1e;
+  --bg-card-alt: #131328;
+
+  /* RGB triplets for rgba() usage */
+  --bg-main-rgb:     7, 7, 15;
+  --bg-card-rgb:     12, 12, 30;
+  --bg-card-alt-rgb: 19, 19, 40;
+
+  /* ── Text ─────────────────────────────────────── */
+  --text-1: #f0ece4;   /* primary */
+  --text-2: #7a7268;   /* muted   */
+  --text-3: #5a5868;   /* dim     */
+  --text-4: #3a3848;   /* dimmer  */
+  --text-5: #4a4850;   /* tiny    */
+
+  /* ── Borders ──────────────────────────────────── */
+  --border-1: rgba(255, 255, 255, 0.06);
+  --border-2: rgba(255, 255, 255, 0.09);
+  --border-3: rgba(255, 255, 255, 0.13);
+
+  /* ── Surfaces (bg w/ opacity) ─────────────────── */
+  --surface-1: rgba(255, 255, 255, 0.03);
+  --surface-2: rgba(255, 255, 255, 0.05);
+  --surface-3: rgba(255, 255, 255, 0.07);
+  --surface-4: rgba(255, 255, 255, 0.10);
+
+  /* ── Glass nav ────────────────────────────────── */
+  --glass-bg: rgba(13, 13, 28, 0.82);
+
+  /* ── Shadows ──────────────────────────────────── */
+  --modal-shadow: 0 0 80px rgba(201, 153, 61, 0.10), 0 -20px 60px rgba(0, 0, 0, 0.80);
+
+  /* ── Delete / Error ───────────────────────────── */
+  --delete-bg:     rgba(248, 113, 113, 0.08);
+  --delete-border: rgba(248, 113, 113, 0.18);
+  --delete-text:   #f87171;
+}
+
+[data-theme="light"] {
+  /* ── Backgrounds ──────────────────────────────── */
+  --bg-main:     #faf7f2;
+  --bg-card:     #ffffff;
+  --bg-card-alt: #f5f0e8;
+
+  --bg-main-rgb:     250, 247, 242;
+  --bg-card-rgb:     255, 255, 255;
+  --bg-card-alt-rgb: 245, 240, 232;
+
+  /* ── Text ─────────────────────────────────────── */
+  --text-1: #1e1a14;
+  --text-2: #7a6a5a;
+  --text-3: #a09080;
+  --text-4: #c0b0a0;
+  --text-5: #b8a898;
+
+  /* ── Borders ──────────────────────────────────── */
+  --border-1: rgba(0, 0, 0, 0.07);
+  --border-2: rgba(0, 0, 0, 0.10);
+  --border-3: rgba(0, 0, 0, 0.14);
+
+  /* ── Surfaces ─────────────────────────────────── */
+  --surface-1: rgba(0, 0, 0, 0.03);
+  --surface-2: rgba(0, 0, 0, 0.05);
+  --surface-3: rgba(0, 0, 0, 0.07);
+  --surface-4: rgba(0, 0, 0, 0.10);
+
+  /* ── Glass nav ────────────────────────────────── */
+  --glass-bg: rgba(250, 247, 242, 0.92);
+
+  /* ── Shadows ──────────────────────────────────── */
+  --modal-shadow: 0 0 60px rgba(201, 153, 61, 0.12), 0 -8px 40px rgba(0, 0, 0, 0.10);
+
+  /* ── Delete / Error ───────────────────────────── */
+  --delete-bg:     rgba(220, 60, 60, 0.06);
+  --delete-border: rgba(220, 60, 60, 0.15);
+  --delete-text:   #c53030;
+}
+
+/* ═══════════════════════════════════════════════════════
+   SHADCN COMPONENT TOKENS (always dark — keep for UI lib)
+═══════════════════════════════════════════════════════ */
 @layer base {
   :root {
     --background: 241 43% 4%;
@@ -37,12 +125,13 @@
   }
 
   body {
-    background-color: #07070f;
-    color: #f0ece4;
+    background-color: var(--bg-main);
+    color: var(--text-1);
     font-family: 'Cairo', 'Inter', system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 }
 
@@ -74,9 +163,9 @@
     animation: shimmer 3s linear infinite;
   }
 
-  /* Glass effect */
+  /* Glass effect — theme-aware */
   .glass {
-    background: rgba(13, 13, 28, 0.82);
+    background: var(--glass-bg);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
   }
@@ -90,6 +179,11 @@
     transform: translateY(-3px);
   }
 
+  [data-theme="light"] .card-glow-hover:hover {
+    box-shadow: 0 0 40px rgba(201, 153, 61, 0.10), 0 12px 32px rgba(0, 0, 0, 0.10);
+    transform: translateY(-3px);
+  }
+
   /* Line clamp */
   .line-clamp-2 {
     overflow: hidden;
@@ -98,39 +192,36 @@
     -webkit-box-orient: vertical;
   }
 
-  /* Dot pattern background */
+  /* Dot pattern */
   .dot-pattern {
     background-image: radial-gradient(rgba(201, 153, 61, 0.08) 1px, transparent 1px);
     background-size: 28px 28px;
   }
 
-  /* Hero image ken burns */
+  /* Hero ken burns */
   .hero-img {
     animation: kenBurns 20s ease-in-out infinite alternate;
   }
 
   @keyframes kenBurns {
-    0% { transform: scale(1.05) translateX(0); }
+    0%   { transform: scale(1.05) translateX(0); }
     100% { transform: scale(1.12) translateX(-2%); }
   }
 }
 
-/* ── Surprise feature ─────────────────────────────────────────────────── */
+/* ── Surprise ──────────────────────────────────────────── */
 .surprise-float-btn {
-  box-shadow: 0 8px 32px rgba(201, 153, 61, 0.45), 0 2px 8px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 8px 32px rgba(201,153,61,0.45), 0 2px 8px rgba(0,0,0,0.5);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   animation: surprisePulse 3.5s ease-in-out infinite;
 }
 .surprise-float-btn:hover {
   transform: scale(1.07) translateY(-2px);
-  box-shadow: 0 12px 40px rgba(201, 153, 61, 0.6), 0 4px 12px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 12px 40px rgba(201,153,61,0.6), 0 4px 12px rgba(0,0,0,0.5);
 }
-.surprise-float-btn:active {
-  transform: scale(0.95);
-  animation: none;
-}
+.surprise-float-btn:active { transform: scale(0.95); animation: none; }
 
-/* ── WhatsApp button ─────────────────────────────────────────────────── */
+/* ── WhatsApp ──────────────────────────────────────────── */
 .whatsapp-float-btn {
   box-shadow: 0 8px 32px rgba(37,211,102,0.38), 0 2px 8px rgba(0,0,0,0.5);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -140,32 +231,17 @@
   transform: scale(1.07) translateY(-2px);
   box-shadow: 0 12px 40px rgba(37,211,102,0.55), 0 4px 12px rgba(0,0,0,0.5);
 }
-.whatsapp-float-btn:active {
-  transform: scale(0.95);
-  animation: none;
-}
+.whatsapp-float-btn:active { transform: scale(0.95); animation: none; }
 
+/* ── Keyframes ─────────────────────────────────────────── */
 @keyframes whatsappPulse {
-  0%,100% { box-shadow: 0 8px 32px rgba(37,211,102,0.38),0 2px 8px rgba(0,0,0,0.5); }
-  50% { box-shadow: 0 8px 48px rgba(37,211,102,0.58),0 2px 8px rgba(0,0,0,0.5),0 0 0 10px rgba(37,211,102,0.08); }
-}
-
-.slide-up-modal {
-  animation: slideUpModal 0.35s cubic-bezier(0.34, 1.2, 0.64, 1) both;
-}
-
-.surprise-reveal {
-  animation: surpriseReveal 0.48s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  0%,100% { box-shadow: 0 8px 32px rgba(37,211,102,0.38), 0 2px 8px rgba(0,0,0,0.5); }
+  50%      { box-shadow: 0 8px 48px rgba(37,211,102,0.58), 0 2px 8px rgba(0,0,0,0.5), 0 0 0 10px rgba(37,211,102,0.08); }
 }
 
 @keyframes surprisePulse {
-  0%, 100% {
-    box-shadow: 0 8px 32px rgba(201, 153, 61, 0.45), 0 2px 8px rgba(0, 0, 0, 0.5);
-  }
-  50% {
-    box-shadow: 0 8px 48px rgba(201, 153, 61, 0.68), 0 2px 8px rgba(0, 0, 0, 0.5),
-      0 0 0 10px rgba(201, 153, 61, 0.09);
-  }
+  0%,100% { box-shadow: 0 8px 32px rgba(201,153,61,0.45), 0 2px 8px rgba(0,0,0,0.5); }
+  50%     { box-shadow: 0 8px 48px rgba(201,153,61,0.68), 0 2px 8px rgba(0,0,0,0.5), 0 0 0 10px rgba(201,153,61,0.09); }
 }
 
 @keyframes slideUpModal {
@@ -173,7 +249,6 @@
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ── Splash bean float ───────────────────────────────────────────── */
 @keyframes beanFloat {
   0%   { transform: translateY(0px) rotate(var(--r, 0deg)); }
   100% { transform: translateY(-14px) rotate(calc(var(--r, 0deg) + 8deg)); }
@@ -183,3 +258,6 @@
   from { opacity: 0; transform: scale(0.9) translateY(10px); }
   to   { opacity: 1; transform: scale(1) translateY(0); }
 }
+
+.slide-up-modal   { animation: slideUpModal   0.35s cubic-bezier(0.34, 1.20, 0.64, 1) both; }
+.surprise-reveal  { animation: surpriseReveal 0.48s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
