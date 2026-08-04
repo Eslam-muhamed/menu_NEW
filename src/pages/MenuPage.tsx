@@ -7,6 +7,7 @@ import Footer from '@/components/layout/Footer';
 import SurpriseButton from '@/components/features/SurpriseButton';
 import WhatsAppButton from '@/components/features/WhatsAppButton';
 import XOButton from '@/components/features/XOButton';
+import CartButton from '@/components/features/CartButton';
 import OffersSection from '@/components/features/OffersSection';
 import { categories, menuItems } from '@/constants/menuData';
 
@@ -151,6 +152,7 @@ export default function MenuPage() {
       {/* Floating action buttons */}
       <WhatsAppButton />
       <XOButton />
+      <CartButton />
       <SurpriseButton />
 
       <Footer />
