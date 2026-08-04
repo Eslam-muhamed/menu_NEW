@@ -129,7 +129,7 @@ export default function MenuCard({ item, index, baseDelay = 0 }: MenuCardProps) 
               />
               <div
                 className="absolute inset-0"
-                style={{ background: 'linear-gradient(to right, rgba(var(--bg-card-alt-rgb),0.85) 0%, transparent 50%)' }}
+                style={{ background: 'linear-gradient(to right, rgba(0,0,0,0.18) 0%, transparent 55%)' }}
               />
             </div>
           </div>
@@ -147,7 +147,7 @@ export default function MenuCard({ item, index, baseDelay = 0 }: MenuCardProps) 
               />
               <div
                 className="absolute inset-0"
-                style={{ background: 'linear-gradient(to top, rgba(var(--bg-card-alt-rgb),0.75) 0%, rgba(var(--bg-card-alt-rgb),0.20) 45%, transparent 100%)' }}
+                style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.15) 45%, transparent 100%)' }}
               />
               {item.badge && (
                 <div className="absolute top-2 left-2">
