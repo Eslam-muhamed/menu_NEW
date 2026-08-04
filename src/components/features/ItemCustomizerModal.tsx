@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X as CloseIcon, Minus, Plus, ShoppingBag } from 'lucide-react';
 import { toast } from 'sonner';
 import type { MenuItem } from '@/types/menu';
-import type { CartCustomization, DrinkSize, IceLevel, MilkType } from '@/types/cart';
+import type { CartCustomization, IceLevel } from '@/types/cart';
 import { CATEGORY_OPTIONS } from '@/constants/itemCustomizations';
 import { useCart } from '@/stores/cartStore';
 
@@ -15,17 +15,11 @@ const GOLD2 = '#c9993d';
 const FALLBACK = 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=480&h=360&fit=crop&auto=format&q=85';
 
 /* ── Labels ──────────────────────────────────────────── */
-const SIZE_LABELS: Record<DrinkSize, string> = { S: 'صغير', M: 'وسط', L: 'كبير' };
-const ICE_LABELS:  Record<IceLevel,  string> = {
+const ICE_LABELS:  Record<IceLevel, string> = {
   none:   '🚫 بدون',
   little: '❄️ قليل',
   normal: '🧊 عادي',
   extra:  '💎 كتير',
-};
-const MILK_LABELS: Record<MilkType, string> = {
-  whole: '🥛 عادي',
-  skim:  '🍃 خالي دسم',
-  oat:   '🌾 شوفان',
 };
 
 /* ── Props ───────────────────────────────────────────── */
@@ -53,10 +47,8 @@ export default function ItemCustomizerModal({ item, onClose }: Props) {
 
   /* State */
   const [qty,       setQty]       = useState(1);
-  const [size,      setSize]      = useState<DrinkSize>('M');
   const [sugar,     setSugar]     = useState(2);
   const [ice,       setIce]       = useState<IceLevel>('normal');
-  const [milk,      setMilk]      = useState<MilkType>('whole');
   const [extraShot, setExtraShot] = useState(false);
   const [cream,     setCream]     = useState(false);
   const [honey,     setHoney]     = useState(false);
@@ -77,10 +69,8 @@ export default function ItemCustomizerModal({ item, onClose }: Props) {
   const handleAdd = () => {
     const customization: CartCustomization = {
       quantity: qty,
-      ...(opts.size      ? { size }      : {}),
       ...(opts.sugar     ? { sugar }     : {}),
       ...(opts.ice       ? { ice }       : {}),
-      ...(opts.milk      ? { milk }      : {}),
       ...(opts.extraShot ? { extraShot } : {}),
       ...(opts.cream     ? { cream }     : {}),
       ...(opts.honey     ? { honey }     : {}),
@@ -212,20 +202,6 @@ export default function ItemCustomizerModal({ item, onClose }: Props) {
               </div>
             </div>
 
-            {/* ─ Size ─ */}
-            {opts.size && (
-              <div>
-                <SectionTitle>📏 الحجم</SectionTitle>
-                <div className="flex gap-2 flex-wrap">
-                  {(['S', 'M', 'L'] as DrinkSize[]).map(s => (
-                    <button key={s} onClick={() => setSize(s)} style={size === s ? pillActive : pillInactive}>
-                      {SIZE_LABELS[s]}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
-
             {/* ─ Sugar ─ */}
             {opts.sugar && (
               <div>
@@ -248,20 +224,6 @@ export default function ItemCustomizerModal({ item, onClose }: Props) {
                   {(['none', 'little', 'normal', 'extra'] as IceLevel[]).map(lvl => (
                     <button key={lvl} onClick={() => setIce(lvl)} style={ice === lvl ? pillActive : pillInactive}>
                       {ICE_LABELS[lvl]}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* ─ Milk ─ */}
-            {opts.milk && (
-              <div>
-                <SectionTitle>🥛 اللبن</SectionTitle>
-                <div className="flex gap-2 flex-wrap">
-                  {(['whole', 'skim', 'oat'] as MilkType[]).map(m => (
-                    <button key={m} onClick={() => setMilk(m)} style={milk === m ? pillActive : pillInactive}>
-                      {MILK_LABELS[m]}
                     </button>
                   ))}
                 </div>

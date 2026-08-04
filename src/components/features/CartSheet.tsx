@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X as CloseIcon, Trash2, Minus, Plus, ShoppingBag, Eye } from 'lucide-react';
 import { useCart } from '@/stores/cartStore';
-import type { CartItem, DrinkSize, IceLevel, MilkType } from '@/types/cart';
+import type { CartItem, IceLevel } from '@/types/cart';
 
 /* ── Theme ───────────────────────────────────────────── */
 const DARK  = '#0c0c1e';
@@ -11,21 +11,15 @@ const GOLD2 = '#c9993d';
 const FALLBACK = 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=480&h=360&fit=crop&auto=format&q=85';
 
 /* ── Label maps ──────────────────────────────────────── */
-const SIZE_MAP: Record<DrinkSize, string> = { S: 'صغير', M: 'وسط', L: 'كبير' };
-const ICE_MAP:  Record<IceLevel,  string> = {
+const ICE_MAP: Record<IceLevel, string> = {
   none: 'بدون ثلج', little: 'ثلج قليل', normal: 'ثلج عادي', extra: 'ثلج كتير',
-};
-const MILK_MAP: Record<MilkType, string> = {
-  whole: 'لبن عادي', skim: 'خالي دسم', oat: 'شوفان',
 };
 
 function getCustomizationTags(item: CartItem): string[] {
   const c = item.customization;
   const tags: string[] = [];
-  if (c.size)                tags.push(SIZE_MAP[c.size]);
   if (c.sugar !== undefined) tags.push(c.sugar === 0 ? 'بدون سكر' : `${c.sugar} معلقة سكر`);
   if (c.ice)                 tags.push(ICE_MAP[c.ice]);
-  if (c.milk)                tags.push(MILK_MAP[c.milk]);
   if (c.extraShot)           tags.push('شوت إضافي');
   if (c.cream)               tags.push('مع كريمة');
   if (c.honey)               tags.push('مع عسل');
