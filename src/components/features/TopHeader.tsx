@@ -10,12 +10,16 @@ const GOLD2 = '#c9993d';
 export const HEADER_H = 56; // px — exported so HeroSection can offset
 
 export default function TopHeader() {
-  const [open,     setOpen]     = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  const [open,        setOpen]        = useState(false);
+  const [scrollRatio,  setScrollRatio]  = useState(0);
   const { totalItems } = useCart();
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
+    const onScroll = () => {
+      // Start fading in at scrollY=80, fully opaque at scrollY=380
+      const ratio = Math.min(Math.max((window.scrollY - 80) / 300, 0), 1);
+      setScrollRatio(ratio);
+    };
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
@@ -27,11 +31,12 @@ export default function TopHeader() {
         style={{
           height:       `${HEADER_H}px`,
           padding:      '0 16px',
-          background:   scrolled ? 'rgba(7,7,15,0.97)' : 'rgba(7,7,15,0.78)',
-          backdropFilter: 'blur(20px)',
-          WebkitBackdropFilter: 'blur(20px)',
-          borderBottom: `1px solid ${scrolled ? 'rgba(201,153,61,0.22)' : 'rgba(201,153,61,0.09)'}`,
-          boxShadow:    scrolled ? '0 4px 32px rgba(0,0,0,0.45)' : 'none',
+          background:   `rgba(7,7,15,${(scrollRatio * 0.97).toFixed(3)})`,
+          backdropFilter: scrollRatio > 0.05 ? 'blur(20px)' : 'none',
+          WebkitBackdropFilter: scrollRatio > 0.05 ? 'blur(20px)' : 'none',
+          borderBottom: `1px solid rgba(201,153,61,${(scrollRatio * 0.22).toFixed(3)})`,
+          boxShadow:    scrollRatio > 0.5 ? `0 4px 32px rgba(0,0,0,${(scrollRatio * 0.45).toFixed(3)})` : 'none',
+          transition:   'box-shadow 0.3s ease',
         }}
       >
         {/* ── LEFT: Cart button ───────────────────────────── */}
