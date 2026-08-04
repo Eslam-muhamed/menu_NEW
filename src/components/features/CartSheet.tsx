@@ -4,7 +4,7 @@ import { X as CloseIcon, Trash2, Minus, Plus, ShoppingBag, Eye } from 'lucide-re
 import { useCart } from '@/stores/cartStore';
 import type { CartItem, IceLevel } from '@/types/cart';
 
-const PHONE = '201000000000'; // ← استبدل بالرقم الحقيقي
+const PHONE = '201128727999'; // ← استبدل بالرقم الحقيقي
 
 function WhatsAppIcon() {
   return (
