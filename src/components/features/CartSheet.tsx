@@ -326,11 +326,38 @@ interface Props { onClose: () => void; }
 
 export default function CartSheet({ onClose }: Props) {
   const { items, clearCart, totalItems, totalPrice } = useCart();
-  const [showWaiter, setShowWaiter] = useState(false);
-  const [splitOpen,  setSplitOpen]  = useState(false);
-  const [splitCount, setSplitCount] = useState(2);
-  const perPerson = Math.ceil(totalPrice / splitCount);
-  const isUneven  = totalPrice % splitCount !== 0;
+  const [showWaiter,   setShowWaiter]   = useState(false);
+  const [splitOpen,    setSplitOpen]    = useState(false);
+  const [splitCount,   setSplitCount]   = useState(2);
+  const [assignments,  setAssignments]  = useState<Record<string, number | null>>({});
+
+  const handleSplitCountChange = (next: number) => {
+    setSplitCount(next);
+    // clear assignments for persons that no longer exist
+    setAssignments(prev => {
+      const cleaned: Record<string, number | null> = {};
+      Object.entries(prev).forEach(([id, idx]) => {
+        cleaned[id] = idx !== null && idx < next ? idx : null;
+      });
+      return cleaned;
+    });
+  };
+
+  const toggleAssign = (cartId: string, personIdx: number) => {
+    setAssignments(prev => ({
+      ...prev,
+      [cartId]: prev[cartId] === personIdx ? null : personIdx,
+    }));
+  };
+
+  const personTotals = Array.from({ length: splitCount }, (_, i) =>
+    items
+      .filter(item => assignments[item.cartId] === i)
+      .reduce((sum, item) => sum + item.price * item.customization.quantity, 0)
+  );
+  const unassignedTotal = items
+    .filter(item => assignments[item.cartId] == null)
+    .reduce((sum, item) => sum + item.price * item.customization.quantity, 0);
 
   return (
     <>
@@ -436,51 +463,21 @@ export default function CartSheet({ onClose }: Props) {
                       style={{
                         width: '100%', padding: '11px 16px', borderRadius: '14px',
                         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                        background: splitOpen
-                          ? 'rgba(168,220,232,0.08)'
-                          : 'rgba(255,255,255,0.04)',
-                        border: `1px solid ${splitOpen
-                          ? 'rgba(168,220,232,0.28)'
-                          : 'rgba(255,255,255,0.09)'}`,
+                        background: splitOpen ? 'rgba(168,220,232,0.08)' : 'rgba(255,255,255,0.04)',
+                        border: `1px solid ${splitOpen ? 'rgba(168,220,232,0.28)' : 'rgba(255,255,255,0.09)'}`,
                         cursor: 'pointer', transition: 'all 0.22s',
                       }}
                     >
                       <div className="flex items-center gap-2">
-                        <Users
-                          className="w-4 h-4"
-                          style={{ color: splitOpen ? '#a8dce8' : '#5a5868' }}
-                        />
-                        <span
-                          style={{
-                            color: splitOpen ? '#a8dce8' : '#7a7268',
-                            fontFamily: "'Cairo', sans-serif",
-                            fontWeight: 600, fontSize: '13px',
-                          }}
-                        >
+                        <Users className="w-4 h-4" style={{ color: splitOpen ? '#a8dce8' : '#5a5868' }} />
+                        <span style={{ color: splitOpen ? '#a8dce8' : '#7a7268', fontFamily: "'Cairo', sans-serif", fontWeight: 600, fontSize: '13px' }}>
                           حساب الشلة
                         </span>
                       </div>
-                      <div className="flex items-center gap-2">
-                        {splitOpen && (
-                          <span
-                            style={{
-                              fontSize: '11px',
-                              color: '#a8dce8',
-                              fontFamily: "'Cairo', sans-serif",
-                              opacity: 0.75,
-                            }}
-                          >
-                            {splitCount} أفراد
-                          </span>
-                        )}
-                        <ChevronDown
-                          className="w-3.5 h-3.5 transition-transform duration-250"
-                          style={{
-                            color: splitOpen ? '#a8dce8' : '#3a3848',
-                            transform: splitOpen ? 'rotate(180deg)' : 'rotate(0deg)',
-                          }}
-                        />
-                      </div>
+                      <ChevronDown
+                        className="w-3.5 h-3.5"
+                        style={{ color: splitOpen ? '#a8dce8' : '#3a3848', transform: splitOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.22s' }}
+                      />
                     </button>
 
                     <AnimatePresence>
@@ -493,33 +490,20 @@ export default function CartSheet({ onClose }: Props) {
                           style={{ overflow: 'hidden' }}
                         >
                           <div style={{ paddingTop: '12px' }}>
-                            {/* People counter */}
+
+                            {/* ─ People counter ─ */}
                             <div
-                              className="flex items-center justify-between mb-3"
+                              className="flex items-center justify-between mb-4"
                               dir="rtl"
-                              style={{
-                                padding: '10px 14px', borderRadius: '14px',
-                                background: 'rgba(255,255,255,0.03)',
-                                border: '1px solid rgba(255,255,255,0.07)',
-                              }}
+                              style={{ padding: '10px 14px', borderRadius: '14px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)' }}
                             >
-                              <span
-                                style={{
-                                  color: '#7a7268',
-                                  fontFamily: "'Cairo', sans-serif",
-                                  fontSize: '13px',
-                                }}
-                              >
-                                عدد الأفراد
-                              </span>
+                              <span style={{ color: '#7a7268', fontFamily: "'Cairo', sans-serif", fontSize: '13px' }}>عدد الأفراد</span>
                               <div className="flex items-center gap-3">
                                 <button
-                                  onClick={() => setSplitCount(n => Math.max(2, n - 1))}
+                                  onClick={() => handleSplitCountChange(Math.max(2, splitCount - 1))}
                                   style={{
                                     width: '30px', height: '30px', borderRadius: '50%',
-                                    background: splitCount <= 2
-                                      ? 'rgba(255,255,255,0.03)'
-                                      : 'rgba(168,220,232,0.1)',
+                                    background: splitCount <= 2 ? 'rgba(255,255,255,0.03)' : 'rgba(168,220,232,0.1)',
                                     border: '1px solid rgba(168,220,232,0.18)',
                                     color: splitCount <= 2 ? '#3a3848' : '#a8dce8',
                                     cursor: splitCount <= 2 ? 'not-allowed' : 'pointer',
@@ -528,22 +512,14 @@ export default function CartSheet({ onClose }: Props) {
                                 >
                                   <Minus className="w-3 h-3" />
                                 </button>
-                                <span
-                                  style={{
-                                    color: '#f0ece4',
-                                    fontFamily: "'Cairo', sans-serif",
-                                    fontWeight: 800, fontSize: '18px',
-                                    minWidth: '28px', textAlign: 'center',
-                                  }}
-                                >
+                                <span style={{ color: '#f0ece4', fontFamily: "'Cairo', sans-serif", fontWeight: 800, fontSize: '18px', minWidth: '28px', textAlign: 'center' }}>
                                   {splitCount}
                                 </span>
                                 <button
-                                  onClick={() => setSplitCount(n => Math.min(20, n + 1))}
+                                  onClick={() => handleSplitCountChange(Math.min(10, splitCount + 1))}
                                   style={{
                                     width: '30px', height: '30px', borderRadius: '50%',
-                                    background: 'rgba(168,220,232,0.1)',
-                                    border: '1px solid rgba(168,220,232,0.18)',
+                                    background: 'rgba(168,220,232,0.1)', border: '1px solid rgba(168,220,232,0.18)',
                                     color: '#a8dce8', cursor: 'pointer',
                                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                                   }}
@@ -553,98 +529,122 @@ export default function CartSheet({ onClose }: Props) {
                               </div>
                             </div>
 
-                            {/* Per-person result */}
-                            <motion.div
-                              key={perPerson}
-                              initial={{ scale: 0.97, opacity: 0.6 }}
-                              animate={{ scale: 1, opacity: 1 }}
-                              transition={{ duration: 0.18 }}
-                              style={{
-                                padding: '16px', borderRadius: '16px',
-                                background: 'linear-gradient(135deg,rgba(168,220,232,0.08),rgba(168,220,232,0.03))',
-                                border: '1px solid rgba(168,220,232,0.2)',
-                                marginBottom: '12px',
-                              }}
-                            >
-                              <div className="flex items-center justify-between" dir="rtl">
-                                <div>
-                                  <p
+                            {/* ─ Item assignment ─ */}
+                            <p style={{ color: '#4a4858', fontFamily: "'Cairo', sans-serif", fontSize: '11px', textAlign: 'center', marginBottom: '10px', direction: 'rtl' }}>
+                              اضغط رقم الشخص جنب كل منتج
+                            </p>
+                            <div className="flex flex-col gap-2 mb-4">
+                              {items.map(item => {
+                                const assigned = assignments[item.cartId] ?? null;
+                                const lineTotal = item.price * item.customization.quantity;
+                                return (
+                                  <div
+                                    key={item.cartId}
                                     style={{
-                                      color: '#7a7268',
-                                      fontFamily: "'Cairo', sans-serif",
-                                      fontSize: '12px', marginBottom: '4px',
+                                      padding: '10px 12px', borderRadius: '14px',
+                                      background: assigned !== null ? 'rgba(168,220,232,0.05)' : 'rgba(255,255,255,0.025)',
+                                      border: `1px solid ${assigned !== null ? 'rgba(168,220,232,0.15)' : 'rgba(255,255,255,0.06)'}`,
+                                      transition: 'all 0.2s',
                                     }}
+                                    dir="rtl"
                                   >
-                                    نصيب كل شخص
-                                  </p>
-                                  {isUneven && (
-                                    <p
-                                      style={{
-                                        color: '#4a5868',
-                                        fontFamily: "'Cairo', sans-serif",
-                                        fontSize: '10px',
-                                      }}
-                                    >
-                                      مقرّب لأعلى
-                                    </p>
-                                  )}
-                                </div>
-                                <div className="text-right">
-                                  <span
-                                    style={{
-                                      color: '#a8dce8',
-                                      fontFamily: "'Cairo', sans-serif",
-                                      fontWeight: 800, fontSize: '26px',
-                                      lineHeight: 1,
-                                    }}
-                                  >
-                                    {perPerson}
-                                  </span>
-                                  <span
-                                    style={{
-                                      color: '#5a8a98',
-                                      fontFamily: "'Cairo', sans-serif",
-                                      fontWeight: 600, fontSize: '13px',
-                                      marginRight: '4px',
-                                    }}
-                                  >
-                                    {' '}ج.م
-                                  </span>
-                                </div>
-                              </div>
+                                    {/* Item name + price */}
+                                    <div className="flex items-center justify-between mb-2">
+                                      <span style={{ color: '#d0ccc6', fontFamily: "'Cairo', sans-serif", fontSize: '13px', fontWeight: 600, flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', paddingLeft: '8px' }}>
+                                        {item.name}
+                                        {item.customization.quantity > 1 && (
+                                          <span style={{ color: '#5a5868', fontSize: '11px', marginRight: '4px' }}>×{item.customization.quantity}</span>
+                                        )}
+                                      </span>
+                                      <span style={{ color: assigned !== null ? '#a8dce8' : GOLD2, fontFamily: "'Cairo', sans-serif", fontSize: '13px', fontWeight: 700, flexShrink: 0 }}>
+                                        {lineTotal} ج.م
+                                      </span>
+                                    </div>
+                                    {/* Person buttons */}
+                                    <div className="flex gap-1.5 flex-wrap">
+                                      {Array.from({ length: splitCount }, (_, i) => {
+                                        const isMe = assigned === i;
+                                        return (
+                                          <button
+                                            key={i}
+                                            onClick={() => toggleAssign(item.cartId, i)}
+                                            style={{
+                                              width: '32px', height: '26px', borderRadius: '8px',
+                                              fontSize: '11px', fontWeight: 700,
+                                              fontFamily: "'Cairo', sans-serif",
+                                              border: 'none', cursor: 'pointer',
+                                              transition: 'all 0.15s',
+                                              background: isMe
+                                                ? 'linear-gradient(135deg,#a8dce8,#7abccf)'
+                                                : 'rgba(255,255,255,0.07)',
+                                              color: isMe ? '#07070f' : '#5a5868',
+                                              transform: isMe ? 'scale(1.08)' : 'scale(1)',
+                                              boxShadow: isMe ? '0 2px 8px rgba(168,220,232,0.35)' : 'none',
+                                            }}
+                                          >
+                                            {i + 1}
+                                          </button>
+                                        );
+                                      })}
+                                    </div>
+                                  </div>
+                                );
+                              })}
+                            </div>
 
-                              {/* Breakdown pills */}
-                              <div
-                                style={{
-                                  marginTop: '12px',
-                                  paddingTop: '12px',
-                                  borderTop: '1px solid rgba(168,220,232,0.1)',
-                                  display: 'flex', alignItems: 'center',
-                                  justifyContent: 'space-between',
-                                }}
-                                dir="rtl"
-                              >
-                                <span
-                                  style={{
-                                    color: '#3a4858',
-                                    fontFamily: "'Cairo', sans-serif",
-                                    fontSize: '11px',
-                                  }}
-                                >
-                                  الإجمالي {totalPrice} ج.م ÷ {splitCount}
-                                </span>
-                                <span
-                                  style={{
-                                    padding: '3px 10px', borderRadius: '20px', fontSize: '10px',
-                                    background: 'rgba(168,220,232,0.1)',
-                                    color: '#7abccf',
-                                    fontFamily: "'Cairo', sans-serif", fontWeight: 600,
-                                  }}
-                                >
-                                  ✦ حساب الشلة
-                                </span>
+                            {/* ─ Per-person totals ─ */}
+                            <div
+                              style={{ padding: '14px', borderRadius: '16px', background: 'linear-gradient(135deg,rgba(168,220,232,0.07),rgba(168,220,232,0.02))', border: '1px solid rgba(168,220,232,0.18)', marginBottom: '12px' }}
+                            >
+                              <p style={{ color: '#7a7268', fontFamily: "'Cairo', sans-serif", fontSize: '11px', textAlign: 'center', marginBottom: '10px', direction: 'rtl' }}>
+                                ✦ ملخص حساب الشلة
+                              </p>
+                              <div className="flex flex-col gap-2">
+                                {Array.from({ length: splitCount }, (_, i) => {
+                                  const amt = personTotals[i];
+                                  return (
+                                    <motion.div
+                                      key={i}
+                                      layout
+                                      className="flex items-center justify-between"
+                                      dir="rtl"
+                                      style={{ padding: '8px 10px', borderRadius: '10px', background: amt > 0 ? 'rgba(168,220,232,0.08)' : 'rgba(255,255,255,0.02)' }}
+                                    >
+                                      <div className="flex items-center gap-2">
+                                        <span style={{ width: '26px', height: '26px', borderRadius: '8px', background: amt > 0 ? 'linear-gradient(135deg,#a8dce8,#7abccf)' : 'rgba(255,255,255,0.07)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '11px', fontWeight: 800, color: amt > 0 ? '#07070f' : '#3a3848', flexShrink: 0 }}>
+                                          {i + 1}
+                                        </span>
+                                        <span style={{ color: amt > 0 ? '#d0ccc6' : '#3a3848', fontFamily: "'Cairo', sans-serif", fontSize: '12px' }}>
+                                          الشخص {i + 1}
+                                        </span>
+                                      </div>
+                                      <motion.span
+                                        key={amt}
+                                        initial={{ scale: 0.9, opacity: 0.5 }}
+                                        animate={{ scale: 1, opacity: 1 }}
+                                        transition={{ duration: 0.15 }}
+                                        style={{ color: amt > 0 ? '#a8dce8' : '#3a3848', fontFamily: "'Cairo', sans-serif", fontWeight: 800, fontSize: amt > 0 ? '16px' : '13px' }}
+                                      >
+                                        {amt > 0 ? `${amt} ج.م` : '—'}
+                                      </motion.span>
+                                    </motion.div>
+                                  );
+                                })}
+
+                                {/* Unassigned remainder */}
+                                {unassignedTotal > 0 && (
+                                  <div
+                                    className="flex items-center justify-between"
+                                    dir="rtl"
+                                    style={{ padding: '8px 10px', borderRadius: '10px', background: 'rgba(201,153,61,0.07)', border: '1px dashed rgba(201,153,61,0.2)', marginTop: '2px' }}
+                                  >
+                                    <span style={{ color: '#7a5a2a', fontFamily: "'Cairo', sans-serif", fontSize: '12px' }}>غير منسوب</span>
+                                    <span style={{ color: GOLD2, fontFamily: "'Cairo', sans-serif", fontWeight: 700, fontSize: '14px' }}>{unassignedTotal} ج.م</span>
+                                  </div>
+                                )}
                               </div>
-                            </motion.div>
+                            </div>
+
                           </div>
                         </motion.div>
                       )}
