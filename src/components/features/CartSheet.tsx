@@ -9,6 +9,9 @@ const GOLD    = '#f0c862';
 const GOLD2   = '#c9993d';
 const FALLBACK = 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=480&h=360&fit=crop&auto=format&q=85';
 
+type OrderType = 'dine-in' | 'delivery';
+interface DeliveryInfo { name: string; phone: string; address: string; }
+
 function WhatsAppIcon() {
   return (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -17,11 +20,30 @@ function WhatsAppIcon() {
   );
 }
 
-function buildWhatsAppMessage(items: CartItem[], totalPrice: number, tableNumber: string): string {
+function buildWhatsAppMessage(
+  items: CartItem[],
+  totalPrice: number,
+  tableNumber: string,
+  orderType: OrderType = 'dine-in',
+  delivery?: DeliveryInfo
+): string {
   const lines: string[] = [];
-  lines.push('☕ *طلبية sky 7 café*');
-  if (tableNumber.trim()) lines.push(`🪑 *رقم الطاولة: ${tableNumber.trim()}*`);
-  lines.push('');
+
+  if (orderType === 'delivery') {
+    lines.push('🛵 *━━━ طلب توصيل خارجي ━━━*');
+    lines.push('*sky 7 café & lounge*');
+    lines.push('');
+    if (delivery?.name.trim())    lines.push(`👤 *الاسم:* ${delivery.name.trim()}`);
+    if (delivery?.phone.trim())   lines.push(`📱 *الموبايل:* ${delivery.phone.trim()}`);
+    if (delivery?.address.trim()) lines.push(`📍 *العنوان:* ${delivery.address.trim()}`);
+    lines.push('');
+  } else {
+    lines.push('☕ *━━━ طلبية داخل الكافيه ━━━*');
+    lines.push('*sky 7 café & lounge*');
+    if (tableNumber.trim()) lines.push(`🪑 *رقم الطاولة: ${tableNumber.trim()}*`);
+    lines.push('');
+  }
+
   items.forEach((item, idx) => {
     const qty       = item.customization.quantity;
     const lineTotal = item.price * qty;
@@ -30,6 +52,7 @@ function buildWhatsAppMessage(items: CartItem[], totalPrice: number, tableNumber
     if (tags.length > 0) lines.push(`   ${tags.join(' · ')}`);
     if (item.customization.notes) lines.push(`   📝 ${item.customization.notes}`);
   });
+
   lines.push('');
   lines.push(`💰 *الإجمالي: ${totalPrice} ج.م*`);
   return lines.join('\n');
@@ -56,7 +79,18 @@ function getCustomizationTags(item: CartItem): string[] {
 ══════════════════════════════════════════════════════ */
 function WaiterView({ onClose }: { onClose: () => void }) {
   const { items, totalPrice } = useCart();
-  const [tableNumber, setTableNumber] = useState('');
+  const [orderType,       setOrderType]       = useState<OrderType>('dine-in');
+  const [tableNumber,     setTableNumber]     = useState('');
+  const [deliveryName,    setDeliveryName]    = useState('');
+  const [deliveryPhone,   setDeliveryPhone]   = useState('');
+  const [deliveryAddress, setDeliveryAddress] = useState('');
+
+  const handleSend = () => {
+    const msg = buildWhatsAppMessage(items, totalPrice, tableNumber, orderType, {
+      name: deliveryName, phone: deliveryPhone, address: deliveryAddress,
+    });
+    window.open(`https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`, '_blank');
+  };
 
   return (
     <motion.div
@@ -102,31 +136,145 @@ function WaiterView({ onClose }: { onClose: () => void }) {
             </p>
           </div>
 
-          {/* Table number */}
-          <div className="px-5 pb-2" dir="rtl">
+          {/* Order type toggle */}
+          <div className="px-5 pb-3">
             <div style={{
-              display: 'flex', alignItems: 'center', gap: '10px',
-              background: 'rgba(201,153,61,0.07)',
-              border: '1px solid rgba(201,153,61,0.22)',
-              borderRadius: '14px', padding: '10px 14px',
-            }}>
-              <span style={{ fontSize: '18px', flexShrink: 0 }}>🪑</span>
-              <input
-                type="text" inputMode="numeric"
-                placeholder="رقم الطاولة (اختياري)"
-                value={tableNumber}
-                onChange={e => setTableNumber(e.target.value)}
-                maxLength={6}
+              display: 'flex', background: 'var(--surface-1)',
+              border: '1px solid var(--border-2)', borderRadius: '16px',
+              padding: '4px', gap: '4px',
+            }} dir="rtl">
+              <button
+                onClick={() => setOrderType('dine-in')}
                 style={{
-                  flex: 1, background: 'transparent', border: 'none', outline: 'none',
-                  color: 'var(--text-1)', fontFamily: "'Cairo', sans-serif",
-                  fontSize: '14px', fontWeight: 600,
+                  flex: 1, padding: '10px 8px', borderRadius: '12px',
+                  border: 'none', cursor: 'pointer', transition: 'all 0.22s',
+                  fontFamily: "'Cairo', sans-serif", fontWeight: 700, fontSize: '13px',
+                  background: orderType === 'dine-in' ? `linear-gradient(135deg,${GOLD2},${GOLD})` : 'transparent',
+                  color: orderType === 'dine-in' ? '#07070f' : 'var(--text-3)',
+                  boxShadow: orderType === 'dine-in' ? '0 2px 12px rgba(201,153,61,0.30)' : 'none',
                 }}
-              />
+              >🪑 داخل الكافيه</button>
+              <button
+                onClick={() => setOrderType('delivery')}
+                style={{
+                  flex: 1, padding: '10px 8px', borderRadius: '12px',
+                  border: 'none', cursor: 'pointer', transition: 'all 0.22s',
+                  fontFamily: "'Cairo', sans-serif", fontWeight: 700, fontSize: '13px',
+                  background: orderType === 'delivery' ? 'linear-gradient(135deg,#1da851,#25D366)' : 'transparent',
+                  color: orderType === 'delivery' ? '#fff' : 'var(--text-3)',
+                  boxShadow: orderType === 'delivery' ? '0 2px 12px rgba(37,211,102,0.30)' : 'none',
+                }}
+              >🛵 توصيل خارجي</button>
             </div>
           </div>
 
-          <div style={{ margin: '12px 20px', borderTop: '1px dashed rgba(201,153,61,0.3)' }} />
+          {/* Dine-in: table number | Delivery: customer info */}
+          <div className="px-5 pb-2">
+            <AnimatePresence mode="wait">
+              {orderType === 'dine-in' ? (
+                <motion.div key="dine-in"
+                  initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }}
+                  transition={{ duration: 0.18 }}
+                >
+                  <div dir="rtl" style={{
+                    display: 'flex', alignItems: 'center', gap: '10px',
+                    background: 'rgba(201,153,61,0.07)', border: '1px solid rgba(201,153,61,0.22)',
+                    borderRadius: '14px', padding: '10px 14px',
+                  }}>
+                    <span style={{ fontSize: '18px', flexShrink: 0 }}>🪑</span>
+                    <input
+                      type="text" inputMode="numeric"
+                      placeholder="رقم الطاولة (اختياري)"
+                      value={tableNumber}
+                      onChange={e => setTableNumber(e.target.value)}
+                      maxLength={6}
+                      style={{
+                        flex: 1, background: 'transparent', border: 'none', outline: 'none',
+                        color: 'var(--text-1)', fontFamily: "'Cairo', sans-serif",
+                        fontSize: '14px', fontWeight: 600,
+                      }}
+                    />
+                  </div>
+                </motion.div>
+              ) : (
+                <motion.div key="delivery"
+                  initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }}
+                  transition={{ duration: 0.18 }}
+                  className="flex flex-col gap-2" dir="rtl"
+                >
+                  {/* Label */}
+                  <div style={{
+                    padding: '8px 12px', borderRadius: '10px', marginBottom: '2px',
+                    background: 'rgba(37,211,102,0.07)', border: '1px dashed rgba(37,211,102,0.22)',
+                    textAlign: 'center',
+                  }}>
+                    <span style={{ color: '#25D366', fontFamily: "'Cairo', sans-serif", fontSize: '11px', fontWeight: 600 }}>
+                      🛵 بيانات التوصيل — ستظهر في رسالة الواتساب
+                    </span>
+                  </div>
+                  {/* Name */}
+                  <div style={{
+                    display: 'flex', alignItems: 'center', gap: '10px',
+                    background: 'rgba(37,211,102,0.05)', border: '1px solid rgba(37,211,102,0.18)',
+                    borderRadius: '14px', padding: '10px 14px',
+                  }}>
+                    <span style={{ fontSize: '16px', flexShrink: 0 }}>👤</span>
+                    <input
+                      type="text"
+                      placeholder="اسم العميل"
+                      value={deliveryName}
+                      onChange={e => setDeliveryName(e.target.value)}
+                      style={{
+                        flex: 1, background: 'transparent', border: 'none', outline: 'none',
+                        color: 'var(--text-1)', fontFamily: "'Cairo', sans-serif",
+                        fontSize: '14px', fontWeight: 600,
+                      }}
+                    />
+                  </div>
+                  {/* Phone */}
+                  <div style={{
+                    display: 'flex', alignItems: 'center', gap: '10px',
+                    background: 'rgba(37,211,102,0.05)', border: '1px solid rgba(37,211,102,0.18)',
+                    borderRadius: '14px', padding: '10px 14px',
+                  }}>
+                    <span style={{ fontSize: '16px', flexShrink: 0 }}>📱</span>
+                    <input
+                      type="tel" inputMode="numeric"
+                      placeholder="رقم الموبايل"
+                      value={deliveryPhone}
+                      onChange={e => setDeliveryPhone(e.target.value)}
+                      style={{
+                        flex: 1, background: 'transparent', border: 'none', outline: 'none',
+                        color: 'var(--text-1)', fontFamily: "'Cairo', sans-serif",
+                        fontSize: '14px', fontWeight: 600,
+                      }}
+                    />
+                  </div>
+                  {/* Address */}
+                  <div style={{
+                    display: 'flex', alignItems: 'flex-start', gap: '10px',
+                    background: 'rgba(37,211,102,0.05)', border: '1px solid rgba(37,211,102,0.18)',
+                    borderRadius: '14px', padding: '10px 14px',
+                  }}>
+                    <span style={{ fontSize: '16px', flexShrink: 0, marginTop: '2px' }}>📍</span>
+                    <textarea
+                      placeholder="العنوان بالتفصيل"
+                      value={deliveryAddress}
+                      onChange={e => setDeliveryAddress(e.target.value)}
+                      rows={3}
+                      style={{
+                        flex: 1, background: 'transparent', border: 'none', outline: 'none',
+                        color: 'var(--text-1)', fontFamily: "'Cairo', sans-serif",
+                        fontSize: '14px', fontWeight: 600, resize: 'none', lineHeight: '1.5',
+                      }}
+                    />
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
+          <div style={{ margin: '8px 20px', borderTop: '1px dashed rgba(201,153,61,0.3)' }} />
 
           {/* Items */}
           <div className="px-5 flex flex-col gap-4" dir="rtl">
@@ -180,10 +328,7 @@ function WaiterView({ onClose }: { onClose: () => void }) {
           <div className="px-5 pb-6">
             <motion.button
               whileTap={{ scale: 0.97 }}
-              onClick={() => {
-                const msg = buildWhatsAppMessage(items, totalPrice, tableNumber);
-                window.open(`https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`, '_blank');
-              }}
+              onClick={handleSend}
               style={{
                 width: '100%', padding: '15px', borderRadius: '16px', marginTop: '10px',
                 fontWeight: 700, fontSize: '15px', fontFamily: "'Cairo', sans-serif",
