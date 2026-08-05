@@ -328,7 +328,7 @@ export default function SurpriseModal({ onClose }: { onClose: () => void }) {
               </div>
               <h2 className="font-bold text-lg mb-1"
                 style={{ color: 'var(--text-1)', fontFamily: "'Cairo',sans-serif" }}>
-                ابهرني! ✨
+                Ai Barista🤵🏻‍♂️
               </h2>
               <p className="text-xs"
                 style={{ color: 'var(--text-2)', fontFamily: "'Cairo',sans-serif" }}>
