@@ -116,7 +116,7 @@ export default function Footer() {
             <div className="flex-1 min-w-0">
               <p className="text-[11px] mb-0.5" style={{ color: 'var(--text-2)', fontFamily: "'Cairo',sans-serif" }}>العنوان</p>
               <p className="text-sm font-semibold" style={{ color: 'var(--text-1)', fontFamily: "'Cairo',sans-serif" }}>
-                القاهرة، مصر {/* ← استبدل بالعنوان الحقيقي */}
+                الشرقية - كفرصقر - علي البحر بجوار الاهلي تمكين {/* ← استبدل بالعنوان الحقيقي */}
               </p>
             </div>
           </div>
@@ -155,7 +155,7 @@ export default function Footer() {
             <div className="flex-1 min-w-0">
               <p className="text-[11px] mb-0.5" style={{ color: 'var(--text-2)', fontFamily: "'Cairo',sans-serif" }}>مواعيد العمل</p>
               <p className="text-sm font-semibold" style={{ color: 'var(--text-1)', fontFamily: "'Cairo',sans-serif" }}>
-                يومياً — 8 ص حتى 2 ص {/* ← استبدل بالمواعيد الحقيقية */}
+                24 ساعة {/* ← استبدل بالمواعيد الحقيقية */}
               </p>
             </div>
           </div>
