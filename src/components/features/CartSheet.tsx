@@ -4,7 +4,7 @@ import { X as CloseIcon, Trash2, Minus, Plus, ShoppingBag, Eye, Users, ChevronDo
 import { useCart } from '@/stores/cartStore';
 import type { CartItem, IceLevel } from '@/types/cart';
 
-const PHONE   = '201128727999';
+const PHONE   = '201000000000';
 const GOLD    = '#f0c862';
 const GOLD2   = '#c9993d';
 const FALLBACK = 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=480&h=360&fit=crop&auto=format&q=85';
@@ -30,17 +30,17 @@ function buildWhatsAppMessage(
   const lines: string[] = [];
 
   if (orderType === 'delivery') {
-    lines.push('*--- طلب توصيل خارجي ---*');
+    lines.push('🛵 *--- طلب توصيل خارجي ---*');
     lines.push('*sky 7 cafe & lounge*');
     lines.push('');
-    if (delivery?.name.trim())    lines.push(`*الاسم:* ${delivery.name.trim()}`);
-    if (delivery?.phone.trim())   lines.push(`*الموبايل:* ${delivery.phone.trim()}`);
-    if (delivery?.address.trim()) lines.push(`*العنوان:* ${delivery.address.trim()}`);
+    if (delivery?.name.trim())    lines.push(`👤 *الاسم:* ${delivery.name.trim()}`);
+    if (delivery?.phone.trim())   lines.push(`📱 *الموبايل:* ${delivery.phone.trim()}`);
+    if (delivery?.address.trim()) lines.push(`📍 *العنوان:* ${delivery.address.trim()}`);
     lines.push('');
   } else {
-    lines.push('*--- طلبية داخل الكافيه ---*');
+    lines.push('🪑 *--- طلبية داخل الكافيه ---*');
     lines.push('*sky 7 cafe & lounge*');
-    if (tableNumber.trim()) lines.push(`*رقم الطاولة: ${tableNumber.trim()}*`);
+    if (tableNumber.trim()) lines.push(`🪑 *رقم الطاولة: ${tableNumber.trim()}*`);
     lines.push('');
   }
 
@@ -54,7 +54,7 @@ function buildWhatsAppMessage(
   });
 
   lines.push('');
-  lines.push(`*الاجمالي: ${totalPrice} ج.م*`);
+  lines.push(`💰 *الاجمالي: ${totalPrice} ج.م*`);
   return lines.join('\n');
 }
 
