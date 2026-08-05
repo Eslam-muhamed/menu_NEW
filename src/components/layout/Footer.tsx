@@ -1,4 +1,4 @@
-import { MapPin, Phone, Clock } from 'lucide-react';
+import { MapPin, Phone, Clock, Github, Linkedin, Code2 } from 'lucide-react';
 
 function WhatsAppIcon() {
   return (
@@ -8,10 +8,124 @@ function WhatsAppIcon() {
   );
 }
 
+/* ── Developer info — update these ───────────────────────── */
+const DEV_NAME      = 'اسم المطور';            // ← اسمك
+const DEV_GITHUB    = 'https://github.com/';   // ← رابط GitHub
+const DEV_LINKEDIN  = 'https://linkedin.com/'; // ← رابط LinkedIn
+const DEV_WHATSAPP  = '01090992723';          // ← رقم واتساب المطور
+const DEV_WA_MSG    = encodeURIComponent('مرحباً، شفت شغلك على موقع sky 7 وعاوز أتواصل معاك');
+
 const PHONE        = '201128727999'; // ← استبدل بالرقم الحقيقي
 const DISPLAY_PHONE = '201128727999';
 const MSG          = encodeURIComponent('مرحباً، أريد الطلب من sky 7 ☕');
 const MAPS_URL     = 'https://maps.google.com/?q=sky+7+cafe+egypt'; // ← استبدل بالرابط الحقيقي
+
+/* ── Dev Credit Component ────────────────────────────────── */
+function DevCredit() {
+  return (
+    <div
+      className="py-5 px-6"
+      style={{ borderTop: '1px solid var(--border-1)' }}
+    >
+      <div className="max-w-sm mx-auto">
+        {/* Label */}
+        <p
+          className="text-center text-[10px] tracking-[0.3em] uppercase mb-3"
+          style={{ color: 'var(--text-4)', fontFamily: "'Inter',sans-serif" }}
+        >
+          Developed by
+        </p>
+
+        {/* Dev card */}
+        <div
+          className="flex items-center justify-between gap-4 px-4 py-3 rounded-2xl transition-all duration-300"
+          style={{
+            background: 'var(--surface-1)',
+            border: '1px solid var(--border-1)',
+          }}
+        >
+          {/* Avatar + name */}
+          <div className="flex items-center gap-3">
+            <div
+              className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
+              style={{
+                background: 'linear-gradient(135deg, rgba(201,153,61,0.15), rgba(240,200,98,0.08))',
+                border: '1px solid rgba(201,153,61,0.25)',
+              }}
+            >
+              <Code2 className="w-4 h-4" style={{ color: '#f0c862' }} />
+            </div>
+            <div>
+              <p
+                className="text-sm font-bold leading-tight"
+                style={{ color: 'var(--text-1)', fontFamily: "'Cairo','Inter',sans-serif" }}
+              >
+                {DEV_NAME}
+              </p>
+              <p
+                className="text-[11px]"
+                style={{ color: 'var(--text-3)', fontFamily: "'Inter',sans-serif" }}
+              >
+                Full-stack Developer
+              </p>
+            </div>
+          </div>
+
+          {/* Social links */}
+          <div className="flex items-center gap-1.5">
+            {/* GitHub */}
+            <a
+              href={DEV_GITHUB}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-8 h-8 flex items-center justify-center rounded-xl no-underline transition-all duration-200 hover:scale-110 active:scale-95"
+              style={{
+                background: 'var(--surface-3)',
+                border: '1px solid var(--border-2)',
+                color: 'var(--text-2)',
+              }}
+              aria-label="GitHub"
+            >
+              <Github className="w-3.5 h-3.5" />
+            </a>
+
+            {/* LinkedIn */}
+            <a
+              href={DEV_LINKEDIN}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-8 h-8 flex items-center justify-center rounded-xl no-underline transition-all duration-200 hover:scale-110 active:scale-95"
+              style={{
+                background: 'rgba(10,102,194,0.12)',
+                border: '1px solid rgba(10,102,194,0.22)',
+                color: '#4a9fd6',
+              }}
+              aria-label="LinkedIn"
+            >
+              <Linkedin className="w-3.5 h-3.5" />
+            </a>
+
+            {/* WhatsApp */}
+            <a
+              href={`https://wa.me/${DEV_WHATSAPP}?text=${DEV_WA_MSG}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-8 h-8 flex items-center justify-center rounded-xl no-underline transition-all duration-200 hover:scale-110 active:scale-95"
+              style={{
+                background: 'linear-gradient(135deg,rgba(29,168,81,0.15),rgba(37,211,102,0.08))',
+                border: '1px solid rgba(37,211,102,0.25)',
+                color: '#4ade80',
+              }}
+              aria-label="واتساب المطور"
+            >
+              <WhatsAppIcon />
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 const infoCardStyle: React.CSSProperties = {
   background: 'var(--surface-1)',
@@ -74,7 +188,7 @@ export default function Footer() {
             <div className="flex-1 min-w-0">
               <p className="text-[11px] mb-0.5" style={{ color: 'var(--text-2)', fontFamily: "'Cairo',sans-serif" }}>العنوان</p>
               <p className="text-sm font-semibold" style={{ color: 'var(--text-1)', fontFamily: "'Cairo',sans-serif" }}>
-                الشرقيه - كفر صقر- بجوار الاهلي تمكين للتمويل {/* ← استبدل بالعنوان الحقيقي */}
+                الشرقيه - كفرصقر - علي البحر بجوار الأهلي تمكين ( لتمويل المشاريع ) {/* ← استبدل بالعنوان الحقيقي */}
               </p>
             </div>
           </div>
@@ -113,7 +227,7 @@ export default function Footer() {
             <div className="flex-1 min-w-0">
               <p className="text-[11px] mb-0.5" style={{ color: 'var(--text-2)', fontFamily: "'Cairo',sans-serif" }}>مواعيد العمل</p>
               <p className="text-sm font-semibold" style={{ color: 'var(--text-1)', fontFamily: "'Cairo',sans-serif" }}>
-               24 ساعه {/* ← استبدل بالمواعيد الحقيقية */}
+                يومياً — 8 ص حتى 2 ص {/* ← استبدل بالمواعيد الحقيقية */}
               </p>
             </div>
           </div>
@@ -167,6 +281,9 @@ export default function Footer() {
           © {year} sky 7 Café · All rights reserved
         </p>
       </div>
+
+      {/* ── Developer Credit ──────────────────────────────────────── */}
+      <DevCredit />
 
     </footer>
   );
