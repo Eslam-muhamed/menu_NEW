@@ -191,7 +191,7 @@ function SectionHeader() {
 
 export default function OffersSection() {
   return (
-    <section className="pt-8 pb-2 max-w-5xl mx-auto overflow-hidden">
+    <section id="offers-section" className="pt-8 pb-2 max-w-5xl mx-auto overflow-hidden">
       <SectionHeader />
 
       <div className="md:hidden flex gap-3 overflow-x-auto px-4 pb-2 scrollbar-hide snap-x snap-mandatory">
