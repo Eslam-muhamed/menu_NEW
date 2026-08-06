@@ -9,6 +9,7 @@ import WhatsAppButton from '@/components/features/WhatsAppButton';
 import XOButton from '@/components/features/XOButton';
 import TopHeader from '@/components/features/TopHeader';
 import OffersSection from '@/components/features/OffersSection';
+import GoogleReviewSection from '@/components/features/GoogleReviewSection';
 import { categories, menuItems } from '@/constants/menuData';
 
 export default function MenuPage() {
@@ -157,6 +158,7 @@ export default function MenuPage() {
 
       <SurpriseButton />
 
+      <GoogleReviewSection />
       <Footer />
     </div>
   );
