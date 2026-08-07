@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X as CloseIcon, Trash2, Minus, Plus, ShoppingBag, Eye, Users, ChevronDown } from 'lucide-react';
 import { useCart } from '@/stores/cartStore';
@@ -9,7 +9,11 @@ const GOLD    = '#f0c862';
 const GOLD2   = '#c9993d';
 const FALLBACK = 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=480&h=360&fit=crop&auto=format&q=85';
 
-type OrderType = 'dine-in' | 'delivery';
+const VODAFONE_CASH = '010XXXXXXXX'; // TODO: ضع رقم فودافون كاش الحقيقي
+const INSTAPAY_ID   = '010XXXXXXXX'; // TODO: ضع معرف انستاباي الحقيقي
+
+type OrderType    = 'dine-in' | 'delivery';
+type PaymentMethod = 'cash' | 'vodafone' | 'instapay';
 interface DeliveryInfo { name: string; phone: string; address: string; }
 
 function WhatsAppIcon() {
@@ -25,7 +29,9 @@ function buildWhatsAppMessage(
   totalPrice: number,
   tableNumber: string,
   orderType: OrderType = 'dine-in',
-  delivery?: DeliveryInfo
+  delivery?: DeliveryInfo,
+  paymentMethod?: PaymentMethod,
+  hasReceipt?: boolean
 ): string {
   const lines: string[] = [];
 
@@ -36,6 +42,11 @@ function buildWhatsAppMessage(
     if (delivery?.name.trim())    lines.push(`👤 *الاسم:* ${delivery.name.trim()}`);
     if (delivery?.phone.trim())   lines.push(`📱 *الموبايل:* ${delivery.phone.trim()}`);
     if (delivery?.address.trim()) lines.push(`📍 *العنوان:* ${delivery.address.trim()}`);
+    if (paymentMethod) {
+      const pmLabels: Record<PaymentMethod, string> = { cash: 'نقدي', vodafone: 'فودافون كاش', instapay: 'انستاباي' };
+      lines.push(`💳 *طريقة الدفع:* ${pmLabels[paymentMethod]}`);
+      if (hasReceipt) lines.push('📎 *وصل الدفع:* سيتم إرساله في المحادثة');
+    }
     lines.push('');
   } else {
     lines.push('🪑 *--- طلبية داخل الكافيه ---*');
@@ -83,13 +94,40 @@ function WaiterView({ onClose }: { onClose: () => void }) {
   const [tableNumber,     setTableNumber]     = useState('');
   const [deliveryName,    setDeliveryName]    = useState('');
   const [deliveryPhone,   setDeliveryPhone]   = useState('');
-  const [deliveryAddress, setDeliveryAddress] = useState('');
+  const [deliveryAddress,  setDeliveryAddress]  = useState('');
+  const [paymentMethod,    setPaymentMethod]    = useState<PaymentMethod>('cash');
+  const [receiptPreview,   setReceiptPreview]   = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => setReceiptPreview((ev.target?.result as string) ?? null);
+    reader.readAsDataURL(file);
+  };
 
   const handleSend = () => {
-    const msg = buildWhatsAppMessage(items, totalPrice, tableNumber, orderType, {
-      name: deliveryName, phone: deliveryPhone, address: deliveryAddress,
-    });
+    const msg = buildWhatsAppMessage(
+      items, totalPrice, tableNumber, orderType,
+      { name: deliveryName, phone: deliveryPhone, address: deliveryAddress },
+      orderType === 'delivery' ? paymentMethod : undefined,
+      orderType === 'delivery' ? !!receiptPreview : false,
+    );
     window.open(`https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`, '_blank');
+    if (orderType === 'delivery' && receiptPreview) {
+      const win = window.open('', '_blank');
+      if (win) {
+        win.document.write(
+          '<!DOCTYPE html><html dir="rtl"><head><meta charset="utf-8"><title>وصل الدفع</title></head>' +
+          '<body style="margin:0;padding:20px;background:#0a0a10;display:flex;flex-direction:column;align-items:center;gap:16px;font-family:Cairo,sans-serif;min-height:100vh;box-sizing:border-box;">' +
+          '<p style="color:#25D366;font-size:15px;text-align:center;margin:0;font-weight:700;">📎 أرسل هذه الصورة في محادثة الواتساب بعد إرسال الطلب</p>' +
+          '<img src="' + receiptPreview + '" style="max-width:100%;max-height:85vh;object-fit:contain;border-radius:14px;" />' +
+          '</body></html>'
+        );
+        win.document.close();
+      }
+    }
   };
 
   return (
@@ -269,6 +307,142 @@ function WaiterView({ onClose }: { onClose: () => void }) {
                       }}
                     />
                   </div>
+
+                  {/* ── Payment Method ──────────────────────────── */}
+                  <div dir="rtl">
+                    <p style={{ color: 'rgba(37,211,102,0.75)', fontFamily: "'Cairo', sans-serif", fontSize: '11px', fontWeight: 700, marginBottom: '8px' }}>
+                      💳 طريقة الدفع
+                    </p>
+                    <div className="flex gap-2">
+                      {([
+                        { key: 'cash',     label: '💵 نقدي' },
+                        { key: 'vodafone', label: '📱 فودافون كاش' },
+                        { key: 'instapay', label: '🏦 انستاباي' },
+                      ] as { key: PaymentMethod; label: string }[]).map(opt => (
+                        <button
+                          key={opt.key}
+                          onClick={() => setPaymentMethod(opt.key)}
+                          style={{
+                            flex: 1, padding: '9px 3px', borderRadius: '12px',
+                            border: `1.5px solid ${paymentMethod === opt.key ? 'rgba(37,211,102,0.55)' : 'rgba(37,211,102,0.15)'}`,
+                            background: paymentMethod === opt.key ? 'rgba(37,211,102,0.13)' : 'transparent',
+                            color: paymentMethod === opt.key ? '#25D366' : 'var(--text-4)',
+                            fontFamily: "'Cairo', sans-serif", fontSize: '10px', fontWeight: 700,
+                            cursor: 'pointer', transition: 'all 0.18s',
+                          }}
+                        >
+                          {opt.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* ── Wallet number ───────────────────────────── */}
+                  <AnimatePresence>
+                    {(paymentMethod === 'vodafone' || paymentMethod === 'instapay') && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.22 }}
+                        style={{ overflow: 'hidden' }}
+                      >
+                        <div style={{
+                          padding: '12px 16px', borderRadius: '14px',
+                          background: 'rgba(37,211,102,0.06)',
+                          border: '1px dashed rgba(37,211,102,0.32)',
+                          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                        }} dir="rtl">
+                          <div>
+                            <p style={{ color: 'rgba(37,211,102,0.55)', fontFamily: "'Cairo', sans-serif", fontSize: '10px', marginBottom: '4px' }}>
+                              {paymentMethod === 'vodafone' ? 'ادفع على رقم فودافون كاش' : 'ادفع على معرف انستاباي'}
+                            </p>
+                            <p style={{ color: '#25D366', fontFamily: "'Cairo', sans-serif", fontWeight: 800, fontSize: '18px', letterSpacing: '0.06em' }}>
+                              {paymentMethod === 'vodafone' ? VODAFONE_CASH : INSTAPAY_ID}
+                            </p>
+                          </div>
+                          <span style={{ fontSize: '30px', lineHeight: 1 }}>
+                            {paymentMethod === 'vodafone' ? '📱' : '🏦'}
+                          </span>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+
+                  {/* ── Receipt upload ──────────────────────────── */}
+                  <AnimatePresence>
+                    {paymentMethod !== 'cash' && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.22 }}
+                        style={{ overflow: 'hidden' }}
+                      >
+                        {!receiptPreview ? (
+                          <button
+                            onClick={() => fileInputRef.current?.click()}
+                            style={{
+                              width: '100%', padding: '16px', borderRadius: '14px',
+                              border: '1.5px dashed rgba(37,211,102,0.25)',
+                              background: 'rgba(37,211,102,0.03)',
+                              color: 'var(--text-4)',
+                              fontFamily: "'Cairo', sans-serif", fontSize: '13px', fontWeight: 600,
+                              cursor: 'pointer',
+                              display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
+                            }}
+                          >
+                            <span style={{ fontSize: '20px' }}>📎</span>
+                            ارفع صورة الوصل (اختياري)
+                          </button>
+                        ) : (
+                          <motion.div
+                            initial={{ opacity: 0, scale: 0.96 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            style={{
+                              position: 'relative', borderRadius: '14px',
+                              overflow: 'hidden', border: '1.5px solid rgba(37,211,102,0.38)',
+                            }}
+                          >
+                            <img
+                              src={receiptPreview}
+                              alt="وصل الدفع"
+                              style={{ width: '100%', maxHeight: '190px', objectFit: 'cover', display: 'block' }}
+                            />
+                            <button
+                              onClick={() => {
+                                setReceiptPreview(null);
+                                if (fileInputRef.current) fileInputRef.current.value = '';
+                              }}
+                              style={{
+                                position: 'absolute', top: '8px', left: '8px',
+                                width: '30px', height: '30px', borderRadius: '50%',
+                                background: 'rgba(0,0,0,0.65)', border: 'none',
+                                color: '#fff', cursor: 'pointer', fontSize: '13px',
+                                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                              }}
+                            >✕</button>
+                            <div style={{
+                              position: 'absolute', bottom: 0, left: 0, right: 0,
+                              padding: '10px 14px',
+                              background: 'linear-gradient(to top,rgba(0,0,0,0.82),transparent)',
+                              color: '#25D366', fontFamily: "'Cairo', sans-serif",
+                              fontSize: '12px', fontWeight: 700,
+                            }} dir="rtl">
+                              ✓ تم رفع الوصل — سيُفتح تلقائياً بعد إرسال الطلب
+                            </div>
+                          </motion.div>
+                        )}
+                        <input
+                          ref={fileInputRef}
+                          type="file"
+                          accept="image/*"
+                          style={{ display: 'none' }}
+                          onChange={handleFileChange}
+                        />
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </motion.div>
               )}
             </AnimatePresence>
