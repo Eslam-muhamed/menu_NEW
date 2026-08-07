@@ -82,7 +82,7 @@ export default function MenuCard({ item, index, baseDelay = 0 }: MenuCardProps) 
           }}
         >
           {/* ── MOBILE LAYOUT ── */}
-          <div className="flex sm:hidden items-stretch min-h-[88px]" dir="rtl">
+          <div className="flex sm:hidden items-stretch min-h-[108px]" dir="rtl">
             {/* Text side */}
             <div className="flex-1 flex flex-col justify-between px-3 py-2.5 overflow-hidden">
               <div>
@@ -95,14 +95,14 @@ export default function MenuCard({ item, index, baseDelay = 0 }: MenuCardProps) 
                   </span>
                 )}
                 <h3
-                  className="font-semibold text-sm leading-tight"
-                  style={{ color: 'var(--text-1)', fontFamily: "'Cairo', 'Inter', sans-serif" }}
+                  className="font-semibold leading-tight"
+                  style={{ color: 'var(--text-1)', fontFamily: "'Cairo', 'Inter', sans-serif", fontSize: '15px' }}
                 >
                   {item.name}
                 </h3>
                 <p
-                  className="text-xs mt-0.5 line-clamp-2 leading-relaxed"
-                  style={{ color: 'var(--text-2)', fontFamily: "'Cairo', sans-serif" }}
+                  className="mt-1 line-clamp-2 leading-relaxed"
+                  style={{ color: 'var(--text-2)', fontFamily: "'Cairo', sans-serif", fontSize: '12px' }}
                 >
                   {item.description}
                 </p>
@@ -110,8 +110,8 @@ export default function MenuCard({ item, index, baseDelay = 0 }: MenuCardProps) 
               {/* Price + add button row */}
               <div className="flex items-center justify-between mt-1.5 gap-2">
                 <span
-                  className="text-xs font-bold px-2.5 py-1 rounded-full"
-                  style={{ backgroundColor: '#c9993d', color: '#07070f', fontFamily: "'Cairo', sans-serif" }}
+                  className="font-bold px-3 py-1.5 rounded-full"
+                  style={{ backgroundColor: '#c9993d', color: '#07070f', fontFamily: "'Cairo', sans-serif", fontSize: '13px' }}
                 >
                   {item.price} {item.currency}
                 </span>
@@ -119,7 +119,7 @@ export default function MenuCard({ item, index, baseDelay = 0 }: MenuCardProps) 
               </div>
             </div>
             {/* Image side */}
-            <div className="relative flex-shrink-0 overflow-hidden" style={{ width: '90px' }}>
+            <div className="relative flex-shrink-0 overflow-hidden" style={{ width: '110px' }}>
               <img
                 src={item.image}
                 alt={item.name}
@@ -137,7 +137,7 @@ export default function MenuCard({ item, index, baseDelay = 0 }: MenuCardProps) 
           {/* ── DESKTOP LAYOUT ── */}
           <div className="hidden sm:block">
             {/* Image */}
-            <div className="relative overflow-hidden" style={{ height: '170px' }}>
+            <div className="relative overflow-hidden" style={{ height: '190px' }}>
               <img
                 src={item.image}
                 alt={item.name}
@@ -171,14 +171,14 @@ export default function MenuCard({ item, index, baseDelay = 0 }: MenuCardProps) 
             {/* Content */}
             <div className="p-3 pb-3" dir="rtl">
               <h3
-                className="font-semibold text-sm leading-snug mb-1"
-                style={{ color: 'var(--text-1)', fontFamily: "'Cairo', 'Inter', sans-serif" }}
+                className="font-semibold leading-snug mb-1"
+                style={{ color: 'var(--text-1)', fontFamily: "'Cairo', 'Inter', sans-serif", fontSize: '15px' }}
               >
                 {item.name}
               </h3>
               <p
-                className="text-xs leading-relaxed line-clamp-2 mb-3"
-                style={{ color: 'var(--text-2)', fontFamily: "'Cairo', sans-serif" }}
+                className="leading-relaxed line-clamp-2 mb-3"
+                style={{ color: 'var(--text-2)', fontFamily: "'Cairo', sans-serif", fontSize: '12px' }}
               >
                 {item.description}
               </p>
