@@ -118,6 +118,27 @@ export default function TopHeader() {
           </AnimatePresence>
         </button>
 
+        {/* ── CENTER: Reviews shortcut ───────────────────── */}
+        <button
+          onClick={() =>
+            document.getElementById('google-reviews-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+          }
+          className="flex items-center gap-1.5 rounded-full transition-all duration-200 hover:scale-[1.03] active:scale-95"
+          style={{
+            height: '34px',
+            padding: '0 12px',
+            background: 'rgba(251,188,5,0.10)',
+            border: '1px solid rgba(251,188,5,0.28)',
+            cursor: 'pointer',
+          }}
+          aria-label="تقييمات العملاء"
+        >
+          <span style={{ fontSize: '13px', lineHeight: 1 }}>⭐</span>
+          <span style={{ color: '#fbbc05', fontFamily: "'Cairo', sans-serif", fontSize: '12px', fontWeight: 700 }}>
+            تقييمات
+          </span>
+        </button>
+
         {/* ── RIGHT: Theme toggle + Brand ─────────────────── */}
         <div className="flex items-center gap-2" dir="rtl">
           {/* Brand */}

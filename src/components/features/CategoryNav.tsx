@@ -60,24 +60,6 @@ export default function CategoryNav({ categories, activeCategory, onCategoryChan
           <span>العروض</span>
         </button>
 
-        {/* ── Reviews shortcut ─────────────────────────── */}
-        <button
-          onClick={() => {
-            document.getElementById('google-reviews-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }}
-          className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-body font-semibold whitespace-nowrap flex-shrink-0 transition-all duration-300 min-h-[44px]"
-          style={{
-            background: 'linear-gradient(135deg, rgba(251,188,5,0.12), rgba(234,67,53,0.06))',
-            border: '1.5px solid rgba(251,188,5,0.32)',
-            color: '#fbbc05',
-            fontFamily: "'Cairo', 'Inter', system-ui, sans-serif",
-          }}
-          aria-label="تقييمات العملاء"
-        >
-          <span className="text-base leading-none" aria-hidden="true">⭐</span>
-          <span>تقييمات</span>
-        </button>
-
         {/* Divider */}
         <div
           className="flex-shrink-0 self-stretch w-px mx-0.5"
