@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X as CloseIcon, Trash2, Minus, Plus, ShoppingBag, Eye, Users, ChevronDown } from 'lucide-react';
 import { useCart } from '@/stores/cartStore';
+import { useTable } from '@/stores/tableStore';
 import type { CartItem, IceLevel } from '@/types/cart';
 
 const PHONE   = '201128727999';
@@ -88,8 +89,8 @@ function getCustomizationTags(item: CartItem): string[] {
 ══════════════════════════════════════════════════════ */
 function WaiterView({ onClose }: { onClose: () => void }) {
   const { items, totalPrice } = useCart();
+  const { tableNumber }                          = useTable();
   const [orderType,       setOrderType]       = useState<OrderType>('dine-in');
-  const [tableNumber,     setTableNumber]     = useState('');
   const [deliveryName,    setDeliveryName]    = useState('');
   const [deliveryPhone,   setDeliveryPhone]   = useState('');
   const [deliveryAddress,  setDeliveryAddress]  = useState('');
@@ -97,7 +98,7 @@ function WaiterView({ onClose }: { onClose: () => void }) {
 
   const handleSend = () => {
     const msg = buildWhatsAppMessage(
-      items, totalPrice, tableNumber, orderType,
+      items, totalPrice, tableNumber ?? '', orderType,
       { name: deliveryName, phone: deliveryPhone, address: deliveryAddress },
       orderType === 'delivery' ? paymentMethod : undefined,
     );
@@ -191,21 +192,25 @@ function WaiterView({ onClose }: { onClose: () => void }) {
                   <div dir="rtl" style={{
                     display: 'flex', alignItems: 'center', gap: '10px',
                     background: 'rgba(201,153,61,0.07)', border: '1px solid rgba(201,153,61,0.22)',
-                    borderRadius: '14px', padding: '10px 14px',
+                    borderRadius: '14px', padding: '12px 16px',
                   }}>
-                    <span style={{ fontSize: '18px', flexShrink: 0 }}>🪑</span>
-                    <input
-                      type="text" inputMode="numeric"
-                      placeholder="رقم الطاولة (اختياري)"
-                      value={tableNumber}
-                      onChange={e => setTableNumber(e.target.value)}
-                      maxLength={6}
-                      style={{
-                        flex: 1, background: 'transparent', border: 'none', outline: 'none',
-                        color: 'var(--text-1)', fontFamily: "'Cairo', sans-serif",
-                        fontSize: '14px', fontWeight: 600,
-                      }}
-                    />
+                    <span style={{ fontSize: '20px', flexShrink: 0 }}>🪑</span>
+                    <div>
+                      {tableNumber ? (
+                        <>
+                          <p style={{ color: 'rgba(201,153,61,0.6)', fontFamily: "'Cairo', sans-serif", fontSize: '10px', marginBottom: '2px' }}>
+                            رقم الطاولة
+                          </p>
+                          <p style={{ color: '#f0c862', fontFamily: "'Cairo', sans-serif", fontWeight: 800, fontSize: '22px', lineHeight: 1 }}>
+                            {tableNumber}
+                          </p>
+                        </>
+                      ) : (
+                        <p style={{ color: 'var(--text-3)', fontFamily: "'Cairo', sans-serif", fontSize: '13px', fontWeight: 600 }}>
+                          امسح QR كود الطاولة لتحديد رقمها
+                        </p>
+                      )}
+                    </div>
                   </div>
                 </motion.div>
               ) : (
