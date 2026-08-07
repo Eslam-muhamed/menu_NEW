@@ -4,7 +4,7 @@ import { X as CloseIcon, Trash2, Minus, Plus, ShoppingBag, Eye, Users, ChevronDo
 import { useCart } from '@/stores/cartStore';
 import type { CartItem, IceLevel } from '@/types/cart';
 
-const PHONE   = '201000000000';
+const PHONE   = '201128727999';
 const GOLD    = '#f0c862';
 const GOLD2   = '#c9993d';
 const FALLBACK = 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=480&h=360&fit=crop&auto=format&q=85';
