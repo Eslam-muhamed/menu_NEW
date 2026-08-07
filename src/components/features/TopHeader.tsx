@@ -55,7 +55,7 @@ export default function TopHeader() {
           onClick={() => setOpen(true)}
           className="relative flex items-center gap-2 rounded-xl transition-all duration-200 hover:scale-[1.03] active:scale-95"
           style={{
-            height:     '38px',
+            height:     tableNumber ? '44px' : '38px',
             minWidth:   '38px',
             padding:    totalItems > 0 ? '0 13px 0 10px' : '0 10px',
             background: totalItems > 0
@@ -97,67 +97,42 @@ export default function TopHeader() {
           </div>
 
           <AnimatePresence>
-            {totalItems > 0 && (
-              <motion.span
+            {(totalItems > 0 || tableNumber) && (
+              <motion.div
                 initial={{ opacity: 0, width: 0 }}
                 animate={{ opacity: 1, width: 'auto' }}
                 exit={{ opacity: 0, width: 0 }}
                 transition={{ duration: 0.22 }}
-                style={{
-                  color: GOLD2,
-                  fontFamily: "'Cairo', sans-serif",
-                  fontSize: '12px',
-                  fontWeight: 700,
-                  whiteSpace: 'nowrap',
-                  overflow: 'hidden',
-                }}
+                style={{ overflow: 'hidden', display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '1px' }}
               >
-                سلتي
-              </motion.span>
+                {totalItems > 0 && (
+                  <span style={{
+                    color: GOLD2,
+                    fontFamily: "'Cairo', sans-serif",
+                    fontSize: '12px',
+                    fontWeight: 700,
+                    whiteSpace: 'nowrap',
+                    lineHeight: 1,
+                  }}>
+                    سلتي
+                  </span>
+                )}
+                {tableNumber && (
+                  <span style={{
+                    color: 'rgba(240,200,98,0.55)',
+                    fontFamily: "'Cairo', sans-serif",
+                    fontSize: '10px',
+                    fontWeight: 600,
+                    whiteSpace: 'nowrap',
+                    lineHeight: 1,
+                  }}>
+                    🪑 ط {tableNumber}
+                  </span>
+                )}
+              </motion.div>
             )}
           </AnimatePresence>
         </button>
-
-        {/* ── TABLE BADGE (shown when table detected) ──────── */}
-        <AnimatePresence>
-          {tableNumber && (
-            <motion.div
-              key="table-badge"
-              initial={{ opacity: 0, scale: 0.7, y: -6 }}
-              animate={{ opacity: 1, scale: 1,   y: 0  }}
-              exit={{   opacity: 0, scale: 0.7, y: -6  }}
-              transition={{ type: 'spring', stiffness: 380, damping: 22 }}
-              style={{
-                position: 'absolute',
-                top: '100%',
-                left: '14px',
-                marginTop: '6px',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '5px',
-                padding: '4px 10px 4px 8px',
-                borderRadius: '20px',
-                background: 'linear-gradient(135deg,rgba(201,153,61,0.18),rgba(240,200,98,0.06))',
-                border: '1px solid rgba(201,153,61,0.35)',
-                backdropFilter: 'blur(12px)',
-                WebkitBackdropFilter: 'blur(12px)',
-                pointerEvents: 'none',
-                zIndex: 50,
-              }}
-            >
-              <span style={{ fontSize: '12px', lineHeight: 1 }}>🪑</span>
-              <span style={{
-                color: GOLD,
-                fontFamily: "'Cairo', sans-serif",
-                fontSize: '11px',
-                fontWeight: 800,
-                letterSpacing: '0.02em',
-              }}>
-                طاولة {tableNumber}
-              </span>
-            </motion.div>
-          )}
-        </AnimatePresence>
 
         {/* ── CENTER: Brand ──────────────────────────────── */}
         <button
