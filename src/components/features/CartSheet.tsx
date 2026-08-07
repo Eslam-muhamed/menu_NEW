@@ -107,27 +107,32 @@ function WaiterView({ onClose }: { onClose: () => void }) {
     reader.readAsDataURL(file);
   };
 
-  const handleSend = () => {
+  const handleSend = async () => {
     const msg = buildWhatsAppMessage(
       items, totalPrice, tableNumber, orderType,
       { name: deliveryName, phone: deliveryPhone, address: deliveryAddress },
       orderType === 'delivery' ? paymentMethod : undefined,
       orderType === 'delivery' ? !!receiptPreview : false,
     );
-    window.open(`https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`, '_blank');
-    if (orderType === 'delivery' && receiptPreview) {
-      const win = window.open('', '_blank');
-      if (win) {
-        win.document.write(
-          '<!DOCTYPE html><html dir="rtl"><head><meta charset="utf-8"><title>وصل الدفع</title></head>' +
-          '<body style="margin:0;padding:20px;background:#0a0a10;display:flex;flex-direction:column;align-items:center;gap:16px;font-family:Cairo,sans-serif;min-height:100vh;box-sizing:border-box;">' +
-          '<p style="color:#25D366;font-size:15px;text-align:center;margin:0;font-weight:700;">📎 أرسل هذه الصورة في محادثة الواتساب بعد إرسال الطلب</p>' +
-          '<img src="' + receiptPreview + '" style="max-width:100%;max-height:85vh;object-fit:contain;border-radius:14px;" />' +
-          '</body></html>'
-        );
-        win.document.close();
+
+    // Try Web Share API with image on mobile
+    if (orderType === 'delivery' && receiptPreview && typeof navigator.share === 'function') {
+      try {
+        const res  = await fetch(receiptPreview);
+        const blob = await res.blob();
+        const ext  = blob.type.includes('png') ? 'png' : 'jpg';
+        const file = new File([blob], `receipt.${ext}`, { type: blob.type });
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+          await navigator.share({ files: [file], text: msg });
+          return;
+        }
+      } catch {
+        // user cancelled or not supported — fall through
       }
     }
+
+    // Fallback: open WhatsApp with text only
+    window.open(`https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`, '_blank');
   };
 
   return (
@@ -429,7 +434,7 @@ function WaiterView({ onClose }: { onClose: () => void }) {
                               color: '#25D366', fontFamily: "'Cairo', sans-serif",
                               fontSize: '12px', fontWeight: 700,
                             }} dir="rtl">
-                              ✓ تم رفع الوصل — سيُفتح تلقائياً بعد إرسال الطلب
+                              ✓ تم رفع الوصل — سيُرسل مع الطلب عبر الواتساب
                             </div>
                           </motion.div>
                         )}
