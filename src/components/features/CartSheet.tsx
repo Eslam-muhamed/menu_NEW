@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X as CloseIcon, Trash2, Minus, Plus, ShoppingBag, Eye, Users, ChevronDown } from 'lucide-react';
 import { useCart } from '@/stores/cartStore';
@@ -31,7 +31,6 @@ function buildWhatsAppMessage(
   orderType: OrderType = 'dine-in',
   delivery?: DeliveryInfo,
   paymentMethod?: PaymentMethod,
-  hasReceipt?: boolean
 ): string {
   const lines: string[] = [];
 
@@ -45,7 +44,6 @@ function buildWhatsAppMessage(
     if (paymentMethod) {
       const pmLabels: Record<PaymentMethod, string> = { cash: 'نقدي', vodafone: 'فودافون كاش', instapay: 'انستاباي' };
       lines.push(`💳 *طريقة الدفع:* ${pmLabels[paymentMethod]}`);
-      if (hasReceipt) lines.push('📎 *وصل الدفع:* سيتم إرساله في المحادثة');
     }
     lines.push('');
   } else {
@@ -96,42 +94,13 @@ function WaiterView({ onClose }: { onClose: () => void }) {
   const [deliveryPhone,   setDeliveryPhone]   = useState('');
   const [deliveryAddress,  setDeliveryAddress]  = useState('');
   const [paymentMethod,    setPaymentMethod]    = useState<PaymentMethod>('cash');
-  const [receiptPreview,   setReceiptPreview]   = useState<string | null>(null);
-  const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (ev) => setReceiptPreview((ev.target?.result as string) ?? null);
-    reader.readAsDataURL(file);
-  };
-
-  const handleSend = async () => {
+  const handleSend = () => {
     const msg = buildWhatsAppMessage(
       items, totalPrice, tableNumber, orderType,
       { name: deliveryName, phone: deliveryPhone, address: deliveryAddress },
       orderType === 'delivery' ? paymentMethod : undefined,
-      orderType === 'delivery' ? !!receiptPreview : false,
     );
-
-    // Try Web Share API with image on mobile
-    if (orderType === 'delivery' && receiptPreview && typeof navigator.share === 'function') {
-      try {
-        const res  = await fetch(receiptPreview);
-        const blob = await res.blob();
-        const ext  = blob.type.includes('png') ? 'png' : 'jpg';
-        const file = new File([blob], `receipt.${ext}`, { type: blob.type });
-        if (navigator.canShare && navigator.canShare({ files: [file] })) {
-          await navigator.share({ files: [file], text: msg });
-          return;
-        }
-      } catch {
-        // user cancelled or not supported — fall through
-      }
-    }
-
-    // Fallback: open WhatsApp with text only
     window.open(`https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`, '_blank');
   };
 
@@ -374,7 +343,7 @@ function WaiterView({ onClose }: { onClose: () => void }) {
                     )}
                   </AnimatePresence>
 
-                  {/* ── Receipt upload ──────────────────────────── */}
+                  {/* ── Receipt note ──────────────────────────── */}
                   <AnimatePresence>
                     {paymentMethod !== 'cash' && (
                       <motion.div
@@ -384,67 +353,20 @@ function WaiterView({ onClose }: { onClose: () => void }) {
                         transition={{ duration: 0.22 }}
                         style={{ overflow: 'hidden' }}
                       >
-                        {!receiptPreview ? (
-                          <button
-                            onClick={() => fileInputRef.current?.click()}
-                            style={{
-                              width: '100%', padding: '16px', borderRadius: '14px',
-                              border: '1.5px dashed rgba(37,211,102,0.25)',
-                              background: 'rgba(37,211,102,0.03)',
-                              color: 'var(--text-4)',
-                              fontFamily: "'Cairo', sans-serif", fontSize: '13px', fontWeight: 600,
-                              cursor: 'pointer',
-                              display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
-                            }}
-                          >
-                            <span style={{ fontSize: '20px' }}>📎</span>
-                            ارفع صورة الوصل (اختياري)
-                          </button>
-                        ) : (
-                          <motion.div
-                            initial={{ opacity: 0, scale: 0.96 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            style={{
-                              position: 'relative', borderRadius: '14px',
-                              overflow: 'hidden', border: '1.5px solid rgba(37,211,102,0.38)',
-                            }}
-                          >
-                            <img
-                              src={receiptPreview}
-                              alt="وصل الدفع"
-                              style={{ width: '100%', maxHeight: '190px', objectFit: 'cover', display: 'block' }}
-                            />
-                            <button
-                              onClick={() => {
-                                setReceiptPreview(null);
-                                if (fileInputRef.current) fileInputRef.current.value = '';
-                              }}
-                              style={{
-                                position: 'absolute', top: '8px', left: '8px',
-                                width: '30px', height: '30px', borderRadius: '50%',
-                                background: 'rgba(0,0,0,0.65)', border: 'none',
-                                color: '#fff', cursor: 'pointer', fontSize: '13px',
-                                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                              }}
-                            >✕</button>
-                            <div style={{
-                              position: 'absolute', bottom: 0, left: 0, right: 0,
-                              padding: '10px 14px',
-                              background: 'linear-gradient(to top,rgba(0,0,0,0.82),transparent)',
-                              color: '#25D366', fontFamily: "'Cairo', sans-serif",
-                              fontSize: '12px', fontWeight: 700,
-                            }} dir="rtl">
-                              ✓ تم رفع الوصل — سيُرسل مع الطلب عبر الواتساب
-                            </div>
-                          </motion.div>
-                        )}
-                        <input
-                          ref={fileInputRef}
-                          type="file"
-                          accept="image/*"
-                          style={{ display: 'none' }}
-                          onChange={handleFileChange}
-                        />
+                        <div style={{
+                          padding: '12px 14px', borderRadius: '14px',
+                          background: 'rgba(37,211,102,0.05)',
+                          border: '1px dashed rgba(37,211,102,0.25)',
+                          display: 'flex', alignItems: 'flex-start', gap: '8px',
+                        }} dir="rtl">
+                          <span style={{ fontSize: '16px', flexShrink: 0 }}>📎</span>
+                          <p style={{
+                            color: 'rgba(37,211,102,0.75)', fontFamily: "'Cairo', sans-serif",
+                            fontSize: '12px', fontWeight: 600, lineHeight: 1.6, margin: 0,
+                          }}>
+                            بعد إرسال الطلب، ابعت صورة الوصل على نفس محادثة الواتساب
+                          </p>
+                        </div>
                       </motion.div>
                     )}
                   </AnimatePresence>
