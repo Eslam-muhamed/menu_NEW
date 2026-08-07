@@ -201,6 +201,7 @@ export default function GoogleReviewSection() {
 
   return (
     <section
+      id="google-reviews-section"
       ref={ref}
       style={{ paddingTop: '56px', paddingBottom: '16px', overflow: 'hidden' }}
       aria-label="تقييمات العملاء"
