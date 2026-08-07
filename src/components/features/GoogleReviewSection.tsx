@@ -276,8 +276,9 @@ export default function GoogleReviewSection() {
             padding: '15px 24px', borderRadius: '18px',
             background: 'linear-gradient(135deg,#c9993d,#f0c862)',
             color: '#07070f', fontFamily: "'Cairo',sans-serif",
-            fontWeight: 800, fontSize: '15px',
-            boxShadow: '0 6px 24px rgba(201,153,61,0.30)',
+            fontWeight: 700, fontSize: '14px',
+            border: 'none',
+            boxShadow: '0 4px 24px rgba(201,153,61,0.35)',
             textDecoration: 'none',
           }}
         >
