@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ShoppingBag, Moon, Sun } from 'lucide-react';
 import { useCart } from '@/stores/cartStore';
 import { useTheme } from '@/stores/themeStore';
+import { useTable } from '@/stores/tableStore';
 import CartSheet from '@/components/features/CartSheet';
 
 const GOLD  = '#f0c862';
@@ -15,6 +16,7 @@ export default function TopHeader() {
   const [scrollRatio, setScrollRatio] = useState(0);
   const { totalItems }                = useCart();
   const { isDark, toggleTheme }       = useTheme();
+  const { tableNumber }               = useTable();
 
   useEffect(() => {
     const onScroll = () => {
@@ -35,7 +37,7 @@ export default function TopHeader() {
   return (
     <>
       <header
-        className="fixed top-0 left-0 right-0 z-[60] flex items-center justify-between"
+        className="fixed top-0 left-0 right-0 z-[60] flex items-center justify-between overflow-visible"
         style={{
           height:               `${HEADER_H}px`,
           padding:              '0 14px',
@@ -48,7 +50,7 @@ export default function TopHeader() {
         }}
       >
 
-        {/* ── LEFT: Cart button ──────────────────────────── */}
+        {/* ── LEFT: Cart button + Table badge ──────────── */}
         <button
           onClick={() => setOpen(true)}
           className="relative flex items-center gap-2 rounded-xl transition-all duration-200 hover:scale-[1.03] active:scale-95"
@@ -115,6 +117,47 @@ export default function TopHeader() {
             )}
           </AnimatePresence>
         </button>
+
+        {/* ── TABLE BADGE (shown when table detected) ──────── */}
+        <AnimatePresence>
+          {tableNumber && (
+            <motion.div
+              key="table-badge"
+              initial={{ opacity: 0, scale: 0.7, y: -6 }}
+              animate={{ opacity: 1, scale: 1,   y: 0  }}
+              exit={{   opacity: 0, scale: 0.7, y: -6  }}
+              transition={{ type: 'spring', stiffness: 380, damping: 22 }}
+              style={{
+                position: 'absolute',
+                top: '100%',
+                left: '14px',
+                marginTop: '6px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '5px',
+                padding: '4px 10px 4px 8px',
+                borderRadius: '20px',
+                background: 'linear-gradient(135deg,rgba(201,153,61,0.18),rgba(240,200,98,0.06))',
+                border: '1px solid rgba(201,153,61,0.35)',
+                backdropFilter: 'blur(12px)',
+                WebkitBackdropFilter: 'blur(12px)',
+                pointerEvents: 'none',
+                zIndex: 50,
+              }}
+            >
+              <span style={{ fontSize: '12px', lineHeight: 1 }}>🪑</span>
+              <span style={{
+                color: GOLD,
+                fontFamily: "'Cairo', sans-serif",
+                fontSize: '11px',
+                fontWeight: 800,
+                letterSpacing: '0.02em',
+              }}>
+                طاولة {tableNumber}
+              </span>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* ── CENTER: Brand ──────────────────────────────── */}
         <button
