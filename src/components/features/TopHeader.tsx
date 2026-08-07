@@ -126,7 +126,7 @@ export default function TopHeader() {
                     whiteSpace: 'nowrap',
                     lineHeight: 1,
                   }}>
-                    🪑 ط {tableNumber}
+                    {/* 🪑 ط {tableNumber} */}
                   </span>
                 )}
               </motion.div>
