@@ -51,7 +51,7 @@ export const hotItems: MenuItem[] = [
   { id: 'cf-22', name: 'نسكافيه حليب',           description: 'نسكافيه مع حليب طازج دافئ',                price: 50,  currency: 'ج.م', category: 'coffee', image: '/images/WhatsApp Image 2026-07-28 at 23.12.06.jpeg' },
   { id: 'cf-23', name: 'كوفي ميكس ساده',         description: 'خلطة قهوة مميزة بدون حليب',                price: 30,  currency: 'ج.م', category: 'coffee', image: '/images/Screenshot 2026-07-29 at 5.40.35 AM.png' },
   { id: 'cf-24', name: 'كوفي ميكس حليب',         description: 'خلطة قهوة فاخرة مع حليب طازج',             price: 50,  currency: 'ج.م', category: 'coffee', image: '/images/Screenshot 2026-07-29 at 5.42.14 AM.png' },
-  { id: 'cf-25', name: 'كوفي V60',               description: 'قهوة مُصفَّاة بتقنية V60 الاحترافية',       price: 40,  currency: 'ج.م', category: 'coffee', image: '/images/WhatsApp Image 2026-07-28 at 22.00.56 (2).jpeg' },
+  { id: 'cf-25', name: 'كوفي V60',               description: 'قهوة مُصفَّاة بتقنية V60 الاحترافية',       price: 70,  currency: 'ج.م', category: 'coffee', image: '/images/WhatsApp Image 2026-07-28 at 22.00.56 (2).jpeg' },
 
   // ── القهوة الباردة ────────────────────────────────────────────────────────
   { id: 'ic-1',  name: 'آيس لاتيه',              description: 'لاتيه مُبرَّد مع حليب بارد ناعم',           price: 75,  currency: 'ج.م', category: 'ice-coffee', image: '/images/WhatsApp Image 2026-07-28 at 23.39.14.jpeg', badge: 'Popular' },
@@ -60,7 +60,7 @@ export const hotItems: MenuItem[] = [
   { id: 'ic-4',  name: 'فرابتشينو',              description: 'فرابتشينو فاخر مع كريمة وتوبينج',           price: 75,  currency: 'ج.م', category: 'ice-coffee', image:'/images/WhatsApp Image 2026-07-29 at 07.31.20 (1).jpeg', badge: 'Popular' },
   { id: 'ic-5',  name: 'آيس موكا',               description: 'إسبريسو بارد مع شوكولاتة داكنة',           price: 80,  currency: 'ج.م', category: 'ice-coffee', image: '/images/WhatsApp Image 2026-07-29 at 07.31.20 (2).jpeg' },
   { id: 'ic-6',  name: 'آيس امريكان كوفي',       description: 'إسبريسو مُبرَّد فوق الثلج',                price: 60,  currency: 'ج.م', category: 'ice-coffee', image: '/images/WhatsApp Image 2026-07-29 at 07.31.21.jpeg' },
-  { id: 'ic-7',  name: 'ايس V60',                description: 'قهوة V60 مُبرَّدة بنكهة نقية',             price: 60,  currency: 'ج.م', category: 'ice-coffee', image: '/images/Screenshot 2026-07-29 at 4.19.32 PM.png' },
+  { id: 'ic-7',  name: 'ايس V60',                description: 'قهوة V60 مُبرَّدة بنكهة نقية',             price: 85,  currency: 'ج.م', category: 'ice-coffee', image: '/images/Screenshot 2026-07-29 at 4.19.32 PM.png' },
 
   // ── ميلك شيك ─────────────────────────────────────────────────────────────
   { id: 'ms-1',  name: 'فانيلا',                 description: 'ميلك شيك كريمي بالفانيليا الطبيعية',       price: 75,  currency: 'ج.م', category: 'milk-shake', image: '/images/WhatsApp Image 2026-07-28 at 23.56.12.jpeg' },
