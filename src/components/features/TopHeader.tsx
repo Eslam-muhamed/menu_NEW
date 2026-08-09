@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ShoppingBag, Moon, Sun } from 'lucide-react';
 import { useCart } from '@/stores/cartStore';
 import { useTheme } from '@/stores/themeStore';
-import { useTable } from '@/stores/tableStore';
 import CartSheet from '@/components/features/CartSheet';
 
 const GOLD  = '#f0c862';
@@ -16,8 +15,6 @@ export default function TopHeader() {
   const [scrollRatio, setScrollRatio] = useState(0);
   const { totalItems }                = useCart();
   const { isDark, toggleTheme }       = useTheme();
-  const { tableNumber }               = useTable();
-
   useEffect(() => {
     const onScroll = () => {
       const ratio = Math.min(Math.max((window.scrollY - 80) / 300, 0), 1);
@@ -55,7 +52,7 @@ export default function TopHeader() {
           onClick={() => setOpen(true)}
           className="relative flex items-center gap-2 rounded-xl transition-all duration-200 hover:scale-[1.03] active:scale-95"
           style={{
-            height:     tableNumber ? '44px' : '38px',
+            height:     '38px',
             minWidth:   '38px',
             padding:    totalItems > 0 ? '0 13px 0 10px' : '0 10px',
             background: totalItems > 0
@@ -97,38 +94,24 @@ export default function TopHeader() {
           </div>
 
           <AnimatePresence>
-            {(totalItems > 0 || tableNumber) && (
+            {totalItems > 0 && (
               <motion.div
                 initial={{ opacity: 0, width: 0 }}
                 animate={{ opacity: 1, width: 'auto' }}
                 exit={{ opacity: 0, width: 0 }}
                 transition={{ duration: 0.22 }}
-                style={{ overflow: 'hidden', display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '1px' }}
+                style={{ overflow: 'hidden' }}
               >
-                {totalItems > 0 && (
-                  <span style={{
-                    color: GOLD2,
-                    fontFamily: "'Cairo', sans-serif",
-                    fontSize: '12px',
-                    fontWeight: 700,
-                    whiteSpace: 'nowrap',
-                    lineHeight: 1,
-                  }}>
-                    سلتي
-                  </span>
-                )}
-                {tableNumber && (
-                  <span style={{
-                    color: 'rgba(240,200,98,0.55)',
-                    fontFamily: "'Cairo', sans-serif",
-                    fontSize: '10px',
-                    fontWeight: 600,
-                    whiteSpace: 'nowrap',
-                    lineHeight: 1,
-                  }}>
-                    {/* 🪑 ط {tableNumber} */}
-                  </span>
-                )}
+                <span style={{
+                  color: GOLD2,
+                  fontFamily: "'Cairo', sans-serif",
+                  fontSize: '12px',
+                  fontWeight: 700,
+                  whiteSpace: 'nowrap',
+                  lineHeight: 1,
+                }}>
+                  سلتي
+                </span>
               </motion.div>
             )}
           </AnimatePresence>

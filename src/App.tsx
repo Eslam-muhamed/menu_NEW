@@ -5,7 +5,6 @@ import MenuPage from '@/pages/MenuPage';
 import SplashScreen from '@/components/features/SplashScreen';
 import { CartProvider } from '@/stores/cartStore';
 import { ThemeProvider } from '@/stores/themeStore';
-import { TableProvider } from '@/stores/tableStore';
 
 export default function App() {
   const [splashDone, setSplashDone] = useState(false);
@@ -17,7 +16,6 @@ export default function App() {
 
   return (
     <ThemeProvider>
-      <TableProvider>
       <CartProvider>
         <Toaster position="top-center" />
       {!splashDone && <SplashScreen onComplete={handleSplashComplete} />}
@@ -28,7 +26,6 @@ export default function App() {
         </Routes>
       </BrowserRouter>
       </CartProvider>
-      </TableProvider>
     </ThemeProvider>
   );
 }
