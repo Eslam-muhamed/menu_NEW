@@ -12,16 +12,16 @@ interface Offer {
 }
 
 const offers: Offer[] = [
-  {
-    id: 'morning',
-    emoji: '☀️',
-    badge: 'عرض الصباح',
-    title: 'خصم 20% على القهوة',
-    desc: 'يومياً حتى الساعة 12 ظهراً على جميع مشروبات القهوة الساخنة',
-    highlight: '20% OFF',
-    gradient: 'linear-gradient(135deg, rgba(201,153,61,0.18) 0%, rgba(240,200,98,0.08) 100%)',
-    glowColor: 'rgba(201,153,61,0.25)',
-  },
+  // {
+  //   id: 'morning',
+  //   emoji: '☀️',
+  //   badge: 'عرض الصباح',
+  //   title: 'خصم 20% على القهوة',
+  //   desc: 'يومياً حتى الساعة 12 ظهراً على جميع مشروبات القهوة الساخنة',
+  //   highlight: '20% OFF',
+  //   gradient: 'linear-gradient(135deg, rgba(201,153,61,0.18) 0%, rgba(240,200,98,0.08) 100%)',
+  //   glowColor: 'rgba(201,153,61,0.25)',
+  // },
   // {
   //   id: 'dessert',
   //   emoji: '🍰',
