@@ -36,7 +36,7 @@ function buildWhatsAppMessage(
 
   if (orderType === 'delivery') {
     lines.push('🛵 *--- طلب توصيل خارجي ---*');
-    lines.push('*sky 7 cafe & lounge*');
+    lines.push('*sky 7 cafe *');
     lines.push('');
     if (delivery?.name.trim())    lines.push(`👤 *الاسم:* ${delivery.name.trim()}`);
     if (delivery?.phone.trim())   lines.push(`📱 *الموبايل:* ${delivery.phone.trim()}`);
@@ -48,7 +48,7 @@ function buildWhatsAppMessage(
     lines.push('');
   } else {
     lines.push('🪑 *--- طلبية داخل الكافيه ---*');
-    lines.push('*sky 7 cafe & lounge*');
+    lines.push('*sky 7 cafe*');
     if (tableNumber.trim()) lines.push(`🪑 *رقم الطاولة: ${tableNumber.trim()}*`);
     lines.push('');
   }

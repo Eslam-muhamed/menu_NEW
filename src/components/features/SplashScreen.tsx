@@ -183,7 +183,7 @@ export default function SplashScreen({ onComplete }: Props) {
                 marginTop: '-6px',
               }}
             >
-              CAFÉ & LOUNGE
+              CAFÉ
             </motion.p>
           </motion.div>
 
