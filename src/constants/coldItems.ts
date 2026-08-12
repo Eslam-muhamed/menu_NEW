@@ -25,12 +25,12 @@ export const coldItems: MenuItem[] = [
   { id: 'yg-4',  name: 'زبادي فواكه',            description: 'زبادي كريمي مع فواكه طازجة',              price: 85,  currency: 'ج.م', category: 'yogurt', image: '/images/yougurt/WhatsApp Image 2026-07-30 at 00.25.04.jpeg' },
 
   // ── آيس كريم ─────────────────────────────────────────────────────────────
-  { id: 'ic2-1', name: 'آيس كريم صغير (2 بوله)',  description: 'كرتان آيس كريم بنكهات اختيارية',         price: 35,  currency: 'ج.م', category: 'ice-cream', image: '/images/WhatsApp Image 2026-07-28 at 22.00.54.jpeg' },
-  { id: 'ic2-2', name: 'آيس كريم وسط (3 بوله)',   description: 'ثلاث كرات آيس كريم بنكهات طازجة',        price: 50,  currency: 'ج.م', category: 'ice-cream', image: '/images/WhatsApp Image 2026-07-28 at 22.00.54.jpeg', badge: 'Popular' },
-  { id: 'ic2-3', name: 'آيس كريم كبير (4 بوله)',  description: 'أربع كرات آيس كريم بنكهات متنوعة',       price: 60,  currency: 'ج.م', category: 'ice-cream', image: '/images/WhatsApp Image 2026-07-28 at 22.00.54.jpeg' },
-  { id: 'ic2-4', name: 'آيس كريم أوريو قطع',      description: 'آيس كريم مع قطع أوريو وصوص شوكولاتة',   price: 65,  currency: 'ج.م', category: 'ice-cream', image: '/images/ChatGPT Image Aug 12, 2026 at 08_51_12 PM 2.png' },
-  { id: 'ic2-5', name: 'آيس كريم لوتس قطع',       description: 'آيس كريم مع قطع لوتس كراميلية فاخرة',   price: 65,  currency: 'ج.م', category: 'ice-cream', image: '/images/ChatGPT Image Aug 12, 2026 at 08_54_13 PM 2.png' },
-  { id: 'ic2-6', name: 'آيس كريم فروت',           description: 'آيس كريم مع فواكه طازجة وصوص الفانيليا', price: 75,  currency: 'ج.م', category: 'ice-cream', image: '/images/ChatGPT Image Aug 12, 2026 at 09_00_49 PM.png' },
+  { id: 'ic2-1', name: 'آيس كريم صغير (2 بوله)',  description: 'كرتان آيس كريم بنكهات اختيارية',         price: 35,  currency: 'ج.م', category: 'ice-cream', image: '/images/ice/WhatsApp Image 2026-07-28 at 22.00.54.jpeg' },
+  { id: 'ic2-2', name: 'آيس كريم وسط (3 بوله)',   description: 'ثلاث كرات آيس كريم بنكهات طازجة',        price: 50,  currency: 'ج.م', category: 'ice-cream', image: '/images/ice/WhatsApp Image 2026-07-28 at 22.00.54.jpeg', badge: 'Popular' },
+  { id: 'ic2-3', name: 'آيس كريم كبير (4 بوله)',  description: 'أربع كرات آيس كريم بنكهات متنوعة',       price: 60,  currency: 'ج.م', category: 'ice-cream', image: '/images/ice/WhatsApp Image 2026-07-28 at 22.00.54.jpeg' },
+  { id: 'ic2-4', name: 'آيس كريم أوريو قطع',      description: 'آيس كريم مع قطع أوريو وصوص شوكولاتة',   price: 65,  currency: 'ج.م', category: 'ice-cream', image: '/images/ice/ChatGPT Image Aug 12, 2026 at 08_51_12 PM 2.png' },
+  { id: 'ic2-5', name: 'آيس كريم لوتس قطع',       description: 'آيس كريم مع قطع لوتس كراميلية فاخرة',   price: 65,  currency: 'ج.م', category: 'ice-cream', image: '/images/ice/ChatGPT Image Aug 12, 2026 at 08_54_13 PM 2.png' },
+  { id: 'ic2-6', name: 'آيس كريم فروت',           description: 'آيس كريم مع فواكه طازجة وصوص الفانيليا', price: 75,  currency: 'ج.م', category: 'ice-cream', image: '/images/ice/ChatGPT Image Aug 12, 2026 at 09_00_49 PM.png' },
 
   // ── سوفت درينك ───────────────────────────────────────────────────────────
   { id: 'sd-1',  name: 'مياه معدنيه صغيره',      description: 'مياه معدنية طبيعية مُبرَّدة',              price: 10,  currency: 'ج.م', category: 'soft-drink', image: '/images/WhatsApp Image 2026-07-30 at 03.06.25.jpeg' },
@@ -41,16 +41,16 @@ export const coldItems: MenuItem[] = [
   { id: 'sd-6',  name: 'مونستر إنرجي',           description: 'Monster Energy مشروب طاقة قوي',           price: 60,  currency: 'ج.م', category: 'soft-drink', image: '/images/WhatsApp Image 2026-07-30 at 03.06.27 (1).jpeg' },
 
   // ── صودا ونكهات ───────────────────────────────────────────────────────────
-  { id: 'sf-1',  name: 'صن شاين',                description: 'صودا بنكهة الشمس الاستوائية الجذابة',     price: 50,  currency: 'ج.م', category: 'soda-flavors', image: '/images/WhatsApp Image 2026-07-30 at 03.31.58.jpeg' },
-  { id: 'sf-2',  name: 'صن رايز',                description: 'صودا بنكهة الشروق الاستوائي المشرق',      price: 55,  currency: 'ج.م', category: 'soda-flavors', image: '/images/WhatsApp Image 2026-07-30 at 03.31.58 (1).jpeg' },
-  { id: 'sf-3',  name: 'ستار منت',               description: 'صودا نعناع نجمية باردة ومنعشة',           price: 50,  currency: 'ج.م', category: 'soda-flavors', image: '/images/WhatsApp Image 2026-07-30 at 03.31.58 (2).jpeg' },
-  { id: 'sf-4',  name: 'موهيتو فلافور',          description: 'موهيتو بنكهة مع نعناع وليمون طازج',       price: 60,  currency: 'ج.م', category: 'soda-flavors', image: '/images/WhatsApp Image 2026-07-30 at 03.31.58 (3).jpeg', badge: 'Popular' },
-  { id: 'sf-5',  name: 'سكاي بلو',               description: 'صودا sky 7 الزرقاء الخاصة',               price: 60,  currency: 'ج.م', category: 'soda-flavors', image: '/images/WhatsApp Image 2026-07-30 at 03.31.59.jpeg', badge: 'New' },
-  { id: 'sf-6',  name: 'باشن فروت',              description: 'صودا باشن فروت استوائية حيوية',           price: 55,  currency: 'ج.م', category: 'soda-flavors', image: '/images/WhatsApp Image 2026-07-30 at 03.31.59 (1).jpeg' },
-  { id: 'sf-7',  name: 'في كيوي',                description: 'صودا كيوي خضراء بنكهة منعشة',             price: 50,  currency: 'ج.م', category: 'soda-flavors', image: '/images/WhatsApp Image 2026-07-30 at 03.31.59 (2).jpeg' },
-  { id: 'sf-8',  name: 'موهيتو رد بل',           description: 'موهيتو مع ريد بل لطاقة مضاعفة',           price: 90,  currency: 'ج.م', category: 'soda-flavors', image: '/images/WhatsApp Image 2026-07-30 at 03.32.00.jpeg', badge: "Chef's Choice" },
-  { id: 'sf-9',  name: 'همر هد',                 description: 'مشروب همر هيد بنكهة قوية مُركَّبة',       price: 100, currency: 'ج.م', category: 'soda-flavors', image: '/images/WhatsApp Image 2026-07-30 at 03.32.01.jpeg' },
-  { id: 'sf-10', name: 'شيري كولا',              description: 'كولا بنكهة الكرز في تجربة راقية',          price: 60,  currency: 'ج.م', category: 'soda-flavors', image: '/images/WhatsApp Image 2026-07-30 at 03.32.02.jpeg' },
+  { id: 'sf-1',  name: 'صن شاين',                description: 'صودا بنكهة الشمس الاستوائية الجذابة',     price: 50,  currency: 'ج.م', category: 'soda-flavors', image: '/images/soda/WhatsApp Image 2026-07-30 at 03.31.58.jpeg' },
+  { id: 'sf-2',  name: 'صن رايز',                description: 'صودا بنكهة الشروق الاستوائي المشرق',      price: 55,  currency: 'ج.م', category: 'soda-flavors', image: '/images/soda/WhatsApp Image 2026-07-30 at 03.31.58 (1).jpeg' },
+  { id: 'sf-3',  name: 'ستار منت',               description: 'صودا نعناع نجمية باردة ومنعشة',           price: 50,  currency: 'ج.م', category: 'soda-flavors', image: '/images/soda/WhatsApp Image 2026-07-30 at 03.31.58 (2).jpeg' },
+  { id: 'sf-4',  name: 'موهيتو فلافور',          description: 'موهيتو بنكهة مع نعناع وليمون طازج',       price: 60,  currency: 'ج.م', category: 'soda-flavors', image: '/images/soda/WhatsApp Image 2026-07-30 at 03.31.58 (3).jpeg', badge: 'Popular' },
+  { id: 'sf-5',  name: 'سكاي بلو',               description: 'صودا sky 7 الزرقاء الخاصة',               price: 60,  currency: 'ج.م', category: 'soda-flavors', image: '/images/soda/WhatsApp Image 2026-07-30 at 03.31.59.jpeg', badge: 'New' },
+  { id: 'sf-6',  name: 'باشن فروت',              description: 'صودا باشن فروت استوائية حيوية',           price: 55,  currency: 'ج.م', category: 'soda-flavors', image: '/images/soda/WhatsApp Image 2026-07-30 at 03.31.59 (1).jpeg' },
+  { id: 'sf-7',  name: 'في كيوي',                description: 'صودا كيوي خضراء بنكهة منعشة',             price: 50,  currency: 'ج.م', category: 'soda-flavors', image: '/images/soda/WhatsApp Image 2026-07-30 at 03.31.59 (2).jpeg' },
+  { id: 'sf-8',  name: 'موهيتو رد بل',           description: 'موهيتو مع ريد بل لطاقة مضاعفة',           price: 90,  currency: 'ج.م', category: 'soda-flavors', image: '/images/soda/WhatsApp Image 2026-07-30 at 03.32.00.jpeg', badge: "Chef's Choice" },
+  { id: 'sf-9',  name: 'همر هد',                 description: 'مشروب همر هيد بنكهة قوية مُركَّبة',       price: 100, currency: 'ج.م', category: 'soda-flavors', image: '/images/soda/WhatsApp Image 2026-07-30 at 03.32.01.jpeg' },
+  { id: 'sf-10', name: 'شيري كولا',              description: 'كولا بنكهة الكرز في تجربة راقية',          price: 60,  currency: 'ج.م', category: 'soda-flavors', image: '/images/soda/WhatsApp Image 2026-07-30 at 03.32.02.jpeg' },
 
   // ── الحلويات ──────────────────────────────────────────────────────────────
   { id: 'ds-1',  name: 'تشيز كيك كلاسيك',        description: 'تشيز كيك نيويورك بالجبن الكريمي',          price: 70,  currency: 'ج.م', category: 'desserts', image: DST[0] },
