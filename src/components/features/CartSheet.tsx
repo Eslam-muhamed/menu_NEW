@@ -369,7 +369,7 @@ function WaiterView({ onClose }: { onClose: () => void }) {
                             color: 'rgba(37,211,102,0.75)', fontFamily: "'Cairo', sans-serif",
                             fontSize: '12px', fontWeight: 600, lineHeight: 1.6, margin: 0,
                           }}>
-                            بعد إرسال الطلب، ابعت صورة الوصل على نفس محادثة الواتساب
+                            بعد إرسال الطلب، ابعت صورة الإيصال على نفس محادثة الواتساب
                           </p>
                         </div>
                       </motion.div>
