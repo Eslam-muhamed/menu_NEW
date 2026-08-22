@@ -35,8 +35,8 @@ export const coldItems: MenuItem[] = [
   // ── سوفت درينك ───────────────────────────────────────────────────────────
   { id: 'sd-1',  name: 'مياه معدنيه صغيره',      description: 'مياه معدنية طبيعية مُبرَّدة',              price: 10,  currency: 'ج.م', category: 'soft-drink', image: '/images/WhatsApp Image 2026-07-30 at 03.06.25.jpeg' },
   { id: 'sd-2',  name: 'صودا كانز',              description: 'مشروبات غازية معروفة في علب',              price: 30,  currency: 'ج.م', category: 'soft-drink', image: '/images/WhatsApp Image 2026-07-30 at 03.06.26 (1).jpeg' },
-  { id: 'sd-3',  name: 'فيروز',                  description: 'فيروز مُنكَّهة فاخرة بنكهات منعشة',        price: 40,  currency: 'ج.م', category: 'soft-drink', image: '/images/WhatsApp Image 2026-07-30 at 03.06.26.jpeg' },
-  { id: 'sd-4',  name: 'بيريل شعير',             description: 'بيريل شعير باردة ومنعشة',                 price: 40,  currency: 'ج.م', category: 'soft-drink', image: '/images/WhatsApp Image 2026-07-30 at 03.06.27.jpeg' },
+  { id: 'sd-3',  name: 'فيروز',                  description: 'فيروز مُنكَّهة فاخرة بنكهات منعشة',        price: 35,  currency: 'ج.م', category: 'soft-drink', image: '/images/WhatsApp Image 2026-07-30 at 03.06.26.jpeg' },
+  { id: 'sd-4',  name: 'بيريل شعير',             description: 'بيريل شعير باردة ومنعشة',                 price: 35,  currency: 'ج.م', category: 'soft-drink', image: '/images/WhatsApp Image 2026-07-30 at 03.06.27.jpeg' },
   { id: 'sd-5',  name: 'ريد بل',                 description: 'مشروب طاقة Red Bull لتجديد النشاط',       price: 75,  currency: 'ج.م', category: 'soft-drink', image: '/images/WhatsApp Image 2026-07-30 at 03.06.27 (2).jpeg' },
   { id: 'sd-6',  name: 'مونستر إنرجي',           description: 'Monster Energy مشروب طاقة قوي',           price: 60,  currency: 'ج.م', category: 'soft-drink', image: '/images/WhatsApp Image 2026-07-30 at 03.06.27 (1).jpeg' },
 
