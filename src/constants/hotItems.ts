@@ -63,8 +63,8 @@ export const hotItems: MenuItem[] = [
   { id: 'ic-5',  name: 'فرابتشينو',              description: 'فرابتشينو فاخر مع كريمة وتوبينج',           price: 75,  currency: 'ج.م', category: 'ice-coffee', image:'/images/WhatsApp Image 2026-07-29 at 07.31.20 (1).jpeg', badge: 'Popular' },
   { id: 'ic-6',  name: 'آيس موكا',               description: 'إسبريسو بارد مع شوكولاتة داكنة',           price: 80,  currency: 'ج.م', category: 'ice-coffee', image: '/images/WhatsApp Image 2026-07-29 at 07.31.20 (2).jpeg' },
   { id: 'ic-7',  name: 'آيس امريكان كوفي (V60)',  description: 'إسبريسو مُبرَّد فوق الثلج',                price: 80,  currency: 'ج.م', category: 'ice-coffee', image: '/images/WhatsApp Image 2026-07-29 at 07.31.21.jpeg' },
-  { id: 'ic-8',  name: 'ايس ماتشا لاتيه',        description: 'مزيج من الماتشا والحليب البارد مع الثلج',  price: 75,  currency: 'ج.م', category: 'ice-coffee', image: '/images/Gemini_Generated_Image_sk0lmjsk0lmjsk0l.jpg' },
-  { id: 'ic-9',  name: 'ايس ماتشا فليفر',        description: 'ماتشا مثلجة بالحليب مع إضافة نكهة منعشة',  price: 85,  currency: 'ج.م', category: 'ice-coffee', image: '/images/Gemini_Generated_Image_m82dtxm82dtxm82d.jpg' },
+  { id: 'ic-8',  name: 'ايس ماتشا لاتيه',        description: 'مزيج من الماتشا والحليب البارد مع الثلج',  price: 75,  currency: 'ج.م', category: 'ice-coffee', image: '/images/Gemini_Generated_Image_m82dtxm82dtxm82d.jpg' },
+  { id: 'ic-9',  name: 'ايس ماتشا فليفر',        description: 'ماتشا مثلجة بالحليب مع إضافة نكهة منعشة',  price: 85,  currency: 'ج.م', category: 'ice-coffee', image: '/images/Gemini_Generated_Image_sk0lmjsk0lmjsk0l.jpg' },
 
   // ── ميلك شيك ─────────────────────────────────────────────────────────────
   { id: 'ms-1',  name: 'فانيلا',                 description: 'ميلك شيك كريمي بالفانيليا الطبيعية',       price: 75,  currency: 'ج.م', category: 'milk-shake', image: '/images/WhatsApp Image 2026-07-28 at 23.56.12.jpeg' },
